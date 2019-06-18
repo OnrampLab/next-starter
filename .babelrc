@@ -1,0 +1,36 @@
+{
+    "presets": [
+      "next/babel",
+      "@zeit/next-typescript/babel"
+    ],
+    "plugins": [
+      [
+        "module-resolver",
+        {
+          "root": [
+            "./"
+          ],
+          "alias": {
+            "@Actions": "./src/Actions",
+            "@Components": "./src/Components",
+            "@Definitions": "./src/Definitions",
+            "@Interfaces": "./src/Interfaces",
+            "@Reducers": "./src/Redux/Reducers",
+            "@Redux": "./src/Redux",
+            "@Services": "./src/Services",
+          }
+        }
+      ],
+      [
+        "babel-plugin-styled-components",
+        {
+          "ssr": true,
+          "displayName": true,
+          "preprocess": false
+        }
+      ],
+      [
+        "import", { "libraryName": "antd" }, "ant"
+      ], ["import", { "libraryName": "react-feather", "libraryDirectory": "dist/icons" }, "react-feather"]
+    ]
+}
