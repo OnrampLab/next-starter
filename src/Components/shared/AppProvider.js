@@ -127,4 +127,5 @@ const AppProvider = props => {
 };
 
 export default AppProvider;
-export const useAppState = () => useContext(Context);
+// export const useAppState = () => useContext(Context);
+export const useAppState = () => [{}, () => {}];
