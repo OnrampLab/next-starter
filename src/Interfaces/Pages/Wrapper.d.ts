@@ -1,5 +1,6 @@
 //#region Global Imports
 import { Props } from 'react';
+import { Store } from 'redux';
 //#endregion Global Imports
 
 //#region Interfaces Imports
@@ -7,7 +8,7 @@ import { PlanetaryModel } from '@Interfaces';
 //#endregion Interfaces Imports
 
 declare namespace IWrapperPage {
-	export type IProps = IOwnProps & IStateProps & IDispatchProps;
+	export type IProps = IOwnProps & IStateProps & IDispatchProps & Store;
 
 	export interface IOwnProps extends Props<{}> {}
 

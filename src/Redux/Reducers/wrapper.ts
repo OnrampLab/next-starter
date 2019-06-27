@@ -46,6 +46,9 @@ export const WrapperReducer = (state = INITIAL_STATE, action: IAction<IMapPayloa
 		case ActionConsts.Wrapper.ResetReducer:
 			return INITIAL_STATE;
 
+    case ActionConsts.Wrapper.ToggleOptionDrawer:
+      return { ...state, ...{ optionDrawer: !state.optionDrawer } };
+
 		default:
 			return state;
   }

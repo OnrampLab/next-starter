@@ -33,4 +33,8 @@ export const WrapperActions = {
 			type: ActionConsts.Wrapper.SetReducer,
 		});
 	},
+
+	ToggleOptionDrawer: () => ({
+		type: ActionConsts.Wrapper.ToggleOptionDrawer,
+	}),
 };

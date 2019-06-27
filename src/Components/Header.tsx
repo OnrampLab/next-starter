@@ -8,17 +8,22 @@ import {
   Settings,
   Triangle
 } from 'react-feather';
+import Link from 'next/link';
+import { useState } from 'react';
+import { bindActionCreators, Dispatch } from 'redux';
+import { connect } from 'react-redux';
+
 import DashHeader, { Notification } from './styles/Header';
 
-import Link from 'next/link';
-import { useAppState } from './shared/AppProvider';
-import { useState } from 'react';
+import { IWrapperPage, IStore } from '@Interfaces';
+import { WrapperActions } from '@Actions';
 
 const { SubMenu } = Menu;
 const { Header } = Layout;
 
-const MainHeader = () => {
-  const [state, dispatch] = useAppState();
+const MainHeader = (props: IWrapperPage.IProps) => {
+  const { dispatch } = props;
+  const state = props;
   const [notifications] = useState([]);
   return (
     <DashHeader>
@@ -66,7 +71,7 @@ const MainHeader = () => {
               )}
             </Menu.Item>
           )}
-          <Menu.Item onClick={() => dispatch({ type: 'options' })}>
+          <Menu.Item onClick={() => dispatch(WrapperActions.ToggleOptionDrawer())}>
             <Settings size={20} strokeWidth={1} />
           </Menu.Item>
           <SubMenu
@@ -87,7 +92,7 @@ const MainHeader = () => {
                 itemLayout="horizontal"
                 dataSource={notifications}
                 footer={<div>{notifications.length} Notifications</div>}
-                renderItem={item => (
+                renderItem={(item: any) => (
                   <Notification>
                     <List.Item>
                       <List.Item.Meta
@@ -120,4 +125,6 @@ const MainHeader = () => {
   );
 };
 
-export default MainHeader;
+const mapStateToProps = (state: IStore) => state.wrapper;
+
+export default connect(mapStateToProps)(MainHeader);
