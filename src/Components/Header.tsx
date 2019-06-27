@@ -13,10 +13,10 @@ import { useState } from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
-import DashHeader, { Notification } from './styles/Header';
-
 import { IWrapperPage, IStore } from '@Interfaces';
 import { WrapperActions } from '@Actions';
+
+import DashHeader, { Notification } from './styles/Header';
 
 const { SubMenu } = Menu;
 const { Header } = Layout;

@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { Container, Inner } from './styles/Page';
 import { connect } from 'react-redux';
 import { Layout, Spin } from 'antd';
 import { useEffect, useState } from 'react';
+import { withRouter, WithRouterProps } from 'next/router';
 
 import Header from './Header';
 import SidebarMenu from './SidebarMenu';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/GlobalStyles';
-import { withRouter, WithRouterProps } from 'next/router';
+import { Container, Inner } from './styles/Page';
 
 import { IWrapperPage, IStore } from '@Interfaces';
 
@@ -42,14 +42,13 @@ const Page = (props: IWrapperPage.IProps & WithRouterProps) => {
             state.boxed ? 'boxed shadow-sm' : ''
           }`}
         >
-          {!isNotDashboard && <Header />}
+          {!isNotDashboard && <Header {...props as any} />}
           <Layout className="workspace">
             {!isNotDashboard && (
               <SidebarMenu
+                {...props as any}
                 sidebarTheme={state.darkSidebar ? 'dark' : 'light'}
                 sidebarMode={state.sidebarPopup ? 'vertical' : 'inline'}
-                sidebarIcons={state.sidebarIcons}
-                collapsed={state.collapsed}
               />
             )}
 

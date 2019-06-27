@@ -1,27 +1,19 @@
 import '../src/assets/styles.less';
 
-//#region Global Imports
 import App, { Container, NextAppContext } from 'next/app';
 import * as React from 'react';
-
 import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
-//#endregion Global Imports
-
-//#region Local Imports
-import store from '@Redux/store';
-//#endregion Local Imports
-
-//#region Interface Imports
-import { IApp } from '@Interfaces';
-//#endregion Interface Imports
-
 import Head from 'next/head';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 
 import { Page } from '@Components';
 import { GlobalStyles } from '@Components/styles/GlobalStyles';
+
+import store from '@Redux/store';
+
+import { IApp } from '@Interfaces';
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
@@ -61,11 +53,11 @@ class MyApp extends App<IApp.IProps> {
             <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.2.5/polyfill.min.js" />
           )}
         </Head>
-          <Provider store={store}>
-            <Page>
-              <Component {...pageProps} />
-            </Page>
-          </Provider>
+        <Provider store={store}>
+          <Page {...this.props as any}>
+            <Component {...pageProps} />
+          </Page>
+        </Provider>
       </Container>
     );
   }
