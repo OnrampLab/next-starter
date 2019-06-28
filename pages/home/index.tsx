@@ -7,7 +7,6 @@ import Head from 'next/head';
 
 //#region Interface Imports
 import { IHomePage, IStore } from '@Interfaces';
-import { Overview } from '@Components';
 import { HomeActions } from '@Actions';
 //#endregion Interface Imports
 
@@ -22,7 +21,6 @@ export class HomePage extends React.Component<IHomePage.IProps, IHomePage.IState
         <Head>
           <link rel="stylesheet" href="/static/react-vis.css" />
         </Head>
-        <Overview />
       </>
     );
   }
