@@ -1,24 +1,16 @@
 import {
-  AlertCircle,
-  Bold,
-  Droplet,
-  Gift,
-  HelpCircle,
   Home,
-  Image,
-  Link,
-  MapPin,
   MessageCircle,
-  Navigation,
-  PieChart,
-  Sidebar,
-  Terminal,
-  Type,
-  Underline,
-  User
 } from 'react-feather';
 
-export default [
+interface RouteSetting {
+  name: string;
+  path?: string;
+  icon?: any;
+  children?: RouteSetting[];
+}
+
+const routes: RouteSetting[] = [
   {
     path: '/',
     name: 'Home',
@@ -30,8 +22,10 @@ export default [
     children: [
       {
         path: '/apps/calendar',
-        name: 'Calendar'
+        name: 'Calendar',
       },
     ]
   },
 ];
+
+export default routes;

@@ -13,22 +13,29 @@ import {
   Tooltip
 } from 'antd';
 import { Book, LogOut, Triangle } from 'react-feather';
-import { capitalize, lowercase } from '../lib/helpers';
 import { useEffect, useState } from 'react';
+import { withRouter, WithRouterProps } from 'next/router';
+import Link from 'next/link';
+import { connect } from 'react-redux';
 
 import DashHeader from './styles/Header';
 import Inner from './styles/Sidebar';
-import Link from 'next/link';
 import Routes from '../lib/routes';
-import { useAppState } from './shared/AppProvider';
-import { withRouter } from 'next/router';
+import { capitalize, lowercase } from '../lib/helpers';
+
+import { IWrapperPage, IStore } from '@Interfaces';
+
+interface ISidebarMenuProps extends IWrapperPage.IProps, WithRouterProps {
+  sidebarTheme: 'dark' | 'light';
+  sidebarMode: 'vertical' | 'inline';
+}
 
 const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
 
-let rootSubMenuKeys = [];
+let rootSubMenuKeys: any[] = [];
 
-const getKey = (name, index) => {
+const getKey = (name: string, index: number) => {
   const string = `${name}-${index}`;
   let key = string.replace(' ', '-');
   return key.charAt(0).toLowerCase() + key.slice(1);
@@ -42,19 +49,19 @@ const UserMenu = (
   </Menu>
 );
 
-const SidebarContent = ({
-  sidebarTheme,
-  sidebarMode,
-  sidebarIcons,
-  collapsed,
-  router
-}) => {
-  const [state, dispatch] = useAppState();
-  const [openKeys, setOpenKeys] = useState([]);
+const SidebarContent = (props: ISidebarMenuProps) => {
+  const {
+    sidebarTheme,
+    sidebarMode,
+    sidebarIcons,
+    collapsed,
+    router,
+    dispatch,
+  } = props;
+  const state = props;
+  const [openKeys, setOpenKeys] = useState<Array<string>>([]);
   const [appRoutes] = useState(Routes);
-  const { pathname } = router;
-
-  const badgeTemplate = badge => <Badge count={badge.value} />;
+  const { pathname = '' } = router || {};
 
   useEffect(() => {
     appRoutes.forEach((route, index) => {
@@ -66,7 +73,7 @@ const SidebarContent = ({
     });
   }, []);
 
-  const onOpenChange = openKeys => {
+  const onOpenChange = (openKeys: string[]) => {
     const latestOpenKey = openKeys.slice(-1);
     if (rootSubMenuKeys.indexOf(latestOpenKey) === -1) {
       setOpenKeys([...latestOpenKey]);
@@ -105,7 +112,6 @@ const SidebarContent = ({
                       <span className="anticon">{route.icon}</span>
                     )}
                     <span className="mr-auto">{capitalize(route.name)}</span>
-                    {route.badge && badgeTemplate(route.badge)}
                   </a>
                 </Link>
               </Menu.Item>
@@ -121,11 +127,10 @@ const SidebarContent = ({
                       <span className="anticon">{route.icon}</span>
                     )}
                     <span>{capitalize(route.name)}</span>
-                    {route.badge && badgeTemplate(route.badge)}
                   </span>
                 }
               >
-                {route.children.map((subitem, index) => (
+                {route.children && route.children.map((subitem, index) => (
                   <Menu.Item
                     key={getKey(subitem.name, index)}
                     className={
@@ -140,7 +145,6 @@ const SidebarContent = ({
                         <span className="mr-auto">
                           {capitalize(subitem.name)}
                         </span>
-                        {subitem.badge && badgeTemplate(subitem.badge)}
                       </a>
                     </Link>
                   </Menu.Item>
@@ -194,7 +198,7 @@ const SidebarContent = ({
               <Popconfirm
                 placement="top"
                 title="Are you sure you want to sign out?"
-                onConfirm={() => router.push('/signin')}
+                onConfirm={() => router && router.push('/signin')}
                 okText="Yes"
                 cancelText="Cancel"
               >
@@ -212,6 +216,21 @@ const SidebarContent = ({
       </div>
     </>
   );
+
+  const InnerDivStyle: React.CSSProperties = {
+    overflow: 'hidden',
+    flex: '1 1 auto',
+    flexDirection: 'column',
+    display: 'flex',
+    height: '100vh',
+  };
+
+  const ListItemSpanStylye: React.CSSProperties = {
+    WebkitBoxFlex: 1,
+    WebkitFlex: '1 0',
+    msFlex: '1 0',
+    flex: '1 0',
+  };
 
   return (
     <>
@@ -237,13 +256,7 @@ const SidebarContent = ({
         >
           <Inner>
             <div
-              css={`
-                overflow: hidden;
-                flex: 1 1 auto;
-                flex-direction: column;
-                display: flex;
-                height: 100vh;
-              `}
+              style={InnerDivStyle}
             >
               <DashHeader>
                 <Header>
@@ -252,9 +265,9 @@ const SidebarContent = ({
                       <Triangle size={24} strokeWidth={1} />
                       <strong
                         className="mx-1"
-                        css={`
-                          display: inline;
-                        `}
+                        style={{
+                          display: 'inline',
+                        }}
                       >
                         {state.name}
                       </strong>
@@ -280,18 +293,11 @@ const SidebarContent = ({
               <Switch
                 size="small"
                 checked={!!state.boxed}
-                onChange={checked => dispatch({ type: 'boxed' })}
+                onChange={() => dispatch({ type: 'boxed' })}
               />
             ]}
           >
-            <span
-              css={`
-                -webkit-box-flex: 1;
-                -webkit-flex: 1 0;
-                -ms-flex: 1 0;
-                flex: 1 0;
-              `}
-            >
+            <span style={ListItemSpanStylye}>
               Boxed view
             </span>
           </List.Item>
@@ -301,18 +307,11 @@ const SidebarContent = ({
                 size="small"
                 checked={!!state.darkSidebar}
                 disabled={state.weakColor}
-                onChange={checked => dispatch({ type: 'sidebarTheme' })}
+                onChange={() => dispatch({ type: 'sidebarTheme' })}
               />
             ]}
           >
-            <span
-              css={`
-                -webkit-box-flex: 1;
-                -webkit-flex: 1 0;
-                -ms-flex: 1 0;
-                flex: 1 0;
-              `}
-            >
+            <span style={ListItemSpanStylye}>
               Dark sidebar menu
             </span>
           </List.Item>
@@ -322,18 +321,11 @@ const SidebarContent = ({
                 size="small"
                 checked={!!state.sidebarPopup}
                 disabled={state.collapsed}
-                onChange={checked => dispatch({ type: 'sidebarPopup' })}
+                onChange={() => dispatch({ type: 'sidebarPopup' })}
               />
             ]}
           >
-            <span
-              css={`
-                -webkit-box-flex: 1;
-                -webkit-flex: 1 0;
-                -ms-flex: 1 0;
-                flex: 1 0;
-              `}
-            >
+            <span style={ListItemSpanStylye}>
               Popup sub menus
             </span>
           </List.Item>
@@ -343,18 +335,11 @@ const SidebarContent = ({
                 size="small"
                 checked={!!state.sidebarIcons}
                 disabled={state.collapsed}
-                onChange={checked => dispatch({ type: 'sidebarIcons' })}
+                onChange={() => dispatch({ type: 'sidebarIcons' })}
               />
             ]}
           >
-            <span
-              css={`
-                -webkit-box-flex: 1;
-                -webkit-flex: 1 0;
-                -ms-flex: 1 0;
-                flex: 1 0;
-              `}
-            >
+            <span style={ListItemSpanStylye}>
               Sidebar menu icons
             </span>
           </List.Item>
@@ -363,18 +348,11 @@ const SidebarContent = ({
               <Switch
                 size="small"
                 checked={!!state.collapsed}
-                onChange={checked => dispatch({ type: 'collapse' })}
+                onChange={() => dispatch({ type: 'collapse' })}
               />
             ]}
           >
-            <span
-              css={`
-                -webkit-box-flex: 1;
-                -webkit-flex: 1 0;
-                -ms-flex: 1 0;
-                flex: 1 0;
-              `}
-            >
+            <span style={ListItemSpanStylye}>
               Collapsed sidebar menu
             </span>
           </List.Item>
@@ -383,18 +361,11 @@ const SidebarContent = ({
               <Switch
                 size="small"
                 checked={!!state.weakColor}
-                onChange={checked => dispatch({ type: 'weak', value: checked })}
+                onChange={() => dispatch({ type: 'weak', value: 'checked' })}
               />
             ]}
           >
-            <span
-              css={`
-                -webkit-box-flex: 1;
-                -webkit-flex: 1 0;
-                -ms-flex: 1 0;
-                flex: 1 0;
-              `}
-            >
+            <span style={ListItemSpanStylye}>
               Weak colors
             </span>
           </List.Item>
@@ -404,4 +375,6 @@ const SidebarContent = ({
   );
 };
 
-export default withRouter(SidebarContent);
+const mapStateToProps = (state: IStore) => state.wrapper;
+
+export default withRouter(connect(mapStateToProps)(SidebarContent));
