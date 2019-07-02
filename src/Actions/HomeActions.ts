@@ -12,17 +12,17 @@ import { IHomePage } from '@Interfaces';
 //#endregion Interface Imports
 
 export const HomeActions = {
-	Map: (payload: {}) => ({
+	map: (payload: {}) => ({
 		payload,
 		type: ActionConsts.Home.SetReducer,
 	}),
 
-	Reset: () => ({
+	reset: () => ({
 		type: ActionConsts.Home.ResetReducer,
 	}),
 
-	GetApod: (payload: IHomePage.Actions.IGetApodPayload) => async (dispatch: Dispatch) => {
-		const result = await PlanetaryService.GetPlanetImage({
+	getApod: (payload: IHomePage.Actions.IGetApodPayload) => async (dispatch: Dispatch) => {
+		const result = await PlanetaryService.getPlanetImage({
 			params: payload.params,
 		});
 

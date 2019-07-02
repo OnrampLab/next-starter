@@ -19,7 +19,7 @@ const {
 const BaseUrl = `${API_URL}/api`;
 
 export const Http = {
-  Request: async <A>(
+  request: async <A>(
     methodType: string,
     url: string,
     params?: HttpModel.IRequestQueryPayload,

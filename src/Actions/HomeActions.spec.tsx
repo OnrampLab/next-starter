@@ -21,7 +21,7 @@ describe('Home action tests', () => {
 		];
 
 		store.dispatch(
-			HomeActions.Map({
+			HomeActions.map({
 				version: 2,
 			}),
 		);
@@ -42,12 +42,12 @@ describe('Home action tests', () => {
 			},
 		];
 
-		store.dispatch(HomeActions.Reset());
+		store.dispatch(HomeActions.reset());
 
 		expect(store.getActions()).toEqual(expectedActions);
 	});
 
-	test('GetApod test', async () => {
+	test('getApod test', async () => {
 		const store = mockStore({});
 
 		const expectedActions = [
@@ -69,7 +69,7 @@ describe('Home action tests', () => {
 		];
 
 		// eslint-disable-next-line
-		await store.dispatch<any>(HomeActions.GetApod({ params: { hd: true } }));
+		await store.dispatch<any>(HomeActions.getApod({ params: { hd: true } }));
 
 		expect(store.getActions()).toEqual(expectedActions);
 	});

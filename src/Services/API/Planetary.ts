@@ -4,7 +4,7 @@ import { PlanetaryModel } from '@Interfaces';
 //#endregion Local Imports
 
 export const PlanetaryService = {
-  GetPlanetImage: async (
+  getPlanetImage: async (
     payload: PlanetaryModel.GetApodPayload,
   ): Promise<PlanetaryModel.GetApodResponse> => {
     let response: PlanetaryModel.GetApodResponse;

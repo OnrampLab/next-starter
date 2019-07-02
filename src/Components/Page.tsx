@@ -1,13 +1,16 @@
-import { Container, Inner } from './styles/Page';
+import * as React from 'react';
+import { connect } from 'react-redux';
 import { Layout, Spin } from 'antd';
 import { useEffect, useState } from 'react';
+import { withRouter, WithRouterProps } from 'next/router';
 
 import Header from './Header';
 import SidebarMenu from './SidebarMenu';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/GlobalStyles';
-import { useAppState } from './shared/AppProvider';
-import { withRouter } from 'next/router';
+import { Container, Inner } from './styles/Page';
+
+import { IWrapperPage, IStore } from '@Interfaces';
 
 const { Content } = Layout;
 
@@ -19,10 +22,11 @@ const NonDashboardRoutes = [
   '/_error'
 ];
 
-const Page = ({ router, children }) => {
+const Page = (props: IWrapperPage.IProps & WithRouterProps) => {
+  const { router, children } = props;
+  const state = props;
   const [loading, setLoading] = useState(true);
-  const [state] = useAppState();
-  const isNotDashboard = NonDashboardRoutes.includes(router.pathname);
+  const isNotDashboard = router && NonDashboardRoutes.includes(router.pathname);
 
   useEffect(() => {
     setTimeout(() => {
@@ -38,14 +42,13 @@ const Page = ({ router, children }) => {
             state.boxed ? 'boxed shadow-sm' : ''
           }`}
         >
-          {!isNotDashboard && <Header />}
+          {!isNotDashboard && <Header {...props as any} />}
           <Layout className="workspace">
             {!isNotDashboard && (
               <SidebarMenu
+                {...props as any}
                 sidebarTheme={state.darkSidebar ? 'dark' : 'light'}
                 sidebarMode={state.sidebarPopup ? 'vertical' : 'inline'}
-                sidebarIcons={state.sidebarIcons}
-                collapsed={state.collapsed}
               />
             )}
 
@@ -61,4 +64,6 @@ const Page = ({ router, children }) => {
   );
 };
 
-export default withRouter(Page);
+const mapStateToProps = (state: IStore) => state.wrapper;
+
+export default withRouter(connect(mapStateToProps)(Page));
