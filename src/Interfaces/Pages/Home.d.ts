@@ -17,8 +17,8 @@ declare namespace IHomePage {
 	export interface IStateProps {}
 
 	export interface IDispatchProps {
-		Map(payload: Actions.IMapPayload): Actions.IMapResponse;
-		GetApod(payload: Actions.IGetApodPayload): Actions.IGetApodResponse;
+		map(payload: Actions.IMapPayload): Actions.IMapResponse;
+		getApod(payload: Actions.IGetApodPayload): Actions.IGetApodResponse;
 	}
 
 	namespace Actions {

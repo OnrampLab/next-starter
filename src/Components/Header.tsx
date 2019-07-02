@@ -19,8 +19,8 @@ const { Header } = Layout;
 
 const MainHeader = (props: IWrapperPage.IProps) => {
   const {
-    SetOptionDrawer,
-    SetMobileDrawer,
+    setOptionDrawer,
+    setMobileDrawer,
   } = props;
   const state = props;
   return (
@@ -28,7 +28,7 @@ const MainHeader = (props: IWrapperPage.IProps) => {
       <Header>
         {state.mobile && (
           <a
-            onClick={() => SetMobileDrawer()}
+            onClick={() => setMobileDrawer()}
             className="trigger"
           >
             <BarChart size={20} strokeWidth={1} />
@@ -60,7 +60,7 @@ const MainHeader = (props: IWrapperPage.IProps) => {
         <span className="mr-auto" />
 
         <Menu mode="horizontal">
-          <Menu.Item onClick={() => SetOptionDrawer()}>
+          <Menu.Item onClick={() => setOptionDrawer()}>
             <Settings size={20} strokeWidth={1} />
           </Menu.Item>
 
@@ -84,8 +84,8 @@ const MainHeader = (props: IWrapperPage.IProps) => {
 const mapStateToProps = (state: IStore) => state.wrapper;
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  SetOptionDrawer: bindActionCreators(WrapperActions.SetOptionDrawer, dispatch),
-  SetMobileDrawer: bindActionCreators(WrapperActions.SetMobileDrawer, dispatch),
+  setOptionDrawer: bindActionCreators(WrapperActions.setOptionDrawer, dispatch),
+  setMobileDrawer: bindActionCreators(WrapperActions.setMobileDrawer, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainHeader);

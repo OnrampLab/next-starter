@@ -19,13 +19,13 @@ const _store: Store = createStore(Reducers, {}, composeWithDevTools(applyMiddlew
 export const afterComponentDidMount = () => {
 	// TODO: window initialize
 	const mediaQueryChanged = () => {
-		_store.dispatch(WrapperActions.SetMobile(!mql.matches));
+		_store.dispatch(WrapperActions.setMobile(!mql.matches));
 		return () => mql.removeListener(mediaQueryChanged);
 	};
 
 	const mql = window.matchMedia(`(min-width: 992px)`);
 	mql.addListener(mediaQueryChanged);
-	_store.dispatch(WrapperActions.Setup({
+	_store.dispatch(WrapperActions.setup({
 		mobile: !mql.matches,
 	}));
 }

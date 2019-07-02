@@ -47,7 +47,6 @@ const UserMenu = (
   <Menu>
     <Menu.Item>Settings</Menu.Item>
     <Menu.Item>Profile</Menu.Item>
-    <Menu.Item>Notifications</Menu.Item>
   </Menu>
 );
 
@@ -58,14 +57,14 @@ const SidebarContent = (props: ISidebarMenuProps) => {
     sidebarIcons,
     collapsed,
     router,
-    SetOptionDrawer,
-    SetMobileDrawer,
-    SetBoxed,
-    SetSidebarTheme,
-    SetSidebarPopup,
-    SetSidebarIcons,
-    SetCollapse,
-    SetWeak,
+    setOptionDrawer,
+    setMobileDrawer,
+    setBoxed,
+    setSidebarTheme,
+    setSidebarPopup,
+    setSidebarIcons,
+    setCollapse,
+    setWeak,
   } = props;
   const state = props;
   const [openKeys, setOpenKeys] = useState<Array<string>>([]);
@@ -112,7 +111,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
                 }
                 onClick={() => {
                   setOpenKeys([getKey(route.name, index)]);
-                  if (state.mobile) SetMobileDrawer();
+                  if (state.mobile) setMobileDrawer();
                 }}
               >
                 <Link href={route.path} prefetch>
@@ -146,7 +145,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
                       pathname === subitem.path ? 'ant-menu-item-selected' : ''
                     }
                     onClick={() => {
-                      if (state.mobile) SetMobileDrawer();
+                      if (state.mobile) setMobileDrawer();
                     }}
                   >
                     <Link href={`${subitem.path ? subitem.path : ''}`} prefetch>
@@ -259,7 +258,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
           closable={false}
           width={240}
           placement="left"
-          onClose={() => SetMobileDrawer()}
+          onClose={() => setMobileDrawer()}
           visible={state.mobileDrawer}
           className="chat-drawer"
         >
@@ -294,7 +293,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
           placement="right"
           closable={true}
           width={300}
-          onClose={() => SetOptionDrawer()}
+          onClose={() => setOptionDrawer()}
           visible={state.optionDrawer}
         >
           <List.Item
@@ -302,7 +301,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
               <Switch
                 size="small"
                 checked={!!state.boxed}
-                onChange={() => SetBoxed()}
+                onChange={() => setBoxed()}
               />
             ]}
           >
@@ -316,7 +315,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
                 size="small"
                 checked={!!state.darkSidebar}
                 disabled={state.weakColor}
-                onChange={() => SetSidebarTheme()}
+                onChange={() => setSidebarTheme()}
               />
             ]}
           >
@@ -330,7 +329,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
                 size="small"
                 checked={!!state.sidebarPopup}
                 disabled={state.collapsed}
-                onChange={() => SetSidebarPopup()}
+                onChange={() => setSidebarPopup()}
               />
             ]}
           >
@@ -344,7 +343,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
                 size="small"
                 checked={!!state.sidebarIcons}
                 disabled={state.collapsed}
-                onChange={() => SetSidebarIcons()}
+                onChange={() => setSidebarIcons()}
               />
             ]}
           >
@@ -357,7 +356,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
               <Switch
                 size="small"
                 checked={!!state.collapsed}
-                onChange={() => SetCollapse()}
+                onChange={() => setCollapse()}
               />
             ]}
           >
@@ -370,7 +369,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
               <Switch
                 size="small"
                 checked={!!state.weakColor}
-                onChange={() => SetWeak()}
+                onChange={() => setWeak()}
               />
             ]}
           >
@@ -387,14 +386,14 @@ const SidebarContent = (props: ISidebarMenuProps) => {
 const mapStateToProps = (state: IStore) => state.wrapper;
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  SetOptionDrawer: bindActionCreators(WrapperActions.SetOptionDrawer, dispatch),
-  SetMobileDrawer: bindActionCreators(WrapperActions.SetMobileDrawer, dispatch),
-  SetBoxed: bindActionCreators(WrapperActions.SetBoxed, dispatch),
-  SetSidebarTheme: bindActionCreators(WrapperActions.SetSidebarTheme, dispatch),
-  SetSidebarPopup: bindActionCreators(WrapperActions.SetSidebarPopup, dispatch),
-  SetSidebarIcons: bindActionCreators(WrapperActions.SetSidebarIcons, dispatch),
-  SetCollapse: bindActionCreators(WrapperActions.SetCollapse, dispatch),
-  SetWeak: bindActionCreators(WrapperActions.SetWeak, dispatch),
+  setOptionDrawer: bindActionCreators(WrapperActions.setOptionDrawer, dispatch),
+  setMobileDrawer: bindActionCreators(WrapperActions.setMobileDrawer, dispatch),
+  setBoxed: bindActionCreators(WrapperActions.setBoxed, dispatch),
+  setSidebarTheme: bindActionCreators(WrapperActions.setSidebarTheme, dispatch),
+  setSidebarPopup: bindActionCreators(WrapperActions.setSidebarPopup, dispatch),
+  setSidebarIcons: bindActionCreators(WrapperActions.setSidebarIcons, dispatch),
+  setCollapse: bindActionCreators(WrapperActions.setCollapse, dispatch),
+  setWeak: bindActionCreators(WrapperActions.setWeak, dispatch),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SidebarContent));

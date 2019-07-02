@@ -98,9 +98,9 @@ export const WrapperReducer = (state = INITIAL_STATE, action: IAction<IMapPayloa
 				weakColor: typeof(action.payload) === 'boolean' ? action.payload : !state.weakColor,
 				darkSidebar,
 			};
-		
+
 		case ActionConsts.Wrapper.Setup:
-      const settings = JSON.parse(localStorage.getItem('settings'));
+      const settings = JSON.parse(localStorage.getItem('settings') || '');
       return { ...state, ...settings, ...action.payload };
 
 		default:
