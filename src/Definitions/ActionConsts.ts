@@ -9,6 +9,7 @@ export const ActionConsts = {
 		SetSidebarIcons: 'Wrapper_SetSidebarIcons',
 		SetCollapse: 'Wrapper_SetCollapse',
 		SetWeak: 'Wrapper_SetWeak',
+		Setup: 'Wrapper_Setup',
 	},
 	Home: {
 		ResetReducer: 'Home_ResetReducer',

@@ -39,6 +39,7 @@ declare namespace IWrapperPage {
 		SetSidebarIcons(payload?: boolean): AnyAction;
 		SetCollapse(payload?: boolean): AnyAction;
 		SetWeak(payload?: boolean): AnyAction;
+		Setup(payload?: options): AnyAction;
 	}
 
 	namespace Actions {

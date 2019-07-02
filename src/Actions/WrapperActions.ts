@@ -47,4 +47,9 @@ export const WrapperActions: IWrapperPage.IDispatchProps = {
 		type: ActionConsts.Wrapper.SetWeak,
 		payload,
 	}),
+
+	Setup: (payload?: any) => ({
+		type: ActionConsts.Wrapper.Setup,
+		payload,
+	}),
 };

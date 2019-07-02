@@ -18,6 +18,10 @@ import { IApp } from '@Interfaces';
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
+Router.events.on(
+  'routeChangeComplete',
+  () => (document.querySelector('.workspace > .ant-layout').scrollTop = 0)
+);
 
 class MyApp extends App<IApp.IProps> {
   static async getInitialProps(props: NextAppContext) {

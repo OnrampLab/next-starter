@@ -25,6 +25,9 @@ export const afterComponentDidMount = () => {
 
 	const mql = window.matchMedia(`(min-width: 992px)`);
 	mql.addListener(mediaQueryChanged);
+	_store.dispatch(WrapperActions.Setup({
+		mobile: !mql.matches,
+	}));
 }
 
 export const getCurrentState = _store.getState();
