@@ -2,16 +2,21 @@ import { createStore, applyMiddleware, Store } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
-import { IWrapperPage } from '@Interfaces';
+import { IStore } from '@Interfaces';
 import { WrapperActions } from '@Actions';
 
 import Reducers from './Reducers';
 
-const saveToLocal = (state: IWrapperPage.IStateProps) => {
-  delete state.mobile;
-  delete state.optionDrawer;
-  delete state.mobileDrawer;
-  localStorage.setItem('settings', JSON.stringify(state));
+const saveToLocal = (state: IStore) => {
+  localStorage.setItem('settings', JSON.stringify({ ...state, ...{
+		wrapper: {
+			...state.wrapper, ...{
+				mobile: undefined,
+				optionDrawer: undefined,
+				mobileDrawer: undefined,
+			}
+		}
+	} }));
 };
 
 const _store: Store = createStore(Reducers, {}, composeWithDevTools(applyMiddleware(thunkMiddleware)));
@@ -30,7 +35,7 @@ export const afterComponentDidMount = () => {
 	}));
 }
 
-export const getCurrentState = _store.getState();
+export const getCurrentStore = _store.getState();
 
 export default () => {
 	// store initialize

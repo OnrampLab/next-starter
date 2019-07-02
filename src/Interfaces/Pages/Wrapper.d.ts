@@ -15,7 +15,7 @@ declare namespace IWrapperPage {
 	export interface IState {}
 
 	export interface IStateProps {
-		app: any;
+		version: number;
 		name: string;
 		mobile: boolean;
 		boxed: boolean;

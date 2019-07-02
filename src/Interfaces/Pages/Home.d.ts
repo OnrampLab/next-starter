@@ -14,7 +14,9 @@ declare namespace IHomePage {
 
 	export interface IState {}
 
-	export interface IStateProps {}
+	export interface IStateProps {
+		version: number;
+	}
 
 	export interface IDispatchProps {
 		map(payload: Actions.IMapPayload): Actions.IMapResponse;

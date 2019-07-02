@@ -1,21 +1,9 @@
-//#region Global Imports
-//#endregion Global Imports
-
-//#region Local Imports
 import { ActionConsts } from '@Definitions';
-//#endregion Local Imports
 
-//#region Interface Imports
-import { IAction, IWrapperPage } from '@Interfaces';
-//#endregion Interface Imports
+import { IAction, IWrapperPage, IStore } from '@Interfaces';
 
-/**
- * INITIAL_STATE
- */
 const INITIAL_STATE: IWrapperPage.IStateProps = {
-	app: {
-		version: 1,
-	},
+	version: 1,
 	name: 'One',
 	mobile: false,
 	boxed: false,
@@ -31,9 +19,6 @@ const INITIAL_STATE: IWrapperPage.IStateProps = {
 
 type IMapPayload = IWrapperPage.Actions.IMapPayload;
 
-/**
- * REDUCER
- */
 /* eslint-disable complexity */
 export const WrapperReducer = (state = INITIAL_STATE, action: IAction<IMapPayload>) => {
 	switch (action.type) {
@@ -100,8 +85,8 @@ export const WrapperReducer = (state = INITIAL_STATE, action: IAction<IMapPayloa
 			};
 
 		case ActionConsts.Wrapper.Setup:
-      const settings = JSON.parse(localStorage.getItem('settings') || '');
-      return { ...state, ...settings, ...action.payload };
+      const { wrapper }: IStore = JSON.parse(localStorage.getItem('settings') || '{}');
+      return { ...state, ...wrapper, ...action.payload };
 
 		default:
 			return state;
