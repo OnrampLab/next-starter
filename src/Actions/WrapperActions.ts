@@ -1,40 +1,50 @@
-//#region Global Imports
-import { Dispatch } from 'redux';
-//#endregion Global Imports
-
-//#region Local Imports
 import { ActionConsts } from '@Definitions';
-import { PlanetaryService } from '@Services';
-//#endregion Local Imports
 
-//#region Interface Imports
 import { IWrapperPage } from '@Interfaces';
-//#endregion Interface Imports
 
-export const WrapperActions = {
-	Map: (payload: {}) => ({
+export const WrapperActions: IWrapperPage.IDispatchProps = {
+	SetOptionDrawer: (payload?: any) => ({
+		type: ActionConsts.Wrapper.SetOptionDrawer,
 		payload,
-		type: ActionConsts.Wrapper.SetReducer,
 	}),
 
-	Reset: () => ({
-		type: ActionConsts.Wrapper.ResetReducer,
+	SetMobile: (payload?: any) => ({
+		type: ActionConsts.Wrapper.SetMobile,
+		payload,
 	}),
 
-	GetApod: (payload: IWrapperPage.Actions.IGetApodPayload) => async (dispatch: Dispatch) => {
-		const result = await PlanetaryService.GetPlanetImage({
-			params: payload.params,
-		});
+	SetMobileDrawer: (payload?: any) => ({
+		type: ActionConsts.Wrapper.SetMobileDrawer,
+		payload,
+	}),
 
-		dispatch({
-			payload: {
-				image: result,
-			},
-			type: ActionConsts.Wrapper.SetReducer,
-		});
-	},
+	SetBoxed: (payload?: any) => ({
+		type: ActionConsts.Wrapper.SetBoxed,
+		payload,
+	}),
 
-	ToggleOptionDrawer: () => ({
-		type: ActionConsts.Wrapper.ToggleOptionDrawer,
+	SetSidebarTheme: (payload?: any) => ({
+		type: ActionConsts.Wrapper.SetSidebarTheme,
+		payload,
+	}),
+
+	SetSidebarPopup: (payload?: any) => ({
+		type: ActionConsts.Wrapper.SetSidebarPopup,
+		payload,
+	}),
+
+	SetSidebarIcons: (payload?: any) => ({
+		type: ActionConsts.Wrapper.SetSidebarIcons,
+		payload,
+	}),
+
+	SetCollapse: (payload?: any) => ({
+		type: ActionConsts.Wrapper.SetCollapse,
+		payload,
+	}),
+
+	SetWeak: (payload?: any) => ({
+		type: ActionConsts.Wrapper.SetWeak,
+		payload,
 	}),
 };

@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import { withRouter, WithRouterProps } from 'next/router';
 import Link from 'next/link';
 import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
 
 import DashHeader from './styles/Header';
 import Inner from './styles/Sidebar';
@@ -24,6 +25,7 @@ import Routes from '../lib/routes';
 import { capitalize, lowercase } from '../lib/helpers';
 
 import { IWrapperPage, IStore } from '@Interfaces';
+import { WrapperActions } from '@Actions';
 
 interface ISidebarMenuProps extends IWrapperPage.IProps, WithRouterProps {
   sidebarTheme: 'dark' | 'light';
@@ -56,7 +58,14 @@ const SidebarContent = (props: ISidebarMenuProps) => {
     sidebarIcons,
     collapsed,
     router,
-    dispatch,
+    SetOptionDrawer,
+    SetMobileDrawer,
+    SetBoxed,
+    SetSidebarTheme,
+    SetSidebarPopup,
+    SetSidebarIcons,
+    SetCollapse,
+    SetWeak,
   } = props;
   const state = props;
   const [openKeys, setOpenKeys] = useState<Array<string>>([]);
@@ -103,7 +112,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
                 }
                 onClick={() => {
                   setOpenKeys([getKey(route.name, index)]);
-                  if (state.mobile) dispatch({ type: 'mobileDrawer' });
+                  if (state.mobile) SetMobileDrawer();
                 }}
               >
                 <Link href={route.path} prefetch>
@@ -137,7 +146,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
                       pathname === subitem.path ? 'ant-menu-item-selected' : ''
                     }
                     onClick={() => {
-                      if (state.mobile) dispatch({ type: 'mobileDrawer' });
+                      if (state.mobile) SetMobileDrawer();
                     }}
                   >
                     <Link href={`${subitem.path ? subitem.path : ''}`} prefetch>
@@ -250,7 +259,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
           closable={false}
           width={240}
           placement="left"
-          onClose={() => dispatch({ type: 'mobileDrawer' })}
+          onClose={() => SetMobileDrawer()}
           visible={state.mobileDrawer}
           className="chat-drawer"
         >
@@ -285,7 +294,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
           placement="right"
           closable={true}
           width={300}
-          onClose={() => dispatch({ type: 'options' })}
+          onClose={() => SetOptionDrawer()}
           visible={state.optionDrawer}
         >
           <List.Item
@@ -293,7 +302,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
               <Switch
                 size="small"
                 checked={!!state.boxed}
-                onChange={() => dispatch({ type: 'boxed' })}
+                onChange={() => SetBoxed()}
               />
             ]}
           >
@@ -307,7 +316,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
                 size="small"
                 checked={!!state.darkSidebar}
                 disabled={state.weakColor}
-                onChange={() => dispatch({ type: 'sidebarTheme' })}
+                onChange={() => SetSidebarTheme()}
               />
             ]}
           >
@@ -321,7 +330,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
                 size="small"
                 checked={!!state.sidebarPopup}
                 disabled={state.collapsed}
-                onChange={() => dispatch({ type: 'sidebarPopup' })}
+                onChange={() => SetSidebarPopup()}
               />
             ]}
           >
@@ -335,7 +344,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
                 size="small"
                 checked={!!state.sidebarIcons}
                 disabled={state.collapsed}
-                onChange={() => dispatch({ type: 'sidebarIcons' })}
+                onChange={() => SetSidebarIcons()}
               />
             ]}
           >
@@ -348,7 +357,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
               <Switch
                 size="small"
                 checked={!!state.collapsed}
-                onChange={() => dispatch({ type: 'collapse' })}
+                onChange={() => SetCollapse()}
               />
             ]}
           >
@@ -361,7 +370,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
               <Switch
                 size="small"
                 checked={!!state.weakColor}
-                onChange={() => dispatch({ type: 'weak', value: 'checked' })}
+                onChange={() => SetWeak()}
               />
             ]}
           >
@@ -377,4 +386,15 @@ const SidebarContent = (props: ISidebarMenuProps) => {
 
 const mapStateToProps = (state: IStore) => state.wrapper;
 
-export default withRouter(connect(mapStateToProps)(SidebarContent));
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  SetOptionDrawer: bindActionCreators(WrapperActions.SetOptionDrawer, dispatch),
+  SetMobileDrawer: bindActionCreators(WrapperActions.SetMobileDrawer, dispatch),
+  SetBoxed: bindActionCreators(WrapperActions.SetBoxed, dispatch),
+  SetSidebarTheme: bindActionCreators(WrapperActions.SetSidebarTheme, dispatch),
+  SetSidebarPopup: bindActionCreators(WrapperActions.SetSidebarPopup, dispatch),
+  SetSidebarIcons: bindActionCreators(WrapperActions.SetSidebarIcons, dispatch),
+  SetCollapse: bindActionCreators(WrapperActions.SetCollapse, dispatch),
+  SetWeak: bindActionCreators(WrapperActions.SetWeak, dispatch),
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SidebarContent));

@@ -30,6 +30,15 @@ declare namespace IWrapperPage {
 	}
 
 	export interface IDispatchProps {
+		SetOptionDrawer(payload?: boolean): AnyAction;
+		SetMobile(payload?: boolean): AnyAction;
+		SetMobileDrawer(payload?: boolean): AnyAction;
+		SetBoxed(payload?: boolean): AnyAction;
+		SetSidebarTheme(payload?: boolean): AnyAction;
+		SetSidebarPopup(payload?: boolean): AnyAction;
+		SetSidebarIcons(payload?: boolean): AnyAction;
+		SetCollapse(payload?: boolean): AnyAction;
+		SetWeak(payload?: boolean): AnyAction;
 	}
 
 	namespace Actions {

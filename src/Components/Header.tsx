@@ -7,6 +7,7 @@ import {
 } from 'react-feather';
 import Link from 'next/link';
 import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
 
 import { IWrapperPage, IStore } from '@Interfaces';
 import { WrapperActions } from '@Actions';
@@ -17,14 +18,17 @@ const { SubMenu } = Menu;
 const { Header } = Layout;
 
 const MainHeader = (props: IWrapperPage.IProps) => {
-  const { dispatch } = props;
+  const {
+    SetOptionDrawer,
+    SetMobileDrawer,
+  } = props;
   const state = props;
   return (
     <DashHeader>
       <Header>
         {state.mobile && (
           <a
-            onClick={() => dispatch({ type: 'mobileDrawer' })}
+            onClick={() => SetMobileDrawer()}
             className="trigger"
           >
             <BarChart size={20} strokeWidth={1} />
@@ -56,7 +60,7 @@ const MainHeader = (props: IWrapperPage.IProps) => {
         <span className="mr-auto" />
 
         <Menu mode="horizontal">
-          <Menu.Item onClick={() => dispatch(WrapperActions.ToggleOptionDrawer())}>
+          <Menu.Item onClick={() => SetOptionDrawer()}>
             <Settings size={20} strokeWidth={1} />
           </Menu.Item>
 
@@ -79,4 +83,9 @@ const MainHeader = (props: IWrapperPage.IProps) => {
 
 const mapStateToProps = (state: IStore) => state.wrapper;
 
-export default connect(mapStateToProps)(MainHeader);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  SetOptionDrawer: bindActionCreators(WrapperActions.SetOptionDrawer, dispatch),
+  SetMobileDrawer: bindActionCreators(WrapperActions.SetMobileDrawer, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainHeader);
