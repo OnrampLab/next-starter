@@ -11,7 +11,7 @@ import NProgress from 'nprogress';
 import { Page } from '@Components';
 import { GlobalStyles } from '@Components/styles/GlobalStyles';
 
-import store from '@Redux/store';
+import store, { afterComponentDidMount } from '@Redux/store';
 
 import { IApp } from '@Interfaces';
 
@@ -28,6 +28,10 @@ class MyApp extends App<IApp.IProps> {
     }
 
     return { pageProps };
+  }
+
+  componentDidMount() {
+    afterComponentDidMount();
   }
 
   render(): JSX.Element {
