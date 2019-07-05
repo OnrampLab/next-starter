@@ -1,12 +1,8 @@
-//#region Global Imports
 import 'isomorphic-unfetch';
 import getConfig from 'next/config';
 import { stringify } from 'query-string';
-//#endregion Global Imports
 
-//#region Interface Imports
 import { HttpModel } from '@Interfaces';
-//#endregion Interface Imports
 
 /**
  * @module Http

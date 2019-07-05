@@ -1,8 +1,5 @@
-//#region Local Imports
 import { Http } from '@Services';
 import { AuthModel } from "@Interfaces";
-//#endregion Local Imports
-
 
 export const AuthService = {
   login: async (payload: AuthModel.SigninPayload): Promise<AuthModel.SigninResponse> => {

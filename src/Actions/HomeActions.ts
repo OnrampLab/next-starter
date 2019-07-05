@@ -1,15 +1,9 @@
-//#region Global Imports
 import { Dispatch } from 'redux';
-//#endregion Global Imports
 
-//#region Local Imports
 import { ActionConsts } from '@Definitions';
 import { PlanetaryService } from '@Services';
-//#endregion Local Imports
 
-//#region Interface Imports
 import { IHomePage } from '@Interfaces';
-//#endregion Interface Imports
 
 export const HomeActions = {
 	map: (payload: {}) => ({
