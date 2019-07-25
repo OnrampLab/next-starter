@@ -15,7 +15,7 @@ const Content = styled.div`
   min-width: 300px;
 `;
 
-const Signin = ({ form }) => (
+const Component = ({ form }) => (
   <Row
     type="flex"
     align="middle"
@@ -134,4 +134,4 @@ const Signin = ({ form }) => (
   </Row>
 );
 
-export default Form.create()(Signin);
+export const Signin = Form.create()(Component);

@@ -22,7 +22,7 @@ const NonDashboardRoutes = [
   '/_error'
 ];
 
-const Page = (props: IWrapperPage.IProps & WithRouterProps) => {
+const Component = (props: IWrapperPage.IProps & WithRouterProps) => {
   const { router, children } = props;
   const state = props;
   const [loading, setLoading] = useState(true);
@@ -66,4 +66,4 @@ const Page = (props: IWrapperPage.IProps & WithRouterProps) => {
 
 const mapStateToProps = (state: IStore) => state.wrapper;
 
-export default withRouter(connect(mapStateToProps)(Page));
+export const Page = withRouter(connect(mapStateToProps)(Component));
