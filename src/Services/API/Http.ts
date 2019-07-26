@@ -22,7 +22,7 @@ export const Http = {
     payload?: HttpModel.IRequestPayload,
   ): Promise<A> => {
     return new Promise((resolve, reject) => {
-      const query = params ? `?${stringify(params)}` : '';
+      const query = params ? `?${stringify({ ...params, api_key: API_KEY })}` : '';
 
       fetch(`${BaseUrl}${url}${query}`, {
         body: JSON.stringify(payload),
