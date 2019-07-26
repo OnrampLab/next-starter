@@ -1,7 +1,10 @@
+//#region Local Imports
 import { Http } from '@Services';
-import { PlanetaryModel } from '@Interfaces';
+import { PlanetaryModel } from './interfaces';
+//#endregion Local Imports
 
-export const PlanetaryService = {
+
+export const PlanetaryApiService = {
   getPlanetImage: async (
     payload: PlanetaryModel.GetApodPayload,
   ): Promise<PlanetaryModel.GetApodResponse> => {
@@ -27,4 +30,4 @@ export const PlanetaryService = {
 
     return response;
   },
-};
+}
