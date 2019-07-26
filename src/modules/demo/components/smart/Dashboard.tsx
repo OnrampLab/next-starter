@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
 import { Card } from 'antd';
+import { IStore } from '@Interfaces';
 
 const { Meta } = Card;
 
 function Component(props) {
   const {
-    home: {
+    demoStore: {
       image = {},
     },
   } = props;
@@ -26,7 +27,7 @@ function Component(props) {
 }
 
 const mapStateToProps = (state: IStore) => ({
-  home: state.home,
+  demoStore: state.demoStore,
 });
 
 export const Dashboard = connect(
