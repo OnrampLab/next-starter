@@ -11,8 +11,4 @@ export const ActionConsts = {
 		SetWeak: 'Wrapper_SetWeak',
 		Setup: 'Wrapper_Setup',
 	},
-	Home: {
-		ResetReducer: 'Home_ResetReducer',
-		SetReducer: 'Home_SetReducer',
-	},
 };
