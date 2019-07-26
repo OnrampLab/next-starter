@@ -18,6 +18,7 @@
             "@Reducers": "./src/Redux/Reducers",
             "@Redux": "./src/Redux",
             "@Services": "./src/Services",
+            "demo": "./src/modules/demo"
           }
         }
       ],
