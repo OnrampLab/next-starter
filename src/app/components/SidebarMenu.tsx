@@ -19,13 +19,13 @@ import Link from 'next/link';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 
-import DashHeader from './styles/Header';
-import Inner from './styles/Sidebar';
-import Routes from '../lib/routes';
-import { capitalize, lowercase } from '../lib/helpers';
+import DashHeader from '../../Components/styles/Header';
+import Inner from '../../Components/styles/Sidebar';
+import Routes from '../routes';
+import { capitalize, lowercase } from '../../lib/helpers';
 
 import { IWrapperPage, IStore } from '@Interfaces';
-import { WrapperActions } from '@Actions';
+import { wrapperActions } from 'app';
 
 interface ISidebarMenuProps extends IWrapperPage.IProps, WithRouterProps {
   sidebarTheme: 'dark' | 'light';
@@ -386,14 +386,14 @@ const SidebarContent = (props: ISidebarMenuProps) => {
 const mapStateToProps = (state: IStore) => state.wrapper;
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setOptionDrawer: bindActionCreators(WrapperActions.setOptionDrawer, dispatch),
-  setMobileDrawer: bindActionCreators(WrapperActions.setMobileDrawer, dispatch),
-  setBoxed: bindActionCreators(WrapperActions.setBoxed, dispatch),
-  setSidebarTheme: bindActionCreators(WrapperActions.setSidebarTheme, dispatch),
-  setSidebarPopup: bindActionCreators(WrapperActions.setSidebarPopup, dispatch),
-  setSidebarIcons: bindActionCreators(WrapperActions.setSidebarIcons, dispatch),
-  setCollapse: bindActionCreators(WrapperActions.setCollapse, dispatch),
-  setWeak: bindActionCreators(WrapperActions.setWeak, dispatch),
+  setOptionDrawer: bindActionCreators(wrapperActions.setOptionDrawer, dispatch),
+  setMobileDrawer: bindActionCreators(wrapperActions.setMobileDrawer, dispatch),
+  setBoxed: bindActionCreators(wrapperActions.setBoxed, dispatch),
+  setSidebarTheme: bindActionCreators(wrapperActions.setSidebarTheme, dispatch),
+  setSidebarPopup: bindActionCreators(wrapperActions.setSidebarPopup, dispatch),
+  setSidebarIcons: bindActionCreators(wrapperActions.setSidebarIcons, dispatch),
+  setCollapse: bindActionCreators(wrapperActions.setCollapse, dispatch),
+  setWeak: bindActionCreators(wrapperActions.setWeak, dispatch),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SidebarContent));
