@@ -3,7 +3,7 @@ require('dotenv').config();
 module.exports = {
   apps: [{
     name: process.env.APPLICATION,
-    script: './app/server.js',
+    script: './src/server/index.js',
     cwd: process.env.DEPLOY_TO + '/current',
     error_file: './logs/pm2.app.log',
     out_file: './logs/pm2.app.log',
