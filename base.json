@@ -9,14 +9,14 @@
       "@Interfaces": ["./src/Interfaces"],
       "@Interfaces/*": ["./src/Interfaces/*"],
       "@Definitions": ["./src/Definitions"],
-      "@Services/*": ["./src/Services/*"],
-      "@Services": ["./src/Services"],
       "app": ["./src/app"],
       "app/*": ["./src/app/*"],
       "auth": ["./src/modules/auth"],
       "auth/*": ["./src/modules/auth/*"],
       "demo": ["./src/modules/demo"],
-      "demo/*": ["./src/modules/demo/*"]
+      "demo/*": ["./src/modules/demo/*"],
+      "shared": ["./src/modules/shared"],
+      "shared/*": ["./src/modules/shared/*"]
     }
   }
 }

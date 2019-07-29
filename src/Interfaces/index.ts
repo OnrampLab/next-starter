@@ -11,4 +11,4 @@ export { IStore } from '@Interfaces/Redux/Store.d.ts';
 export { IAction } from '@Interfaces/Redux/Action.d.ts';
 
 //SERVICES INTERFACES
-export { HttpModel } from '@Interfaces/Services/API/Http.d.ts';
+export { HttpModel } from 'shared';

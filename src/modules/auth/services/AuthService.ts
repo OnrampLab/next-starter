@@ -1,4 +1,4 @@
-import { Http } from '@Services';
+import { Http } from 'shared';
 import { AuthModel } from './interfaces';
 
 export const AuthService = {

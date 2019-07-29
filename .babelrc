@@ -14,10 +14,10 @@
             "@Components": "./src/Components",
             "@Definitions": "./src/Definitions",
             "@Interfaces": "./src/Interfaces",
-            "@Services": "./src/Services",
             "app": "./src/app",
             "auth": "./src/modules/auth",
-            "demo": "./src/modules/demo"
+            "demo": "./src/modules/demo",
+            "shared": "./src/modules/shared"
           }
         }
       ],
