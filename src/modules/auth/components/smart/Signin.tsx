@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Router from 'next/router';
 import styled from 'styled-components';
 
-import { AuthService } from '@Services';
+import { AuthService } from 'auth';
 
 const FormItem = Form.Item;
 
