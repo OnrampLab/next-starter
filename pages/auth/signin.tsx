@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Signin } from '@Components';
+import { Signin } from 'auth';
 
 const SigninPage = () => <Signin />;
 
