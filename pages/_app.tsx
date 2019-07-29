@@ -8,10 +8,10 @@ import Head from 'next/head';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 
-import { Page } from '@Components';
+import { Page } from 'app';
 import { GlobalStyles } from '@Components/styles/GlobalStyles';
 
-import store, { afterComponentDidMount } from '@Redux/store';
+import { store, afterComponentDidMount } from 'app';
 
 import { IApp } from '@Interfaces';
 

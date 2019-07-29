@@ -1,5 +1,5 @@
-import { Http } from '@Services';
-import { AuthModel } from "@Interfaces";
+import { Http } from 'shared';
+import { AuthModel } from './interfaces';
 
 export const AuthService = {
   login: async (payload: AuthModel.SigninPayload): Promise<AuthModel.SigninResponse> => {

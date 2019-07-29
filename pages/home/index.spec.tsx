@@ -4,7 +4,7 @@ import HomePage from '../home/index';
 
 import { Provider } from 'react-redux';
 
-import initStore from '@Redux/store';
+import { store } from 'app';
 
 describe('HomePage', () => {
 	it('should render without throwing an error', () => {
@@ -14,7 +14,7 @@ describe('HomePage', () => {
 
 	it('should render without throwing an error', () => {
 		const wrap = mount(
-			<Provider store={initStore()}>
+			<Provider store={store()}>
 				<HomePage />
 			</Provider>,
 		);

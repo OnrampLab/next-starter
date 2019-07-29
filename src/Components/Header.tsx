@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 
 import { IWrapperPage, IStore } from '@Interfaces';
-import { WrapperActions } from '@Actions';
+import { wrapperActions } from 'app';
 
 import DashHeader from './styles/Header';
 
@@ -84,8 +84,8 @@ const MainHeader = (props: IWrapperPage.IProps) => {
 const mapStateToProps = (state: IStore) => state.wrapper;
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setOptionDrawer: bindActionCreators(WrapperActions.setOptionDrawer, dispatch),
-  setMobileDrawer: bindActionCreators(WrapperActions.setMobileDrawer, dispatch),
+  setOptionDrawer: bindActionCreators(wrapperActions.setOptionDrawer, dispatch),
+  setMobileDrawer: bindActionCreators(wrapperActions.setMobileDrawer, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainHeader);

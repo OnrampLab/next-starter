@@ -1,10 +1,11 @@
-import AnimatedBG from './styles/AnimatedBG';
 import HTTPStatus from 'http-status';
 import { Row } from 'antd';
 import styled from 'styled-components';
+import AnimatedBG from './styles/AnimatedBG';
 
 const Content = styled.div`
   max-width: 400px;
+export * from './Signin';
   z-index: 2;
   min-width: 300px;
   h1 {

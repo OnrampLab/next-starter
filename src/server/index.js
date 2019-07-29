@@ -2,7 +2,7 @@
 const express = require('express');
 const next = require('next');
 const path = require('path');
-const devProxy = require('./proxy.js');
+const devProxy = require('./proxy');
 
 const PORT = process.env.PORT || 3000;
 
@@ -15,27 +15,27 @@ const handler = routes.getRequestHandler(app);
 
 app.prepare()
   .then(() => {
-    const server = express()
+    const server = express();
 
-    app.setAssetPrefix(process.env.STATIC_PATH)
+    app.setAssetPrefix(process.env.STATIC_PATH);
 
-    server.use(express.static(path.join(__dirname, '../static')));
+    server.use(express.static(path.join(__dirname, '../../static')));
 
     if (process.env.PROXY_MODE === 'local') {
       const proxyMiddleware = require('http-proxy-middleware');
       Object.keys(devProxy).forEach(function (context, a) {
-        server.use(proxyMiddleware(context, devProxy[context]))
-      })
+        server.use(proxyMiddleware(context, devProxy[context]));
+      });
     }
 
-    server.get('*', (req, res) => {
-      return handler(req, res)
-    })
+    server.get('*', async (req, res) => {
+      return handler(req, res);
+    });
 
     server.listen(PORT, (err) => {
-      if (err) throw err
-      console.log(`> Ready on http://localhost:${PORT}`)
-    })
-  })
+      if (err) throw err;
+      console.log(`> Ready on http://localhost:${PORT}`);
+    });
+  });
 
 /* eslint-enable @typescript-eslint/no-var-requires */

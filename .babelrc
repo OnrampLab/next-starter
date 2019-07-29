@@ -11,14 +11,13 @@
             "./"
           ],
           "alias": {
-            "@Actions": "./src/Actions",
             "@Components": "./src/Components",
             "@Definitions": "./src/Definitions",
             "@Interfaces": "./src/Interfaces",
-            "@Reducers": "./src/Redux/Reducers",
-            "@Redux": "./src/Redux",
-            "@Services": "./src/Services",
-            "demo": "./src/modules/demo"
+            "app": "./src/app",
+            "auth": "./src/modules/auth",
+            "demo": "./src/modules/demo",
+            "shared": "./src/modules/shared"
           }
         }
       ],

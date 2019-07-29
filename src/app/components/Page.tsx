@@ -4,11 +4,11 @@ import { Layout, Spin } from 'antd';
 import { useEffect, useState } from 'react';
 import { withRouter, WithRouterProps } from 'next/router';
 
-import Header from './Header';
+import Header from '../../Components/Header';
 import SidebarMenu from './SidebarMenu';
 import { ThemeProvider } from 'styled-components';
-import { theme } from './styles/GlobalStyles';
-import { Container, Inner } from './styles/Page';
+import { theme } from '../../Components/styles/GlobalStyles';
+import { Container, Inner } from '../../Components/styles/Page';
 
 import { IWrapperPage, IStore } from '@Interfaces';
 

@@ -1,5 +1,5 @@
 //#region Local Imports
-import { Http } from '@Services';
+import { Http } from 'shared';
 import { PlanetaryModel } from './interfaces';
 //#endregion Local Imports
 
