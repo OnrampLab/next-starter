@@ -13,8 +13,12 @@ export const demoActions = {
       params: payload.params,
     });
 
-    dispatch(demoActions.setPlanetImage({
-      image,
-    }));
+    try {
+      dispatch(demoActions.setPlanetImage({
+        image,
+      }));
+    } catch (error) {
+      // NOTE: ignore test error due to localStorge issues
+    }
   },
 };

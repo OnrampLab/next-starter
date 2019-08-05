@@ -5,9 +5,7 @@ import { demoReducer } from './demoReducer';
 describe('home reducer', () => {
 	it('should return the initial state', () => {
 		expect(demoReducer(undefined, {} as IAction<IHomePage.IDispatchProps>)).toEqual({
-			home: {
-				version: 1,
-			},
+      demos: [],
 		});
 	});
 

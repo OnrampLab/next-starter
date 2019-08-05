@@ -8,7 +8,6 @@ export { IHeading } from '@Interfaces/Components/Heading.d.ts';
 
 // REDUX INTERFACES
 export { IStore } from '@Interfaces/Redux/Store.d.ts';
-export { IAction } from '@Interfaces/Redux/Action.d.ts';
 
 //SERVICES INTERFACES
-export { HttpModel } from 'shared';
+export { HttpModel, IAction } from 'shared';

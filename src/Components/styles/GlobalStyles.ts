@@ -1,9 +1,9 @@
 import { createGlobalStyle } from 'styled-components';
-import lessToJs from 'less-vars-to-js';
+import * as lessToJs from 'less-vars-to-js';
 import { objectToCamelCase } from '../../lib/helpers';
 import paletteLess from '!!raw-loader!../../assets/antd-custom.less';
 
-const lessVariables = lessToJs(paletteLess, {
+const lessVariables = lessToJs(paletteLess || '', {
     resolveVariables: true,
     stripPrefix: true
   }),

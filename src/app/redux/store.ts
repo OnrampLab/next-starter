@@ -3,9 +3,10 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
 import { IStore } from '@Interfaces';
-import { wrapperActions } from 'app/redux/actions';
+import { wrapperActions } from 'app';
 
 import reducers from './reducers';
+import console = require('console');
 
 const saveToLocal = (state: IStore) => {
   localStorage.setItem('settings', JSON.stringify({
@@ -18,7 +19,7 @@ const saveToLocal = (state: IStore) => {
         }
       }
     }
-  }));
+  }))
 };
 
 const _store: Store = createStore(reducers, {}, composeWithDevTools(applyMiddleware(thunkMiddleware)));

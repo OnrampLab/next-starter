@@ -13,7 +13,7 @@ import {
   Tooltip
 } from 'antd';
 import { Book, LogOut, Triangle } from 'react-feather';
-import { useEffect, useState } from 'react';
+import * as React from 'react';
 import { withRouter, WithRouterProps } from 'next/router';
 import Link from 'next/link';
 import { connect } from 'react-redux';
@@ -67,11 +67,11 @@ const SidebarContent = (props: ISidebarMenuProps) => {
     setWeak,
   } = props;
   const state = props;
-  const [openKeys, setOpenKeys] = useState<Array<string>>([]);
-  const [appRoutes] = useState(Routes);
+  const [openKeys, setOpenKeys] = React.useState<Array<string>>([]);
+  const [appRoutes] = React.useState(Routes);
   const { pathname = '' } = router || {};
 
-  useEffect(() => {
+  React.useEffect(() => {
     appRoutes.forEach((route, index) => {
       const isCurrentPath =
         pathname.indexOf(lowercase(route.name)) > -1 ? true : false;
