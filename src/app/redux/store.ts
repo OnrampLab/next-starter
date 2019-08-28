@@ -6,7 +6,6 @@ import { IStore } from '@Interfaces';
 import { wrapperActions } from 'app';
 
 import reducers from './reducers';
-import console = require('console');
 
 const saveToLocal = (state: IStore) => {
   localStorage.setItem('settings', JSON.stringify({
