@@ -1,0 +1,73 @@
+# https://discuss.circleci.com/t/build-on-tag/9864/42
+# NOTE: a workaround that make circle-ci 2.0 support $CIRCLE_TAG environment variable
+deployment:
+  fake_deploy_for_production:
+    tag: /.*/
+    commands:
+      - echo "make tags run in 2.0"
+
+version: 2
+jobs:
+  build:
+    working_directory: ~/project
+    docker:
+      - image: circleci/node:10.13.0
+        cmd: ["/bin/bash"]
+
+    steps:
+      - run:
+          name: Install System Libs
+          command: |
+            sudo apt -qq update
+            sudo apt install -y -qq bcrypt ruby-full
+            sudo chmod -R 777 /var/lib/gems /usr/local/bin
+
+      - checkout
+
+      - restore_cache:
+          key: dependency-cache-yarn-{{ checksum "yarn.lock" }}
+
+      - restore_cache:
+          key: dependency-cache-npm-{{ checksum "yarn.lock" }}
+
+      - run:
+          name: Install Dependencies
+          command: |
+            node --version
+            yarn install
+            cp .env.example .env
+            cp .env.example .env.test
+
+      - save_cache:
+          key: dependency-cache-yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.yarn-cache
+
+      - save_cache:
+          key: dependency-cache-npm-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/kid-guard-client/node_modules
+
+      - run:
+          name: Run Linter
+          command: |
+            ./tools/scripts/eslint-pr.sh
+
+      - run:
+          name: Run Tests
+          command: |
+            yarn test
+
+      - deploy:
+          command: |
+            # /usr/bin/gem install bundler -v 1.16.0
+            # bundle install
+
+            echo "current branch is ${CIRCLE_BRANCH}"
+            echo "current tag is ${CIRCLE_TAG}"
+
+            # if [[ -n "${CIRCLE_TAG}" ]]; then
+            #   CI_BRANCH="${CIRCLE_TAG}" cap production deploy
+            # elif [[ "${CIRCLE_BRANCH}" == "master" ]]; then
+            #   CI_BRANCH=master cap staging deploy
+            # fi
