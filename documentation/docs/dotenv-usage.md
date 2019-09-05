@@ -14,7 +14,7 @@ Dotenv is a zero-dependency module that loads environment variables from a .env 
 There are two modes for use:
 
 - client: You can access both client and server.
-Example:  ```API_URL``` 
+Example:  ```API_URL```
 
 - server: Only serverside can access
 Example: ```ANY_SECRET_TOKEN```
@@ -31,13 +31,13 @@ API_KEY=test1234
 
 ```
 const withConfig = nextRuntimeDotenv({
-	public: [
-		'API_URL',
-		'API_KEY'
-	],
-	server: [
-		'ANY_SECRET_TOKEN'
-	]
+  public: [
+    'API_URL',
+    'API_KEY'
+  ],
+  server: [
+    'ANY_SECRET_TOKEN'
+  ]
 })
 ```
 <br>
@@ -45,14 +45,14 @@ const withConfig = nextRuntimeDotenv({
 
 ```
 setConfig({
-	publicRuntimeConfig:
-	{
-		'API_URL': process.env.API_URL,
-		'API_KEY': process.env.API_KEY
-	},
-	serverRuntimeConfig: {
-		'ANY_SECRET_TOKEN': process.env.ANY_SECRET_TOKEN
-	}
+  publicRuntimeConfig:
+  {
+    'API_URL': process.env.API_URL,
+    'API_KEY': process.env.API_KEY
+  },
+  serverRuntimeConfig: {
+    'ANY_SECRET_TOKEN': process.env.ANY_SECRET_TOKEN
+  }
 })
 ```
 <br>
@@ -64,7 +64,7 @@ import getConfig from 'next/config';
 const { publicRuntimeConfig: { API_KEY, API_URL },  serverRuntimeConfig: { ANY_SECRET_TOKEN } } = getConfig();
 ````
 
-To use server only config you need to push the same keys to array of server in scope of ```withConfig``` in  ```next.config.js``` file. 
+To use server only config you need to push the same keys to array of server in scope of ```withConfig``` in  ```next.config.js``` file.
 
 It's accessible from serverRuntimeConfig.
 
@@ -73,4 +73,3 @@ It's accessible from serverRuntimeConfig.
 - The .env file only needs to be used in the development process.
 
 - [Environment variable](https://en.wikipedia.org/wiki/Environment_variable) should be used for production use.
-
