@@ -8,6 +8,7 @@ module.exports = {
       diagnostics: false,
     },
   },
+  collectCoverageFrom: ['src/**/*.{js,ts,jsx,tsx}'],
   coveragePathIgnorePatterns: ['/node_modules/', 'enzyme.js'],
   setupFiles: ['<rootDir>/jest.setup.ts'],
   coverageReporters: ['json', 'lcov', 'text', 'text-summary'],
