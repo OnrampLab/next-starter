@@ -7,7 +7,7 @@ import * as path from 'path';
 
 describe('Test Helper constructor', () => {
 
-	 test('', () => {
-	});
+   test('', () => {
+  });
 
 });

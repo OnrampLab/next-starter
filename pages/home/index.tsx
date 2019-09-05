@@ -37,10 +37,10 @@ const mapStateToProps = (state: IStore) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-	getPlanetImage: bindActionCreators(demoActions.getPlanetImage, dispatch),
+  getPlanetImage: bindActionCreators(demoActions.getPlanetImage, dispatch),
 });
 
 export default connect(
-	mapStateToProps,
-	mapDispatchToProps,
+  mapStateToProps,
+  mapDispatchToProps,
 )(HomePage);
