@@ -1063,6 +1063,11 @@
   dependencies:
     "@types/jest-diff" "*"
 
+"@types/lodash@^4.14.138":
+  version "4.14.138"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.138.tgz#34f52640d7358230308344e579c15b378d91989e"
+  integrity sha512-A4uJgHz4hakwNBdHNPdxOTkYmXNgmUAKLbXZ7PKGslgeV0Mb8P3BlbYfPovExek1qnod4pDfRbxuzcVs3dlFLg==
+
 "@types/next-redux-wrapper@^2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@types/next-redux-wrapper/-/next-redux-wrapper-2.0.2.tgz#ab74f5988911b3403c4da91c6d7dabac4aa2f9fb"
