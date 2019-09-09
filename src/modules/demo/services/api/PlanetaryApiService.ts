@@ -3,7 +3,6 @@ import { Http } from 'shared';
 import { PlanetaryModel } from './interfaces';
 //#endregion Local Imports
 
-
 export const PlanetaryApiService = {
   getPlanetImage: async (
     payload: PlanetaryModel.GetApodPayload,
@@ -30,4 +29,4 @@ export const PlanetaryApiService = {
 
     return response;
   },
-}
+};

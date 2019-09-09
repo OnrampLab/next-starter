@@ -6,15 +6,11 @@ export const AuthService = {
     let response: AuthModel.SigninResponse;
 
     try {
-      response = await Http.request<AuthModel.SigninResponse>(
-        'POST',
-        '/login',
-        payload.params
-      );
+      response = await Http.request<AuthModel.SigninResponse>('POST', '/login', payload.params);
     } catch (error) {
       throw new Error(`Login Error: ${error}`);
     }
 
     return response;
-  }
-}
+  },
+};

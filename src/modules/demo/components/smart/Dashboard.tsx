@@ -7,19 +7,13 @@ const { Meta } = Card;
 
 function Component(props) {
   const {
-    demoStore: {
-      image = {},
-    },
+    demoStore: { image = {} },
   } = props;
 
   return (
     <>
       {image && (
-        <Card
-          hoverable
-          style={{ width: 480 }}
-          cover={<img alt="example" src={image.url} />}
-        >
+        <Card hoverable style={{ width: 480 }} cover={<img alt="example" src={image.url} />}>
           <Meta title={image.title} description={image.explanation} />
         </Card>
       )}
@@ -31,6 +25,4 @@ const mapStateToProps = (state: IStore) => ({
   demoStore: state.demoStore,
 });
 
-export const Dashboard = connect(
-	mapStateToProps,
-)(Component);
+export const Dashboard = connect(mapStateToProps)(Component);

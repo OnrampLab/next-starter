@@ -29,9 +29,9 @@ export const Http = {
         cache: 'no-cache',
         headers: {
           'content-type': 'application/json',
-          'authorization': `Bearer ${API_KEY}`,
+          authorization: `Bearer ${API_KEY}`,
         },
-        method: `${methodType}`
+        method: `${methodType}`,
       })
         .then(async response => {
           switch (response.status) {
@@ -42,7 +42,7 @@ export const Http = {
           }
         })
         .catch(e => {
-          reject(e)
+          reject(e);
         });
     });
   },

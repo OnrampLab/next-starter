@@ -10,7 +10,7 @@ import {
   Popconfirm,
   Row,
   Switch,
-  Tooltip
+  Tooltip,
 } from 'antd';
 import { Book, LogOut, Triangle } from 'react-feather';
 import * as React from 'react';
@@ -35,11 +35,11 @@ interface ISidebarMenuProps extends IWrapperPage.IProps, WithRouterProps {
 const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
 
-let rootSubMenuKeys: any[] = [];
+const rootSubMenuKeys: any[] = [];
 
 const getKey = (name: string, index: number) => {
   const string = `${name}-${index}`;
-  let key = string.replace(' ', '-');
+  const key = string.replace(' ', '-');
   return key.charAt(0).toLowerCase() + key.slice(1);
 };
 
@@ -67,14 +67,13 @@ const SidebarContent = (props: ISidebarMenuProps) => {
     setWeak,
   } = props;
   const state = props;
-  const [openKeys, setOpenKeys] = React.useState<Array<string>>([]);
+  const [openKeys, setOpenKeys] = React.useState<string[]>([]);
   const [appRoutes] = React.useState(Routes);
   const { pathname = '' } = router || {};
 
   React.useEffect(() => {
     appRoutes.forEach((route, index) => {
-      const isCurrentPath =
-        pathname.indexOf(lowercase(route.name)) > -1 ? true : false;
+      const isCurrentPath = pathname.indexOf(lowercase(route.name)) > -1 ? true : false;
       const key = getKey(route.name, index);
       rootSubMenuKeys.push(key);
       if (isCurrentPath) setOpenKeys([...openKeys, key]);
@@ -106,9 +105,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
             return (
               <Menu.Item
                 key={getKey(route.name, index)}
-                className={
-                  pathname === route.path ? 'ant-menu-item-selected' : ''
-                }
+                className={pathname === route.path ? 'ant-menu-item-selected' : ''}
                 onClick={() => {
                   setOpenKeys([getKey(route.name, index)]);
                   if (state.mobile) setMobileDrawer();
@@ -116,9 +113,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
               >
                 <Link href={route.path} prefetch>
                   <a>
-                    {sidebarIcons && (
-                      <span className="anticon">{route.icon}</span>
-                    )}
+                    {sidebarIcons && <span className="anticon">{route.icon}</span>}
                     <span className="mr-auto">{capitalize(route.name)}</span>
                   </a>
                 </Link>
@@ -131,32 +126,27 @@ const SidebarContent = (props: ISidebarMenuProps) => {
                 key={getKey(route.name, index)}
                 title={
                   <span>
-                    {sidebarIcons && (
-                      <span className="anticon">{route.icon}</span>
-                    )}
+                    {sidebarIcons && <span className="anticon">{route.icon}</span>}
                     <span>{capitalize(route.name)}</span>
                   </span>
                 }
               >
-                {route.children && route.children.map((subitem, index) => (
-                  <Menu.Item
-                    key={getKey(subitem.name, index)}
-                    className={
-                      pathname === subitem.path ? 'ant-menu-item-selected' : ''
-                    }
-                    onClick={() => {
-                      if (state.mobile) setMobileDrawer();
-                    }}
-                  >
-                    <Link href={`${subitem.path ? subitem.path : ''}`} prefetch>
-                      <a>
-                        <span className="mr-auto">
-                          {capitalize(subitem.name)}
-                        </span>
-                      </a>
-                    </Link>
-                  </Menu.Item>
-                ))}
+                {route.children &&
+                  route.children.map((subitem, index) => (
+                    <Menu.Item
+                      key={getKey(subitem.name, index)}
+                      className={pathname === subitem.path ? 'ant-menu-item-selected' : ''}
+                      onClick={() => {
+                        if (state.mobile) setMobileDrawer();
+                      }}
+                    >
+                      <Link href={`${subitem.path ? subitem.path : ''}`} prefetch>
+                        <a>
+                          <span className="mr-auto">{capitalize(subitem.name)}</span>
+                        </a>
+                      </Link>
+                    </Menu.Item>
+                  ))}
               </SubMenu>
             );
         })}
@@ -165,7 +155,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
       <Divider
         className={`m-0`}
         style={{
-          display: `${sidebarTheme === 'dark' ? 'none' : ''}`
+          display: `${sidebarTheme === 'dark' ? 'none' : ''}`,
         }}
       />
       <div className={`py-3 px-4 bg-${sidebarTheme}`}>
@@ -177,14 +167,10 @@ const SidebarContent = (props: ISidebarMenuProps) => {
                 overflowCount={5}
                 style={{
                   color: 'rgb(245, 106, 0)',
-                  backgroundColor: 'rgb(253, 227, 207)'
+                  backgroundColor: 'rgb(253, 227, 207)',
                 }}
               >
-                <Avatar
-                  shape="circle"
-                  size={40}
-                  src="/static/images/avatar.jpg"
-                />
+                <Avatar shape="circle" size={40} src="/static/images/avatar.jpg" />
               </Badge>
             </span>
           </Dropdown>
@@ -192,11 +178,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
             <>
               <span className="mr-auto" />
               <Link href="https://one-readme.fusepx.com">
-                <a
-                  className={`px-3 ${
-                    sidebarTheme === 'dark' ? 'text-white' : 'text-body'
-                  }`}
-                >
+                <a className={`px-3 ${sidebarTheme === 'dark' ? 'text-white' : 'text-body'}`}>
                   <Tooltip title="Help">
                     <Book size={20} strokeWidth={1} />
                   </Tooltip>
@@ -210,11 +192,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
                 okText="Yes"
                 cancelText="Cancel"
               >
-                <a
-                  className={`px-3 ${
-                    sidebarTheme === 'dark' ? 'text-white' : 'text-body'
-                  }`}
-                >
+                <a className={`px-3 ${sidebarTheme === 'dark' ? 'text-white' : 'text-body'}`}>
                   <LogOut size={20} strokeWidth={1} />
                 </a>
               </Popconfirm>
@@ -263,9 +241,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
           className="chat-drawer"
         >
           <Inner>
-            <div
-              style={InnerDivStyle}
-            >
+            <div style={InnerDivStyle}>
               <DashHeader>
                 <Header>
                   <Link href="/">
@@ -297,17 +273,9 @@ const SidebarContent = (props: ISidebarMenuProps) => {
           visible={state.optionDrawer}
         >
           <List.Item
-            actions={[
-              <Switch
-                size="small"
-                checked={!!state.boxed}
-                onChange={() => setBoxed()}
-              />
-            ]}
+            actions={[<Switch size="small" checked={!!state.boxed} onChange={() => setBoxed()} />]}
           >
-            <span style={ListItemSpanStylye}>
-              Boxed view
-            </span>
+            <span style={ListItemSpanStylye}>Boxed view</span>
           </List.Item>
           <List.Item
             actions={[
@@ -316,12 +284,10 @@ const SidebarContent = (props: ISidebarMenuProps) => {
                 checked={!!state.darkSidebar}
                 disabled={state.weakColor}
                 onChange={() => setSidebarTheme()}
-              />
+              />,
             ]}
           >
-            <span style={ListItemSpanStylye}>
-              Dark sidebar menu
-            </span>
+            <span style={ListItemSpanStylye}>Dark sidebar menu</span>
           </List.Item>
           <List.Item
             actions={[
@@ -330,12 +296,10 @@ const SidebarContent = (props: ISidebarMenuProps) => {
                 checked={!!state.sidebarPopup}
                 disabled={state.collapsed}
                 onChange={() => setSidebarPopup()}
-              />
+              />,
             ]}
           >
-            <span style={ListItemSpanStylye}>
-              Popup sub menus
-            </span>
+            <span style={ListItemSpanStylye}>Popup sub menus</span>
           </List.Item>
           <List.Item
             actions={[
@@ -344,38 +308,24 @@ const SidebarContent = (props: ISidebarMenuProps) => {
                 checked={!!state.sidebarIcons}
                 disabled={state.collapsed}
                 onChange={() => setSidebarIcons()}
-              />
+              />,
             ]}
           >
-            <span style={ListItemSpanStylye}>
-              Sidebar menu icons
-            </span>
+            <span style={ListItemSpanStylye}>Sidebar menu icons</span>
           </List.Item>
           <List.Item
             actions={[
-              <Switch
-                size="small"
-                checked={!!state.collapsed}
-                onChange={() => setCollapse()}
-              />
+              <Switch size="small" checked={!!state.collapsed} onChange={() => setCollapse()} />,
             ]}
           >
-            <span style={ListItemSpanStylye}>
-              Collapsed sidebar menu
-            </span>
+            <span style={ListItemSpanStylye}>Collapsed sidebar menu</span>
           </List.Item>
           <List.Item
             actions={[
-              <Switch
-                size="small"
-                checked={!!state.weakColor}
-                onChange={() => setWeak()}
-              />
+              <Switch size="small" checked={!!state.weakColor} onChange={() => setWeak()} />,
             ]}
           >
-            <span style={ListItemSpanStylye}>
-              Weak colors
-            </span>
+            <span style={ListItemSpanStylye}>Weak colors</span>
           </List.Item>
         </Drawer>
       </Inner>
@@ -396,4 +346,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setWeak: bindActionCreators(wrapperActions.setWeak, dispatch),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SidebarContent));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(SidebarContent),
+);

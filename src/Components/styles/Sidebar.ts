@@ -23,7 +23,8 @@ const Sidebar = styled.div`
     display: inline-block;
     opacity: 0;
   }
-  .ant-menu-inline .ant-menu-item, .ant-menu-inline .ant-menu-submenu-title {
+  .ant-menu-inline .ant-menu-item,
+  .ant-menu-inline .ant-menu-submenu-title {
     width: calc(100%);
   }
 `;

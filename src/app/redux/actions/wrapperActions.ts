@@ -3,53 +3,53 @@ import { ActionConsts } from '@Definitions';
 import { IWrapperPage } from '@Interfaces';
 
 export const wrapperActions: IWrapperPage.IDispatchProps = {
-	setOptionDrawer: (payload?: boolean) => ({
-		type: ActionConsts.Wrapper.SetOptionDrawer,
-		payload,
-	}),
+  setOptionDrawer: (payload?: boolean) => ({
+    type: ActionConsts.Wrapper.SetOptionDrawer,
+    payload,
+  }),
 
-	setMobile: (payload?: boolean) => ({
-		type: ActionConsts.Wrapper.SetMobile,
-		payload,
-	}),
+  setMobile: (payload?: boolean) => ({
+    type: ActionConsts.Wrapper.SetMobile,
+    payload,
+  }),
 
-	setMobileDrawer: (payload?: boolean) => ({
-		type: ActionConsts.Wrapper.SetMobileDrawer,
-		payload,
-	}),
+  setMobileDrawer: (payload?: boolean) => ({
+    type: ActionConsts.Wrapper.SetMobileDrawer,
+    payload,
+  }),
 
-	setBoxed: (payload?: boolean) => ({
-		type: ActionConsts.Wrapper.SetBoxed,
-		payload,
-	}),
+  setBoxed: (payload?: boolean) => ({
+    type: ActionConsts.Wrapper.SetBoxed,
+    payload,
+  }),
 
-	setSidebarTheme: (payload?: boolean) => ({
-		type: ActionConsts.Wrapper.SetSidebarTheme,
-		payload,
-	}),
+  setSidebarTheme: (payload?: boolean) => ({
+    type: ActionConsts.Wrapper.SetSidebarTheme,
+    payload,
+  }),
 
-	setSidebarPopup: (payload?: boolean) => ({
-		type: ActionConsts.Wrapper.SetSidebarPopup,
-		payload,
-	}),
+  setSidebarPopup: (payload?: boolean) => ({
+    type: ActionConsts.Wrapper.SetSidebarPopup,
+    payload,
+  }),
 
-	setSidebarIcons: (payload?: boolean) => ({
-		type: ActionConsts.Wrapper.SetSidebarIcons,
-		payload,
-	}),
+  setSidebarIcons: (payload?: boolean) => ({
+    type: ActionConsts.Wrapper.SetSidebarIcons,
+    payload,
+  }),
 
-	setCollapse: (payload?: boolean) => ({
-		type: ActionConsts.Wrapper.SetCollapse,
-		payload,
-	}),
+  setCollapse: (payload?: boolean) => ({
+    type: ActionConsts.Wrapper.SetCollapse,
+    payload,
+  }),
 
-	setWeak: (payload?: boolean) => ({
-		type: ActionConsts.Wrapper.SetWeak,
-		payload,
-	}),
+  setWeak: (payload?: boolean) => ({
+    type: ActionConsts.Wrapper.SetWeak,
+    payload,
+  }),
 
-	setup: (payload?: any) => ({
-		type: ActionConsts.Wrapper.Setup,
-		payload,
-	}),
+  setup: (payload?: any) => ({
+    type: ActionConsts.Wrapper.Setup,
+    payload,
+  }),
 };

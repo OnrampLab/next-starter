@@ -39,8 +39,8 @@ const Component = ({ form }) => (
           e.preventDefault();
           form.validateFields((err, values) => {
             if (!err) {
-              Message.success('Account created. Please check your inbox!').then(
-                () => Router.push('/signin')
+              Message.success('Account created. Please check your inbox!').then(() =>
+                Router.push('/signin'),
               );
             }
           });
@@ -61,20 +61,14 @@ const Component = ({ form }) => (
               {
                 required: true,
                 message: 'Please input your nickname!',
-                whitespace: true
-              }
-            ]
+                whitespace: true,
+              },
+            ],
           })(
             <Input
-              prefix={
-                <User
-                  size={16}
-                  strokeWidth={1}
-                  style={{ color: 'rgba(0,0,0,.25)' }}
-                />
-              }
+              prefix={<User size={16} strokeWidth={1} style={{ color: 'rgba(0,0,0,.25)' }} />}
               placeholder="Nickname"
-            />
+            />,
           )}
         </FormItem>
 
@@ -83,43 +77,31 @@ const Component = ({ form }) => (
             rules: [
               {
                 type: 'email',
-                message: 'The input is not valid E-mail!'
+                message: 'The input is not valid E-mail!',
               },
               {
                 required: true,
-                message: 'Please input your E-mail!'
-              }
-            ]
+                message: 'Please input your E-mail!',
+              },
+            ],
           })(
             <Input
-              prefix={
-                <Mail
-                  size={16}
-                  strokeWidth={1}
-                  style={{ color: 'rgba(0,0,0,.25)' }}
-                />
-              }
+              prefix={<Mail size={16} strokeWidth={1} style={{ color: 'rgba(0,0,0,.25)' }} />}
               type="email"
               placeholder="Email"
-            />
+            />,
           )}
         </FormItem>
 
         <FormItem label="Password">
           {form.getFieldDecorator('password', {
-            rules: [{ required: true, message: 'Please input your Password!' }]
+            rules: [{ required: true, message: 'Please input your Password!' }],
           })(
             <Input
-              prefix={
-                <Eye
-                  size={16}
-                  strokeWidth={1}
-                  style={{ color: 'rgba(0,0,0,.25)' }}
-                />
-              }
+              prefix={<Eye size={16} strokeWidth={1} style={{ color: 'rgba(0,0,0,.25)' }} />}
               type="password"
               placeholder="Password"
-            />
+            />,
           )}
         </FormItem>
 
@@ -128,7 +110,7 @@ const Component = ({ form }) => (
             rules: [
               {
                 required: true,
-                message: 'Please confirm your password!'
+                message: 'Please confirm your password!',
               },
               {
                 validator: (rule, value, callback) => {
@@ -137,21 +119,15 @@ const Component = ({ form }) => (
                   } else {
                     callback();
                   }
-                }
-              }
-            ]
+                },
+              },
+            ],
           })(
             <Input
-              prefix={
-                <Eye
-                  size={16}
-                  strokeWidth={1}
-                  style={{ color: 'rgba(0,0,0,.25)' }}
-                />
-              }
+              prefix={<Eye size={16} strokeWidth={1} style={{ color: 'rgba(0,0,0,.25)' }} />}
               type="password"
               placeholder="Confirm password"
-            />
+            />,
           )}
         </FormItem>
 

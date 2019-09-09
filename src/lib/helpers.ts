@@ -12,7 +12,7 @@ export function formatPrice(number) {
   const fnumber = parseFloat(number);
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'USD'
+    currency: 'USD',
   }).format(fnumber);
 }
 
@@ -29,8 +29,8 @@ function toCamelCase(str) {
 
 export function objectToCamelCase(origObj) {
   return Object.keys(origObj).reduce(function(newObj, key) {
-    let val = origObj[key];
-    let newVal = typeof val === 'object' ? objectToCamelCase(val) : val;
+    const val = origObj[key];
+    const newVal = typeof val === 'object' ? objectToCamelCase(val) : val;
     newObj[toCamelCase(key)] = newVal;
     return newObj;
   }, {});

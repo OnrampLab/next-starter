@@ -14,9 +14,11 @@ export const demoActions = {
     });
 
     try {
-      dispatch(demoActions.setPlanetImage({
-        image,
-      }));
+      dispatch(
+        demoActions.setPlanetImage({
+          image,
+        }),
+      );
     } catch (error) {
       // NOTE: ignore test error due to localStorge issues
     }

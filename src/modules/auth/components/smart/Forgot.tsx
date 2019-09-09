@@ -39,9 +39,9 @@ const Forgot = ({ form }) => (
           e.preventDefault();
           form.validateFields((err, values) => {
             if (!err) {
-              Message.success(
-                'Reset email sent. Please check your inbox!'
-              ).then(() => Router.push('/signin'));
+              Message.success('Reset email sent. Please check your inbox!').then(() =>
+                Router.push('/signin'),
+              );
             }
           });
         }}
@@ -51,25 +51,19 @@ const Forgot = ({ form }) => (
             rules: [
               {
                 type: 'email',
-                message: 'The input is not valid E-mail!'
+                message: 'The input is not valid E-mail!',
               },
               {
                 required: true,
-                message: 'Please input your E-mail!'
-              }
-            ]
+                message: 'Please input your E-mail!',
+              },
+            ],
           })(
             <Input
-              prefix={
-                <Mail
-                  size={16}
-                  strokeWidth={1}
-                  style={{ color: 'rgba(0,0,0,.25)' }}
-                />
-              }
+              prefix={<Mail size={16} strokeWidth={1} style={{ color: 'rgba(0,0,0,.25)' }} />}
               type="email"
               placeholder="Email"
-            />
+            />,
           )}
         </FormItem>
 

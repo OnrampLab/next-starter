@@ -14,13 +14,7 @@ import { IWrapperPage, IStore } from '@Interfaces';
 
 const { Content } = Layout;
 
-const NonDashboardRoutes = [
-  '/auth/signin',
-  '/auth/signup',
-  '/forgot',
-  '/lockscreen',
-  '/_error'
-];
+const NonDashboardRoutes = ['/auth/signin', '/auth/signup', '/forgot', '/lockscreen', '/_error'];
 
 const Component = (props: IWrapperPage.IProps & WithRouterProps) => {
   const { router, children } = props;
@@ -42,20 +36,18 @@ const Component = (props: IWrapperPage.IProps & WithRouterProps) => {
             state.boxed ? 'boxed shadow-sm' : ''
           }`}
         >
-          {!isNotDashboard && <Header {...props as any} />}
+          {!isNotDashboard && <Header {...(props as any)} />}
           <Layout className="workspace">
             {!isNotDashboard && (
               <SidebarMenu
-                {...props as any}
+                {...(props as any)}
                 sidebarTheme={state.darkSidebar ? 'dark' : 'light'}
                 sidebarMode={state.sidebarPopup ? 'vertical' : 'inline'}
               />
             )}
 
             <Layout>
-              <Content>
-                {!isNotDashboard ? <Inner>{children}</Inner> : children}
-              </Content>
+              <Content>{!isNotDashboard ? <Inner>{children}</Inner> : children}</Content>
             </Layout>
           </Layout>
         </Container>

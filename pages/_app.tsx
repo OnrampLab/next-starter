@@ -20,7 +20,7 @@ Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 Router.events.on(
   'routeChangeComplete',
-  () => (document.querySelector('.workspace > .ant-layout').scrollTop = 0)
+  () => (document.querySelector('.workspace > .ant-layout').scrollTop = 0),
 );
 
 class MyApp extends App<IApp.IProps> {
@@ -62,7 +62,7 @@ class MyApp extends App<IApp.IProps> {
           )}
         </Head>
         <Provider store={store}>
-          <Page {...this.props as any}>
+          <Page {...(this.props as any)}>
             <Component {...pageProps} />
           </Page>
         </Provider>

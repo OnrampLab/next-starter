@@ -8,20 +8,29 @@ import { wrapperActions } from 'app';
 import reducers from './reducers';
 
 const saveToLocal = (state: IStore) => {
-  localStorage.setItem('settings', JSON.stringify({
-    ...state, ...{
-      wrapper: {
-        ...state.wrapper, ...{
-          mobile: undefined,
-          optionDrawer: undefined,
-          mobileDrawer: undefined,
-        }
-      }
-    }
-  }))
+  localStorage.setItem(
+    'settings',
+    JSON.stringify({
+      ...state,
+      ...{
+        wrapper: {
+          ...state.wrapper,
+          ...{
+            mobile: undefined,
+            optionDrawer: undefined,
+            mobileDrawer: undefined,
+          },
+        },
+      },
+    }),
+  );
 };
 
-const _store: Store = createStore(reducers, {}, composeWithDevTools(applyMiddleware(thunkMiddleware)));
+const _store: Store = createStore(
+  reducers,
+  {},
+  composeWithDevTools(applyMiddleware(thunkMiddleware)),
+);
 
 export const afterComponentDidMount = () => {
   // TODO: window initialize
@@ -32,10 +41,12 @@ export const afterComponentDidMount = () => {
 
   const mql = window.matchMedia(`(min-width: 992px)`);
   mql.addListener(mediaQueryChanged);
-  _store.dispatch(wrapperActions.setup({
-    mobile: !mql.matches,
-  }));
-}
+  _store.dispatch(
+    wrapperActions.setup({
+      mobile: !mql.matches,
+    }),
+  );
+};
 
 export const getCurrentStore = _store.getState();
 

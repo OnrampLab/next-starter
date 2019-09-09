@@ -45,18 +45,16 @@ const Component = ({ form }) => (
                 params: {
                   email: form.email,
                   password: form.password,
-                }
+                },
               })
-              .then((response) => {
-                Message.success(
-                  'Sign complete. Taking you to your dashboard!'
-                ).then(() => Router.push('/'));
-              })
-              .catch((error) => {
-                Message.success(
-                  `Sign error: ${error.message}`
-                );
-              });
+                .then(response => {
+                  Message.success('Sign complete. Taking you to your dashboard!').then(() =>
+                    Router.push('/'),
+                  );
+                })
+                .catch(error => {
+                  Message.success(`Sign error: ${error.message}`);
+                });
             }
           });
         }}
@@ -66,50 +64,38 @@ const Component = ({ form }) => (
             rules: [
               {
                 type: 'email',
-                message: 'The input is not valid E-mail!'
+                message: 'The input is not valid E-mail!',
               },
               {
                 required: true,
-                message: 'Please input your E-mail!'
-              }
-            ]
+                message: 'Please input your E-mail!',
+              },
+            ],
           })(
             <Input
-              prefix={
-                <Mail
-                  size={16}
-                  strokeWidth={1}
-                  style={{ color: 'rgba(0,0,0,.25)' }}
-                />
-              }
+              prefix={<Mail size={16} strokeWidth={1} style={{ color: 'rgba(0,0,0,.25)' }} />}
               type="email"
               placeholder="Email"
-            />
+            />,
           )}
         </FormItem>
 
         <FormItem label="Password">
           {form.getFieldDecorator('password', {
-            rules: [{ required: true, message: 'Please input your Password!' }]
+            rules: [{ required: true, message: 'Please input your Password!' }],
           })(
             <Input
-              prefix={
-                <Eye
-                  size={16}
-                  strokeWidth={1}
-                  style={{ color: 'rgba(0,0,0,.25)' }}
-                />
-              }
+              prefix={<Eye size={16} strokeWidth={1} style={{ color: 'rgba(0,0,0,.25)' }} />}
               type="password"
               placeholder="Password"
-            />
+            />,
           )}
         </FormItem>
 
         <FormItem>
           {form.getFieldDecorator('remember', {
             valuePropName: 'checked',
-            initialValue: true
+            initialValue: true,
           })(<Checkbox>Remember me</Checkbox>)}
           <Link href="/forgot">
             <a className="text-xs-right">

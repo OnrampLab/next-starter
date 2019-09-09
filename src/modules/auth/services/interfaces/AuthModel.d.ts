@@ -1,12 +1,12 @@
-import { LoginPayload, LoginResponse } from "@Interfaces";
+import { LoginPayload, LoginResponse } from '@Interfaces';
 
 /**
-* @module @interface AuthModel
-*/
-declare module AuthModel {
-    export interface SigninPayload {
-        params: LoginPayload;
-    }
+ * @module @interface AuthModel
+ */
+declare namespace AuthModel {
+  export interface SigninPayload {
+    params: LoginPayload;
+  }
 
-	export interface SigninResponse extends LoginResponse { }
+  export interface SigninResponse extends LoginResponse {}
 }

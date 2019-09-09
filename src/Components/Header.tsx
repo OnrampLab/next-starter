@@ -1,10 +1,5 @@
 import { Avatar, Layout, Menu } from 'antd';
-import {
-  BarChart,
-  ChevronsDown,
-  Settings,
-  Triangle
-} from 'react-feather';
+import { BarChart, ChevronsDown, Settings, Triangle } from 'react-feather';
 import Link from 'next/link';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
@@ -18,19 +13,13 @@ const { SubMenu } = Menu;
 const { Header } = Layout;
 
 const MainHeader = (props: IWrapperPage.IProps) => {
-  const {
-    setOptionDrawer,
-    setMobileDrawer,
-  } = props;
+  const { setOptionDrawer, setMobileDrawer } = props;
   const state = props;
   return (
     <DashHeader>
       <Header>
         {state.mobile && (
-          <a
-            onClick={() => setMobileDrawer()}
-            className="trigger"
-          >
+          <a onClick={() => setMobileDrawer()} className="trigger">
             <BarChart size={20} strokeWidth={1} />
           </a>
         )}
@@ -88,4 +77,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setMobileDrawer: bindActionCreators(wrapperActions.setMobileDrawer, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainHeader);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(MainHeader);

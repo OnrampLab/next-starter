@@ -5,11 +5,11 @@ import paletteLess from '!!raw-loader!../../assets/antd-custom.less';
 
 const lessVariables = lessToJs(paletteLess || '', {
     resolveVariables: true,
-    stripPrefix: true
+    stripPrefix: true,
   }),
   camelCasedVariables = objectToCamelCase(lessVariables),
   theme = {
-    ...camelCasedVariables
+    ...camelCasedVariables,
   };
 
 const GlobalStyles = createGlobalStyle`

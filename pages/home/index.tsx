@@ -17,7 +17,7 @@ class HomePage extends React.Component<IHomePage.IProps, IHomePage.IState> {
     getPlanetImage({
       params: {
         hd: true,
-      }
+      },
     });
   }
 
@@ -33,8 +33,7 @@ class HomePage extends React.Component<IHomePage.IProps, IHomePage.IState> {
   }
 }
 
-const mapStateToProps = (state: IStore) => ({
-});
+const mapStateToProps = (state: IStore) => ({});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getPlanetImage: bindActionCreators(demoActions.getPlanetImage, dispatch),

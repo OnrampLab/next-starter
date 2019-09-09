@@ -1,8 +1,5 @@
 import * as React from 'react';
-import {
-  Home,
-  MessageCircle,
-} from 'react-feather';
+import { Home, MessageCircle } from 'react-feather';
 
 interface RouteSetting {
   name: string;
@@ -15,7 +12,7 @@ const routes: RouteSetting[] = [
   {
     path: '/',
     name: 'Home',
-    icon: <Home strokeWidth={1} size={16} />
+    icon: <Home strokeWidth={1} size={16} />,
   },
   {
     name: 'Apps',
@@ -25,7 +22,7 @@ const routes: RouteSetting[] = [
         path: '/apps/calendar',
         name: 'Calendar',
       },
-    ]
+    ],
   },
 ];
 
