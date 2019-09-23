@@ -11,11 +11,9 @@
             "./"
           ],
           "alias": {
-            "@Components": "./src/Components",
-            "@Definitions": "./src/Definitions",
-            "@Interfaces": "./src/Interfaces",
             "app": "./src/app",
             "auth": "./src/modules/auth",
+            "core": "./src/modules/core",
             "demo": "./src/modules/demo",
             "shared": "./src/modules/shared"
           }

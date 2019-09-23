@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Card } from 'antd';
-import { IStore } from '@Interfaces';
+import { IStore } from 'core';
 
 const { Meta } = Card;
 

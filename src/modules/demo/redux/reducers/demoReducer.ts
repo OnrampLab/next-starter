@@ -6,7 +6,7 @@ import { actionConsts } from '../actionConsts';
 //#endregion Local Imports
 
 //#region Interface Imports
-import { IAction } from '@Interfaces';
+import { IAction } from 'core';
 //#endregion Interface Imports
 
 /**

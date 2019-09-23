@@ -2,17 +2,15 @@ import 'isomorphic-unfetch';
 import getConfig from 'next/config';
 import { stringify } from 'query-string';
 
-import { HttpModel } from '@Interfaces';
+import { HttpModel } from './interfaces';
 
 /**
  * @module Http
  */
 
-const {
-  publicRuntimeConfig: { API_KEY, API_URL },
-} = getConfig();
+const { publicRuntimeConfig: { API_KEY } = {} } = getConfig();
 
-const BaseUrl = `${API_URL}/api`;
+const BaseUrl = `/api`;
 
 export const Http = {
   request: async <A>(

@@ -1,6 +1,8 @@
+require('dotenv').config();
+
 const devProxy = {
   '/api': {
-    target: 'https://api.nasa.gov',
+    target: process.env.API_URL,
     pathRewrite: { '^/api': '' },
     changeOrigin: true,
   },
