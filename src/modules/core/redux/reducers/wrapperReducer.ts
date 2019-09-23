@@ -4,7 +4,7 @@ import { IAction, IWrapperPage, IStore } from 'core';
 
 const INITIAL_STATE: IWrapperPage.IStateProps = {
   version: 1,
-  name: 'One',
+  name: 'Next Starter',
   mobile: false,
   boxed: false,
   darkSidebar: false,
