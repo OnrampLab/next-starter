@@ -18,7 +18,7 @@ module.exports = {
     '\\.(css|less|scss|html)$': '<rootDir>/__mocks__/mocks.js',
     '^@([A-Z].*)$': '<rootDir>/src/$1',
     '^(app)$': '<rootDir>/src/$1',
-    '^(demo|shared|app)$': '<rootDir>/src/modules/$1',
+    '^(auth|core|demo|shared|app)$': '<rootDir>/src/modules/$1',
   },
   preset: 'ts-jest',
 };
