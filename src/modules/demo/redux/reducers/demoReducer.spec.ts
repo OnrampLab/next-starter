@@ -1,10 +1,9 @@
-import { IAction, IHomePage } from '@Interfaces';
 import { actionConsts } from 'demo';
 import { demoReducer } from './demoReducer';
 
 describe('home reducer', () => {
   it('should return the initial state', () => {
-    expect(demoReducer(undefined, {} as IAction<IHomePage.IDispatchProps>)).toEqual({
+    expect(demoReducer(undefined, {}).toEqual({
       demos: [],
     });
   });

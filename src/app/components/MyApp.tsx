@@ -10,9 +10,7 @@ import NProgress from 'nprogress';
 
 import { Page, GlobalStyles } from 'core';
 import { store, afterComponentDidMount } from '../redux';
-import { menuItems } from '../menuItems';
-
-import { IApp } from '@Interfaces';
+import { menuItems } from '../configs';
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
@@ -22,7 +20,7 @@ Router.events.on(
   () => (document.querySelector('.workspace > .ant-layout').scrollTop = 0),
 );
 
-export class AppComponent extends App<IApp.IProps> {
+export class AppComponent extends App<any> {
   static async getInitialProps(props: NextAppContext) {
     let pageProps = {};
 

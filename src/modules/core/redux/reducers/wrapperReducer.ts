@@ -1,6 +1,6 @@
-import { ActionConsts } from '@Definitions';
+import { ActionConsts } from '../actions/ActionConsts';
 
-import { IAction, IWrapperPage, IStore } from '@Interfaces';
+import { IAction, IWrapperPage, IStore } from 'core';
 
 const INITIAL_STATE: IWrapperPage.IStateProps = {
   version: 1,
@@ -20,7 +20,7 @@ const INITIAL_STATE: IWrapperPage.IStateProps = {
 type IMapPayload = IWrapperPage.Actions.IMapPayload;
 
 /* eslint-disable complexity */
-export const WrapperReducer = (state = INITIAL_STATE, action: IAction<IMapPayload>) => {
+export const wrapperReducer = (state = INITIAL_STATE, action: IAction<IMapPayload>) => {
   switch (action.type) {
     case ActionConsts.Wrapper.SetOptionDrawer:
       return {

@@ -2,8 +2,7 @@ import { createStore, applyMiddleware, Store } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
-import { IStore } from '@Interfaces';
-import { wrapperActions } from 'app';
+import { wrapperActions, IStore } from 'core';
 
 import reducers from './reducers';
 

@@ -1,6 +1,6 @@
-import { ActionConsts } from '@Definitions';
+import { ActionConsts } from './ActionConsts';
 
-import { IWrapperPage } from '@Interfaces';
+import { IWrapperPage } from 'core';
 
 export const wrapperActions: IWrapperPage.IDispatchProps = {
   setOptionDrawer: (payload?: boolean) => ({

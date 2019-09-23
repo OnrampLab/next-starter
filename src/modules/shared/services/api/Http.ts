@@ -2,7 +2,7 @@ import 'isomorphic-unfetch';
 import getConfig from 'next/config';
 import { stringify } from 'query-string';
 
-import { HttpModel } from '@Interfaces';
+import { HttpModel } from './interfaces';
 
 /**
  * @module Http

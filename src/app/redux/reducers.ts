@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import { WrapperReducer } from './wrapper';
+import { reducers as wrapperReducers } from 'core';
 import { reducers as demoReducers } from 'demo';
 
 export default combineReducers({
-  wrapper: WrapperReducer,
+  ...wrapperReducers,
   ...demoReducers,
 });

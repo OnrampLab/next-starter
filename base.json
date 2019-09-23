@@ -4,11 +4,6 @@
     "baseUrl": ".",
     "strict": true,
     "paths": {
-      "@Components/*": ["./src/Components/*"],
-      "@Components": ["./src/Components"],
-      "@Interfaces": ["./src/Interfaces"],
-      "@Interfaces/*": ["./src/Interfaces/*"],
-      "@Definitions": ["./src/Definitions"],
       "app": ["./src/app"],
       "auth": ["./src/modules/auth"],
       "core": ["./src/modules/core"],

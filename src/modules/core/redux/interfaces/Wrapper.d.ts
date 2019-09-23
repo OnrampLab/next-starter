@@ -1,8 +1,6 @@
 import { Props } from 'react';
 import { Store } from 'redux';
 
-import { PlanetaryModel } from '@Interfaces';
-
 declare namespace IWrapperPage {
   export type IProps = IOwnProps & IStateProps & IDispatchProps & Store;
 
@@ -42,9 +40,5 @@ declare namespace IWrapperPage {
     export interface IMapPayload {}
 
     export interface IMapResponse {}
-
-    export interface IGetApodPayload extends PlanetaryModel.GetApodPayload {}
-
-    export interface IGetApodResponse extends PlanetaryModel.GetApodResponse {}
   }
 }

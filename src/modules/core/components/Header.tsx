@@ -4,8 +4,7 @@ import Link from 'next/link';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 
-import { IWrapperPage, IStore } from '@Interfaces';
-import { wrapperActions } from 'app';
+import { wrapperActions, IWrapperPage, IStore } from 'core';
 
 import DashHeader from './styles/Header';
 
