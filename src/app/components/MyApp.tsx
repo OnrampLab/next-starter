@@ -1,4 +1,5 @@
 import '../../assets/styles.less';
+import '../../assets/tailwind-extension.css';
 
 import App, { Container, NextAppContext } from 'next/app';
 import React from 'react';
