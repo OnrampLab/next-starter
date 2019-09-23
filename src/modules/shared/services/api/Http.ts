@@ -8,9 +8,7 @@ import { HttpModel } from './interfaces';
  * @module Http
  */
 
-const {
-  publicRuntimeConfig: { API_KEY, API_URL },
-} = getConfig();
+const { publicRuntimeConfig: { API_KEY, API_URL } = {} } = getConfig();
 
 const BaseUrl = `${API_URL}/api`;
 
