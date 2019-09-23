@@ -8,10 +8,8 @@ import Head from 'next/head';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 
-import { Page } from 'app';
-import { GlobalStyles } from '@Components/styles/GlobalStyles';
-
-import { store, afterComponentDidMount } from 'app';
+import { Page, GlobalStyles } from 'core';
+import { menuItems, store, afterComponentDidMount } from 'app';
 
 import { IApp } from '@Interfaces';
 
@@ -62,7 +60,7 @@ class MyApp extends App<IApp.IProps> {
           )}
         </Head>
         <Provider store={store}>
-          <Page {...(this.props as any)}>
+          <Page {...(this.props as any)} menuItems={menuItems}>
             <Component {...pageProps} />
           </Page>
         </Provider>

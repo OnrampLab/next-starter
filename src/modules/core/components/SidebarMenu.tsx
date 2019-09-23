@@ -19,10 +19,9 @@ import Link from 'next/link';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 
-import DashHeader from '../../Components/styles/Header';
-import Inner from '../../Components/styles/Sidebar';
-import Routes from '../routes';
-import { capitalize, lowercase } from '../../lib/helpers';
+import DashHeader from './styles/Header';
+import Inner from './styles/Sidebar';
+import { capitalize, lowercase } from '../../../lib/helpers';
 
 import { IWrapperPage, IStore } from '@Interfaces';
 import { wrapperActions } from 'app';
@@ -52,6 +51,7 @@ const UserMenu = (
 
 const SidebarContent = (props: ISidebarMenuProps) => {
   const {
+    menuItems,
     sidebarTheme,
     sidebarMode,
     sidebarIcons,
@@ -68,7 +68,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
   } = props;
   const state = props;
   const [openKeys, setOpenKeys] = React.useState<string[]>([]);
-  const [appRoutes] = React.useState(Routes);
+  const [appRoutes] = React.useState(menuItems);
   const { pathname = '' } = router || {};
 
   React.useEffect(() => {

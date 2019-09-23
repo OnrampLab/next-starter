@@ -1,14 +1,14 @@
-import * as React from 'react';
+import React, { ReactElement } from 'react';
 import { Home, MessageCircle } from 'react-feather';
 
-interface RouteSetting {
+interface MenuItem {
   name: string;
   path?: string;
-  icon?: any;
-  children?: RouteSetting[];
+  icon?: ReactElement;
+  children?: MenuItem[];
 }
 
-const routes: RouteSetting[] = [
+export const menuItems: MenuItem[] = [
   {
     path: '/',
     name: 'Home',
@@ -25,5 +25,3 @@ const routes: RouteSetting[] = [
     ],
   },
 ];
-
-export default routes;

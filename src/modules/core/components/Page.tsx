@@ -4,11 +4,11 @@ import { Layout, Spin } from 'antd';
 import { useEffect, useState } from 'react';
 import { withRouter, WithRouterProps } from 'next/router';
 
-import Header from '../../Components/Header';
+import Header from './Header';
 import SidebarMenu from './SidebarMenu';
 import { ThemeProvider } from 'styled-components';
-import { theme } from '../../Components/styles/GlobalStyles';
-import { Container, Inner } from '../../Components/styles/Page';
+import { theme } from './styles/GlobalStyles';
+import { Container, Inner } from './styles/Page';
 
 import { IWrapperPage, IStore } from '@Interfaces';
 
@@ -17,7 +17,7 @@ const { Content } = Layout;
 const NonDashboardRoutes = ['/auth/signin', '/auth/signup', '/forgot', '/lockscreen', '/_error'];
 
 const Component = (props: IWrapperPage.IProps & WithRouterProps) => {
-  const { router, children } = props;
+  const { router, menuItems, children } = props;
   const state = props;
   const [loading, setLoading] = useState(true);
   const isNotDashboard = router && NonDashboardRoutes.includes(router.pathname);
@@ -41,6 +41,7 @@ const Component = (props: IWrapperPage.IProps & WithRouterProps) => {
             {!isNotDashboard && (
               <SidebarMenu
                 {...(props as any)}
+                menuItems={menuItems}
                 sidebarTheme={state.darkSidebar ? 'dark' : 'light'}
                 sidebarMode={state.sidebarPopup ? 'vertical' : 'inline'}
               />
