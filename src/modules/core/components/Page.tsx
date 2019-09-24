@@ -10,7 +10,7 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/GlobalStyles';
 import { Container, Inner } from './styles/Page';
 
-import { IWrapperPage, IStore } from 'core';
+import { IWrapperPage, IStore } from '@onr/core';
 
 const { Content } = Layout;
 

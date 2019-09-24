@@ -23,7 +23,7 @@ import DashHeader from './styles/Header';
 import Inner from './styles/Sidebar';
 import { capitalize, lowercase } from '../../../lib/helpers';
 
-import { wrapperActions, IWrapperPage, IStore } from 'core';
+import { wrapperActions, IWrapperPage, IStore } from '@onr/core';
 
 interface ISidebarMenuProps extends IWrapperPage.IProps, WithRouterProps {
   sidebarTheme: 'dark' | 'light';

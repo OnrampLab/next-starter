@@ -1,6 +1,6 @@
 import { ActionConsts } from '../actions/ActionConsts';
 
-import { IAction, IWrapperPage, IStore } from 'core';
+import { IAction, IWrapperPage, IStore } from '@onr/core';
 
 const INITIAL_STATE: IWrapperPage.IStateProps = {
   version: 1,

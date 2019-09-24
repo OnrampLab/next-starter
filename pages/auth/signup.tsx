@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Signup } from 'auth';
+import { Signup } from '@onr/auth';
 
 const SignupPage = () => <Signup />;
 

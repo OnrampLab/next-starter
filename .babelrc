@@ -11,11 +11,8 @@
             "./"
           ],
           "alias": {
-            "app": "./src/app",
-            "auth": "./src/modules/auth",
-            "core": "./src/modules/core",
-            "demo": "./src/modules/demo",
-            "shared": "./src/modules/shared"
+            "@app": "./src/app",
+            "^@onr/(.+)": "./src/modules/\\1"
           }
         }
       ],

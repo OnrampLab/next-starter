@@ -1,11 +1,19 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Card } from 'antd';
-import { IStore } from 'core';
+import { IStore } from '@onr/core';
+
+interface Props {
+  demoStore: any;
+}
 
 const { Meta } = Card;
 
-function Component(props) {
+const MyImage: React.FC = ({ image }) => {
+  return <img alt="example" src={image.url} />;
+};
+
+const Component: React.FC<Props> = (props: Props) => {
   const {
     demoStore: { image = {} },
   } = props;
@@ -13,13 +21,13 @@ function Component(props) {
   return (
     <>
       {image && (
-        <Card hoverable className="max-w-lg" cover={<img alt="example" src={image.url} />}>
+        <Card hoverable className="max-w-lg" cover={<MyImage image={image} />}>
           <Meta title={image.title} description={image.explanation} />
         </Card>
       )}
     </>
   );
-}
+};
 
 const mapStateToProps = (state: IStore) => ({
   demoStore: state.demoStore,

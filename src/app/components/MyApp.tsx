@@ -9,7 +9,7 @@ import Head from 'next/head';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 
-import { Page, GlobalStyles } from 'core';
+import { Page, GlobalStyles } from '@onr/core';
 import { store, afterComponentDidMount } from '../redux';
 import { menuItems } from '../configs';
 

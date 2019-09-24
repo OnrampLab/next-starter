@@ -1,4 +1,4 @@
-import { actionConsts, demoActions } from 'demo';
+import { actionConsts, demoActions } from '@onr/demo';
 
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';

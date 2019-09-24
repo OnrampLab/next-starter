@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Signin } from 'auth';
+import { Signin } from '@onr/auth';
 
 const SigninPage = () => <Signin />;
 

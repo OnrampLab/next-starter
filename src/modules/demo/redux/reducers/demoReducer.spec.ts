@@ -1,4 +1,4 @@
-import { actionConsts } from 'demo';
+import { actionConsts } from '@onr/demo';
 import { demoReducer } from './demoReducer';
 
 describe('home reducer', () => {

@@ -1,4 +1,4 @@
-import { PlanetaryModel, PlanetaryApiService } from 'demo';
+import { PlanetaryModel, PlanetaryApiService } from '@onr/demo';
 
 export class DemoService {
   static async getPlanetImage(

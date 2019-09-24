@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { actionConsts } from './actionConsts';
-import { DemoService } from 'demo';
+import { DemoService } from '@onr/demo';
 
 export const demoActions = {
   setPlanetImage: (payload: {}) => ({
