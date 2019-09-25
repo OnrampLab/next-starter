@@ -1,1 +1,1 @@
-export * from './smart';
+export * from './Planet';

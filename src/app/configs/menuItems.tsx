@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Home, MessageCircle } from 'react-feather';
+import { Home, MessageCircle, Star } from 'react-feather';
 
 interface MenuItem {
   name: string;
@@ -23,5 +23,10 @@ export const menuItems: MenuItem[] = [
         name: 'Calendar',
       },
     ],
+  },
+  {
+    path: '/demo',
+    name: 'Demo',
+    icon: <Star strokeWidth={1} size={16} />,
   },
 ];
