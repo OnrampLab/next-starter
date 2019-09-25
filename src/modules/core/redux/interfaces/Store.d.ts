@@ -1,2 +1,1 @@
-export interface IStore {
-}
+export interface IStore {}

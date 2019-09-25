@@ -13,8 +13,8 @@
     "cli": "node ./project-cli/dist/index.js a",
     "postinstall": "cd project-cli && npm i && npm run build",
     "test": "jest --coverage",
-    "lint": "eslint -c .eslintrc.js --ext .ts,.tsx {app,pages,src}/**",
-    "format": "eslint -c .eslintrc.js --ext .ts,.tsx --fix {app,pages,src}/**"
+    "lint": "eslint -c .eslintrc.js --ext .ts,.tsx pages src",
+    "format": "eslint -c .eslintrc.js --ext .ts,.tsx --fix pages src"
   },
   "dependencies": {
     "@zeit/next-bundle-analyzer": "^0.1.2",
