@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { demoActions, Planet, IPlanetImage, IDemoStore } from '@onr/demo';
 
-export const DemoMainPage: React.FC = () => {
+export const DailyPlanetPage: React.FC = () => {
   const dispatch = useDispatch();
   const image: IPlanetImage = useSelector((store: IDemoStore) => store.demoStore.image);
 
@@ -16,9 +16,5 @@ export const DemoMainPage: React.FC = () => {
     );
   }, []);
 
-  return (
-    <>
-      <Planet image={image} />
-    </>
-  );
+  return <>{image && <Planet image={image} />}</>;
 };

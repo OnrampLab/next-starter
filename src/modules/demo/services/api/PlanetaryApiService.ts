@@ -16,15 +16,27 @@ export const PlanetaryApiService = {
         payload.params,
       );
     } catch (error) {
-      response = {
-        copyright: '',
-        date: '',
-        explanation: '',
-        hdurl: '',
-        service_version: '',
-        title: '',
-        url: '',
-      };
+      console.log(error);
+      throw new Error(`[PlanetaryApiService] getPlanetImage Error: ${JSON.stringify(error)}`);
+    }
+
+    return response;
+  },
+
+  getMarsPhotos: async (
+    payload: PlanetaryModel.GetMarsPhotosPayload,
+  ): Promise<PlanetaryModel.GetMarsPhotosResponse> => {
+    let response: PlanetaryModel.GetMarsPhotosResponse;
+
+    try {
+      response = await Http.request<PlanetaryModel.GetMarsPhotosResponse>(
+        'GET',
+        '/mars-photos/api/v1/rovers/curiosity/photos',
+        payload.params,
+      );
+    } catch (error) {
+      console.log(error);
+      throw new Error(`[PlanetaryApiService] getMarsPhotos Error: ${JSON.stringify(error)}`);
     }
 
     return response;

@@ -1,1 +1,2 @@
-export * from './DemoMainPage';
+export * from './DailyPlanetPage';
+export * from './MarsPhotosPage';

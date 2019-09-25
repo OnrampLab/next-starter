@@ -15,18 +15,17 @@ export const menuItems: MenuItem[] = [
     icon: <Home strokeWidth={1} size={16} />,
   },
   {
-    name: 'Apps',
+    name: 'Demo',
     icon: <MessageCircle strokeWidth={1} size={16} />,
     children: [
       {
-        path: '/apps/calendar',
-        name: 'Calendar',
+        path: '/demo/planet',
+        name: 'Daily Planet',
+      },
+      {
+        path: '/demo/mars',
+        name: 'Mars Photos',
       },
     ],
-  },
-  {
-    path: '/demo',
-    name: 'Demo',
-    icon: <Star strokeWidth={1} size={16} />,
   },
 ];

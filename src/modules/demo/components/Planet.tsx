@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Button, Divider } from 'antd';
+import { Card, Button, Divider, List, Avatar } from 'antd';
 import { IPlanetImage } from '@onr/demo';
 
 interface IPlanetProps {
@@ -19,7 +19,7 @@ export const Planet: React.FC<IPlanetProps> = ({ image }: IPlanetProps) => {
 
   return (
     <>
-      <Button onClick={() => setDetailVisible(!detailVisible)}>Toggle Detail</Button>
+      <Button onClick={() => setDetailVisible(!detailVisible)}>Toggle Daily Planet Detail</Button>
       <Divider />
       {detailVisible && (
         <Card hoverable className="max-w-lg" cover={<CoverImage image={image} />}>
