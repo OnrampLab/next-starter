@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Button, Divider, List, Avatar } from 'antd';
+import { Card, Button, Divider } from 'antd';
 import { IPlanetImage } from '@onr/demo';
 
 interface IPlanetProps {

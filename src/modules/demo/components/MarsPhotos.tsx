@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, List, Avatar, Row, Col } from 'antd';
+import { Card, Row, Col } from 'antd';
 import { IMarsPhoto } from '@onr/demo';
 
 interface IMarsPhotoProps {
