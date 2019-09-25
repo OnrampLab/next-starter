@@ -1,4 +1,4 @@
-import { ApodPayload, ApodResponse } from '.';
+import { ApodPayload, IPlanetImage } from '@onr/demo';
 
 /**
  * @module @interface PlanetaryModel
@@ -8,5 +8,5 @@ declare namespace PlanetaryModel {
     params: ApodPayload;
   }
 
-  export interface GetApodResponse extends ApodResponse {}
+  export interface GetApodResponse extends IPlanetImage {}
 }
