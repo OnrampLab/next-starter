@@ -1,7 +1,7 @@
 import '../../assets/styles.less';
 import '../../assets/tailwind-extension.css';
 
-import App, { Container, NextAppContext } from 'next/app';
+import App, { NextAppContext } from 'next/app';
 import React from 'react';
 import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
@@ -40,7 +40,7 @@ export class AppComponent extends App<any> {
     const { Component, pageProps, store } = this.props;
 
     return (
-      <Container>
+      <>
         <GlobalStyles />
         <Head>
           <meta
@@ -64,7 +64,7 @@ export class AppComponent extends App<any> {
             <Component {...pageProps} />
           </Page>
         </Provider>
-      </Container>
+      </>
     );
   }
 }

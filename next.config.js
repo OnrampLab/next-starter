@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const withPlugins = require('next-compose-plugins');
 
-const withTypescript = require('@zeit/next-typescript');
 const withCSS = require('@zeit/next-css');
 const withSass = require('@zeit/next-sass');
 const withLess = require('@zeit/next-less');
@@ -45,7 +44,6 @@ const nextConfig = {
 
 module.exports = withConfig(withPlugins(
   [
-    [withTypescript],
     [withCSS],
     [withSass],
     [withLess],

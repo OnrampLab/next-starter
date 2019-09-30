@@ -110,7 +110,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
                   if (state.mobile) setMobileDrawer();
                 }}
               >
-                <Link href={route.path} prefetch>
+                <Link href={route.path}>
                   <a>
                     {sidebarIcons && <span className="anticon">{route.icon}</span>}
                     <span className="mr-auto">{capitalize(route.name)}</span>
