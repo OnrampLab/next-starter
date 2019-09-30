@@ -139,7 +139,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
                         if (state.mobile) setMobileDrawer();
                       }}
                     >
-                      <Link href={`${subitem.path ? subitem.path : ''}`} prefetch>
+                      <Link href={`${subitem.path ? subitem.path : ''}`}>
                         <a>
                           <span className="mr-auto">{capitalize(subitem.name)}</span>
                         </a>

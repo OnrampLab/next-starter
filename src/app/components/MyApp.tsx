@@ -42,6 +42,7 @@ export class AppComponent extends App<any> {
     return (
       <>
         <GlobalStyles />
+
         <Head>
           <meta
             name="viewport"
