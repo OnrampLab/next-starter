@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DailyPlanetPage } from '@onr/demo';
-import { Spin } from 'antd';
+import { message, Spin } from 'antd';
 
 export const ProductDetailPage: React.FC = () => {
   const [done, setDone] = useState(false);
 
-  setTimeout(() => {
-    console.log('Done');
-    setDone(true);
-  }, 5000);
+  console.log('Render!!');
+
+  useEffect(() => {
+    setTimeout(() => {
+      console.log('Done!!');
+
+      message.success('Done');
+      setDone(true);
+    }, 1000);
+  }, []);
 
   return (
     <>
