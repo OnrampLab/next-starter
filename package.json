@@ -14,7 +14,9 @@
     "postinstall": "cd project-cli && npm i && npm run build",
     "test": "jest --coverage",
     "lint": "eslint -c .eslintrc.js --ext .ts,.tsx pages src",
-    "format": "eslint -c .eslintrc.js --ext .ts,.tsx --fix pages src"
+    "format": "eslint -c .eslintrc.js --ext .ts,.tsx --fix pages src",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@zeit/next-bundle-analyzer": "^0.1.2",
@@ -48,6 +50,13 @@
     "tailwindcss": "^1.1.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@storybook/addon-actions": "^5.2.3",
+    "@storybook/addon-info": "^5.2.3",
+    "@storybook/addon-links": "^5.2.3",
+    "@storybook/addons": "^5.2.3",
+    "@storybook/cli": "^5.2.3",
+    "@storybook/react": "^5.2.3",
     "@types/enzyme": "^3.9.1",
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/jest": "^24.0.12",
@@ -60,11 +69,13 @@
     "@types/react-dom": "^16.9.1",
     "@types/react-redux": "^7.1.4",
     "@types/redux-mock-store": "^1.0.1",
+    "@types/storybook__react": "^4.0.2",
     "@types/styled-components": "^4.1.16",
     "@typescript-eslint/eslint-plugin": "^2.3.0",
     "@typescript-eslint/parser": "^2.3.0",
     "autoprefixer": "^9.6.0",
     "babel-jest": "^24.8.0",
+    "babel-loader": "^8.0.6",
     "babel-plugin-import": "^1.12.0",
     "babel-plugin-module-resolver": "^3.2.0",
     "babel-plugin-styled-components": "^1.10.1",
@@ -83,13 +94,14 @@
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "raw-loader": "^3.0.0",
+    "react-docgen-typescript-loader": "^3.3.0",
     "react-test-renderer": "^16.8.6",
     "redux-devtools-extension": "^2.13.8",
     "redux-mock-store": "^1.5.3",
     "rimraf": "^2.6.3",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.3.0",
-    "typescript": "^3.5.2"
+    "typescript": "^3.6.3"
   },
   "author": "",
   "license": "ISC"
