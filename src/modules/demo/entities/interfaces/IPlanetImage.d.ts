@@ -24,6 +24,13 @@ export interface IPlanetImage {
    * @type {string}
    * @memberof IPlanetImage
    */
+  media_type: string;
+
+  /**
+   *
+   * @type {string}
+   * @memberof IPlanetImage
+   */
   explanation: string;
 
   /**
