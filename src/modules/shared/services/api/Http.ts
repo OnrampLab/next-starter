@@ -1,47 +1,32 @@
-import 'isomorphic-unfetch';
-import getConfig from 'next/config';
-import { stringify } from 'query-string';
+import getConfig from 'next/config'
+import { stringify } from 'query-string'
+import Axios from 'axios'
 
-import { HttpModel } from './interfaces';
+declare type RequestMethods = "get" | "GET" | "delete" | "DELETE" | "head" | "HEAD" | "options" | "OPTIONS" | "post" | "POST" | "put" | "PUT" | "patch" | "PATCH"
 
-/**
- * @module Http
- */
+const { publicRuntimeConfig: { API_KEY } = { API_KEY: '' } }: { publicRuntimeConfig: { API_KEY: string } } = getConfig();
+// const { publicRuntimeConfig: { API_KEY } = {} } = getConfig() || {};
+let BaseUrl = `/api`
 
-const { publicRuntimeConfig: { API_KEY } = {} } = getConfig() || {};
-
-const BaseUrl = `/api`;
 
 export const Http = {
-  request: async <A>(
-    methodType: string,
+  setBaseUrl: (url: string) => BaseUrl = url,
+  request: async <A> (methodType: RequestMethods,
     url: string,
-    params?: HttpModel.IRequestQueryPayload,
-    payload?: HttpModel.IRequestPayload,
-  ): Promise<A> => {
-    return new Promise((resolve, reject) => {
-      const query = params ? `?${stringify({ ...params, api_key: API_KEY })}` : '';
+    params?: any,
+    payload?: any): Promise<A> => {
+    const query = params ? `?${stringify({ ...params, api_key: API_KEY })}` : ''
 
-      fetch(`${BaseUrl}${url}${query}`, {
-        body: JSON.stringify(payload),
-        cache: 'no-cache',
-        headers: {
-          'content-type': 'application/json',
-          authorization: `Bearer ${API_KEY}`,
-        },
-        method: `${methodType}`,
-      })
-        .then(async response => {
-          switch (response.status) {
-            case 200:
-              return response.json().then(resolve);
-            default:
-              return reject(response);
-          }
-        })
-        .catch(e => {
-          reject(e);
-        });
-    });
-  },
+    return Axios(`${BaseUrl}${url}${query}`, {
+      method: methodType,
+      data: JSON.stringify(payload),
+      headers: {
+        'content-type': 'application/json',
+        authorization: `Bearer ${API_KEY}`
+      }
+    }).then(res => res.status === 200 ? res.data : Promise.reject(res.statusText))
+      .catch(e => {
+        throw e;
+      });
+  }
 };

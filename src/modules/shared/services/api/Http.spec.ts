@@ -1,14 +1,14 @@
-import { Http } from './Http';
+import { Http } from './Http'
 
-describe('Http request tests', () => {
+describe('Axios request tests', () => {
   test('200 test', async () => {
-    const result = await Http.request<{ success: boolean }>('GET', '/200');
+    const result = await Http.request<{ success: boolean }>('get', '/200');
     expect(result.success).toEqual(true);
   });
 
   test('404 test', async () => {
     try {
-      await Http.request('GET', '/404');
+      await Http.request('get', '/404');
     } catch (error) {
       expect(error.status).toEqual(404);
     }
@@ -16,9 +16,9 @@ describe('Http request tests', () => {
 
   test('Catch test', async () => {
     try {
-      await Http.request('GET', '');
+      await Http.request('get', '');
     } catch (error) {
       expect(error.code).toBeUndefined();
     }
   });
-});
+})
