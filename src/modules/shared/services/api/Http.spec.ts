@@ -1,4 +1,4 @@
-import { Http } from './Axios'
+import { Http } from './Http'
 
 describe('Axios request tests', () => {
   test('200 test', async () => {
