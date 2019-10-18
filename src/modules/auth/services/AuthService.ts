@@ -9,8 +9,8 @@ export const AuthService = {
       // response = await Http.request<AuthModel.SigninResponse>('POST', '/login', payload.params);
       response = {
         id: 111,
-        token: '1111'
-      }
+        token: '1111',
+      };
     } catch (error) {
       throw new Error(`Login Error: ${error}`);
     }
@@ -23,15 +23,15 @@ export const AuthService = {
     try {
       // response = await Http.request<AuthModel.SignoutResponse>('GET', '/logout')
       response = {
-        message: 'ok'
-      }
+        message: 'ok',
+      };
     } catch (error) {
-      throw new Error(`Login Error: ${error.message}`)
+      throw new Error(`Login Error: ${error.message}`);
     }
-    return response
+    return response;
   },
 
   loginWithJWT: async (token: string) => {
     // TODO with jwt login
-  }
+  },
 };

@@ -71,7 +71,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
   const [appRoutes] = React.useState(menuItems);
   const { pathname = '' } = router || {};
 
-  const {logout} = useAuth()
+  const { logout } = useAuth();
 
   React.useEffect(() => {
     appRoutes.forEach((route, index) => {

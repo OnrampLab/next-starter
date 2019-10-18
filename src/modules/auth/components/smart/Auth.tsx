@@ -17,13 +17,15 @@ const AuthProvider: React.FC = props => {
         throw err.message;
       });
   };
-  const logout = () => AuthService.logout()
-    .then(response => {
-      setData(null)
-      return response
-    }).catch(err => {
-      message.error(err.message)
-    });
+  const logout = () =>
+    AuthService.logout()
+      .then(response => {
+        setData(null);
+        return response;
+      })
+      .catch(err => {
+        message.error(err.message);
+      });
 
   return (
     <AuthContext.Provider

@@ -53,7 +53,9 @@ const Component = ({ form }) => {
                     },
                   })
                   .then(response => {
-                    Message.success('Sign complete. Taking you to your dashboard!')/* .then(
+                    Message.success(
+                      'Sign complete. Taking you to your dashboard!',
+                    ); /* .then(
                       () => Router.push('/'),
                       () => {},
                     ); */

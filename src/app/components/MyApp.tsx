@@ -30,7 +30,7 @@ const PageContainer: React.FC = (props: any) => {
   return (
     <>
       {user ? (
-        <Page {...(props as any)} menuItems={menuItems}>
+        <Page {...props} menuItems={menuItems}>
           <Component {...pageProps} />
         </Page>
       ) : (

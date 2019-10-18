@@ -1,4 +1,4 @@
-import { Http } from './Http'
+import { Http } from './Http';
 
 describe('Axios request tests', () => {
   test('200 test', async () => {
@@ -21,4 +21,4 @@ describe('Axios request tests', () => {
       expect(error.code).toBeUndefined();
     }
   });
-})
+});

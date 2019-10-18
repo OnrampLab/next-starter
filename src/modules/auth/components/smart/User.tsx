@@ -5,7 +5,7 @@ import { useAuth } from './Auth';
 const UserContext = React.createContext<AuthModel.SigninResponse | undefined>(undefined);
 
 const UserProvider: React.FC = props => {
-  const { data } = useAuth() as AuthModel.IAuthContext;
+  const { data } = useAuth();
   return <UserContext.Provider value={data} {...props} />;
 };
 
