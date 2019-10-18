@@ -36,11 +36,11 @@ const Component = (props: IWrapperPage.IProps & WithRouterProps) => {
             state.boxed ? 'boxed shadow-sm' : ''
           }`}
         >
-          {!isNotDashboard && <Header {...(props as any)} />}
+          {!isNotDashboard && <Header {...props} />}
           <Layout className="workspace">
             {!isNotDashboard && (
               <SidebarMenu
-                {...(props as any)}
+                {...props}
                 menuItems={menuItems}
                 sidebarTheme={state.darkSidebar ? 'dark' : 'light'}
                 sidebarMode={state.sidebarPopup ? 'vertical' : 'inline'}

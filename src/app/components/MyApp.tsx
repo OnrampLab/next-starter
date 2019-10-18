@@ -12,14 +12,33 @@ import NProgress from 'nprogress';
 import { Page, GlobalStyles } from '@onr/core';
 import { store, afterComponentDidMount } from '../redux';
 import { menuItems } from '../configs';
+import { AuthenticationProvider } from './AuthProvider';
+import { useUser } from '@onr/auth/components/smart/User';
+import { Signin } from '@onr/auth';
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 Router.events.on(
   'routeChangeComplete',
-  () => (document.querySelector('.workspace > .ant-layout').scrollTop = 0),
+  () => (document.querySelector('.workspace > .ant-layout')!.scrollTop = 0),
 );
+
+const PageContainer: React.FC = (props: any) => {
+  const user = useUser();
+  const { Component, pageProps, store } = props;
+  return (
+    <>
+      {user ? (
+        <Page {...props} menuItems={menuItems}>
+          <Component {...pageProps} />
+        </Page>
+      ) : (
+        <Signin></Signin>
+      )}
+    </>
+  );
+};
 
 export class AppComponent extends App<any> {
   static async getInitialProps(props: NextAppContext) {
@@ -61,9 +80,9 @@ export class AppComponent extends App<any> {
           )}
         </Head>
         <Provider store={store}>
-          <Page {...(this.props as any)} menuItems={menuItems}>
-            <Component {...pageProps} />
-          </Page>
+          <AuthenticationProvider>
+            <PageContainer {...this.props}></PageContainer>
+          </AuthenticationProvider>
         </Provider>
       </>
     );

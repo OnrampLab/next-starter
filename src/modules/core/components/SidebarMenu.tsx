@@ -24,6 +24,7 @@ import Inner from './styles/Sidebar';
 import { capitalize, lowercase } from '../../../lib/helpers';
 
 import { wrapperActions, IWrapperPage, IStore } from '@onr/core';
+import { useAuth } from '@onr/auth/components/smart/Auth';
 
 interface ISidebarMenuProps extends IWrapperPage.IProps, WithRouterProps {
   sidebarTheme: 'dark' | 'light';
@@ -69,6 +70,8 @@ const SidebarContent = (props: ISidebarMenuProps) => {
   const [openKeys, setOpenKeys] = React.useState<string[]>([]);
   const [appRoutes] = React.useState(menuItems);
   const { pathname = '' } = router || {};
+
+  const { logout } = useAuth();
 
   React.useEffect(() => {
     appRoutes.forEach((route, index) => {
@@ -187,7 +190,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
               <Popconfirm
                 placement="top"
                 title="Are you sure you want to sign out?"
-                onConfirm={() => router && router.push('/signin')}
+                onConfirm={() => logout()}
                 okText="Yes"
                 cancelText="Cancel"
               >
