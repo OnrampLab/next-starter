@@ -8,9 +8,14 @@ const { publicRuntimeConfig: { API_KEY } = { API_KEY: '' } }: { publicRuntimeCon
 // const { publicRuntimeConfig: { API_KEY } = {} } = getConfig() || {};
 let BaseUrl = `/api`
 
+let headers = {
+  'content-type': 'application/json',
+  authorization: `Bearer ${API_KEY}`
+}
 
 export const Http = {
   setBaseUrl: (url: string) => BaseUrl = url,
+  setHeader: (params: any) => headers = params,
   request: async <A> (methodType: RequestMethods,
     url: string,
     params?: any,
@@ -20,10 +25,7 @@ export const Http = {
     return Axios(`${BaseUrl}${url}${query}`, {
       method: methodType,
       data: JSON.stringify(payload),
-      headers: {
-        'content-type': 'application/json',
-        authorization: `Bearer ${API_KEY}`
-      }
+      headers
     }).then(res => res.status === 200 ? res.data : Promise.reject(res.statusText))
       .catch(e => {
         throw e;

@@ -7,6 +7,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { wrapperActions, IWrapperPage, IStore } from '@onr/core';
 
 import DashHeader from './styles/Header';
+import { useAuth } from '@onr/auth/components/smart/Auth';
 
 const { SubMenu } = Menu;
 const { Header } = Layout;
@@ -14,6 +15,7 @@ const { Header } = Layout;
 const MainHeader = (props: IWrapperPage.IProps) => {
   const { setOptionDrawer, setMobileDrawer } = props;
   const state = props;
+  const { logout } = useAuth();
   return (
     <DashHeader>
       <Header>
@@ -61,7 +63,7 @@ const MainHeader = (props: IWrapperPage.IProps) => {
                 <a>Help?</a>
               </Link>
             </Menu.Item>
-            <Menu.Item>Signout</Menu.Item>
+            <Menu.Item onClick={() => logout()}>Signout</Menu.Item>
           </SubMenu>
         </Menu>
       </Header>

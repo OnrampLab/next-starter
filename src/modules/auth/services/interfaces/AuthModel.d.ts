@@ -9,4 +9,14 @@ declare namespace AuthModel {
   }
 
   export interface SigninResponse extends LoginResponse {}
+
+  export interface SignoutResponse {
+    message:string
+  }
+
+  export interface IAuthContext {
+    login: Function
+    logout: Function
+    data?: SigninResponse
+  }
 }
