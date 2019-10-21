@@ -6,15 +6,15 @@ export const AuthService = {
     let response: AuthModel.SigninResponse;
 
     try {
-      Http.setBaseUrl('')
+      Http.setBaseUrl('');
       response = await Http.request<AuthModel.SigninResponse>('POST', '/onr-login', payload.params);
-      Http.setBaseUrl('/api')
+      Http.setBaseUrl('/api');
       response = {
         id: 111,
         token: '1111',
       };
-      sessionStorage.setItem('onr_id', `${response.id}`)
-      sessionStorage.setItem('onr_token', response.token as string)
+      sessionStorage.setItem('onr_id', `${response.id}`);
+      sessionStorage.setItem('onr_token', response.token as string);
     } catch (error) {
       throw new Error(`Login Error: ${error.message}`);
     }
@@ -29,8 +29,8 @@ export const AuthService = {
       response = {
         message: 'ok',
       };
-      sessionStorage.removeItem('onr_id')
-      sessionStorage.removeItem('onr_token')
+      sessionStorage.removeItem('onr_id');
+      sessionStorage.removeItem('onr_token');
     } catch (error) {
       throw new Error(`Login Error: ${error.message}`);
     }

@@ -4,10 +4,10 @@ import { AuthService } from '@onr/auth/services';
 import { message } from 'antd';
 enum AuthState {
   Prepare,
-  Resolve
+  Resolve,
 }
 interface IAuthContext extends AuthModel.IAuthContext {
-  authState: AuthState
+  authState: AuthState;
 }
 const AuthContext = React.createContext<IAuthContext | undefined>(undefined);
 
@@ -15,8 +15,8 @@ const AuthProvider: React.FC = props => {
   const [data, setData] = useState<AuthModel.SigninResponse | null>(null);
   const [state, setState] = useState<AuthState>(AuthState.Prepare);
   useEffect(() => {
-    let id = +(sessionStorage.getItem('onr_id') || '-1');
-    let token: string = sessionStorage.getItem('onr_token') || '';
+    const id = +(sessionStorage.getItem('onr_id') || '-1');
+    const token: string = sessionStorage.getItem('onr_token') || '';
     if (id && id !== -1 && token) {
       setData({ id, token });
     }

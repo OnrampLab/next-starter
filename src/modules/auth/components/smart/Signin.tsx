@@ -5,7 +5,6 @@ import Link from 'next/link';
 import styled from 'styled-components';
 
 import { useAuth, AuthState } from './Auth';
-// import { AuthState } from '@onr/auth/services/interfaces';
 
 const FormItem = Form.Item;
 
