@@ -27,6 +27,14 @@ app.prepare().then(() => {
     });
   }
 
+  server.post('/onr-login', (req, res) => {
+    res.send({
+      id: 111,
+      token: '1111'
+    })
+    res.end()
+  })
+
   server.get('*', async (req, res) => {
     return handler(req, res);
   });

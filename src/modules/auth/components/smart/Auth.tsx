@@ -2,30 +2,52 @@ import React, { useState, useEffect } from 'react';
 import { AuthModel } from '@onr/auth/services/interfaces';
 import { AuthService } from '@onr/auth/services';
 import { message } from 'antd';
-
-const AuthContext = React.createContext<AuthModel.IAuthContext | undefined>(undefined);
+enum AuthState {
+  Prepare,
+  Resolve,
+}
+interface IAuthContext extends AuthModel.IAuthContext {
+  authState: AuthState;
+}
+const AuthContext = React.createContext<IAuthContext | undefined>(undefined);
 
 const AuthProvider: React.FC = props => {
   const [data, setData] = useState<AuthModel.SigninResponse | null>(null);
+  const [state, setState] = useState<AuthState>(AuthState.Prepare);
+  useEffect(() => {
+    const id = +(sessionStorage.getItem('onr_id') || '-1');
+    const token: string = sessionStorage.getItem('onr_token') || '';
+    if (id && id !== -1 && token) {
+      setData({ id, token });
+    }
+    setState(AuthState.Resolve);
+  }, []);
   const login = (form: AuthModel.SigninPayload) => {
+    setState(AuthState.Prepare);
     return AuthService.login(form)
       .then(response => {
         setData(response);
+        setState(AuthState.Resolve);
         return response;
       })
       .catch(err => {
+        setState(AuthState.Resolve);
         throw err.message;
       });
   };
-  const logout = () =>
+  const logout = () => {
+    setState(AuthState.Prepare);
     AuthService.logout()
       .then(response => {
         setData(null);
+        setState(AuthState.Resolve);
         return response;
       })
       .catch(err => {
+        setState(AuthState.Resolve);
         message.error(err.message);
       });
+  };
 
   return (
     <AuthContext.Provider
@@ -34,6 +56,7 @@ const AuthProvider: React.FC = props => {
         data: data,
         login,
         logout,
+        authState: state,
       }}
     />
   );
@@ -47,4 +70,4 @@ function useAuth() {
   return context;
 }
 
-export { AuthProvider, useAuth };
+export { AuthProvider, useAuth, AuthState };
