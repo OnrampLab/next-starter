@@ -41,4 +41,23 @@ export const PlanetaryApiService = {
 
     return response;
   },
+
+  getMarsWeather: async (
+    payload: any,
+  ): Promise<any> => {
+    let response: any;
+
+    try {
+      response = await Http.request<any>(
+        'GET',
+        '/insight_weather/',
+        payload.params,
+      );
+    } catch (error) {
+      console.log(error);
+      throw new Error(`[PlanetaryApiService] getMarsPhotos Error: ${JSON.stringify(error)}`);
+    }
+
+    return response;
+  },
 };

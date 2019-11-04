@@ -12,4 +12,10 @@ export class DemoService {
 
     return response.photos;
   }
+
+  static async getMarsWeather(payload: any): Promise<any> {
+    const response = await PlanetaryApiService.getMarsWeather(payload);
+
+    return response;
+  }
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Divider, Spin, DatePicker } from 'antd';
 import { Moment } from 'moment';
 import { MarsPhotos, DemoService, IMarsPhoto } from '@onr/demo';
@@ -8,6 +8,15 @@ const getMarsPhotos = async (dateString: string) => {
     params: {
       earth_date: dateString,
       camera: 'NAVCAM',
+    },
+  });
+};
+
+const getMarsWeather = async (dateString: string) => {
+  return await DemoService.getMarsWeather({
+    params: {
+      feedtype: 'json',
+      ver: '1.0',
     },
   });
 };
@@ -24,6 +33,20 @@ export const MarsPhotosPage: React.FC = () => {
 
     setLoading(false);
   };
+
+  const showMarsWeather = async (_date: null | Moment, dateString: string) => {
+    setLoading(true);
+
+    const weather = await getMarsWeather(dateString);
+
+    console.log(weather);
+
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getMarsWeather('2019-09-01');
+  }, []);
 
   return (
     <>
