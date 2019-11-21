@@ -45,7 +45,7 @@ export const Http = {
       data: JSON.stringify(payload),
       headers,
     })
-      .then(res => (res.status === 200 ? res.data : Promise.reject(res.statusText)))
+      .then(res => (res.status >= 200 && res.status <= 302 ? res.data : Promise.reject(res.statusText)))
       .catch(e => {
         throw e;
       });
