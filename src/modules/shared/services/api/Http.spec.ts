@@ -1,6 +1,9 @@
 import { Http } from './Http';
 
 describe('Axios request tests', () => {
+  beforeAll(() => {
+    Http.setBaseUrl('http://localhost:3000/api')
+  })
   test('200 test', async () => {
     const result = await Http.request<{ success: boolean }>('get', '/200');
     expect(result.success).toEqual(true);
@@ -10,7 +13,7 @@ describe('Axios request tests', () => {
     try {
       await Http.request('get', '/404');
     } catch (error) {
-      expect(error.status).toEqual(404);
+      expect(error).not.toBeUndefined()
     }
   });
 
