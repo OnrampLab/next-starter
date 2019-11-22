@@ -3,7 +3,7 @@ import { demoReducer } from './demoReducer';
 
 describe('home reducer', () => {
   it('should return the initial state', () => {
-    expect(demoReducer(undefined, {}).toEqual({
+    expect(demoReducer(undefined, {})).toEqual({
       demos: [],
     });
   });

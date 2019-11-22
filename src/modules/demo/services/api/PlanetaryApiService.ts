@@ -16,7 +16,7 @@ export const PlanetaryApiService = {
         payload.params,
       );
     } catch (error) {
-      console.log(error);
+      console.error(error);
       throw new Error(`[PlanetaryApiService] getPlanetImage Error: ${JSON.stringify(error)}`);
     }
 
@@ -35,7 +35,7 @@ export const PlanetaryApiService = {
         payload.params,
       );
     } catch (error) {
-      console.log(error);
+      console.error(error);
       throw new Error(`[PlanetaryApiService] getMarsPhotos Error: ${JSON.stringify(error)}`);
     }
 
