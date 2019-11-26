@@ -13,7 +13,7 @@ import { pageComp } from './src/definitions/page-component';
 console.clear();
 
 console.log(
-  chalk.default(
+  chalk(
     figlet.textSync('Pankod CLI Boilerplate')
   )
 );
