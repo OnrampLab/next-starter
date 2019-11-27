@@ -1,7 +1,7 @@
 import '../../assets/styles.less';
 import '../../assets/tailwind-extension.css';
 
-import App, { NextAppContext } from 'next/app';
+import App, { AppContext } from 'next/app';
 import React from 'react';
 import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
@@ -41,7 +41,7 @@ const PageContainer: React.FC = (props: any) => {
 };
 
 export class AppComponent extends App<any> {
-  static async getInitialProps(props: NextAppContext) {
+  static async getInitialProps(props: AppContext) {
     let pageProps = {};
 
     if (props.Component.getInitialProps) {

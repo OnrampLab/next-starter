@@ -39,7 +39,11 @@ const nextConfig = {
       analyzerMode: 'static',
       reportFilename: '../bundles/client.html',
     },
-  }
+  },
+  typescript: {
+    ignoreDevErrors: true,
+    ignoreBuildErrors: true,
+  },
 };
 
 module.exports = withConfig(withPlugins(
