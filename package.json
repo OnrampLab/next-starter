@@ -13,8 +13,8 @@
     "cli": "node ./project-cli/dist/index.js a",
     "postinstall": "cd project-cli && npm i && npm run build",
     "test": "jest --coverage",
-    "lint": "eslint -c .eslintrc.js --ext .ts,.tsx pages src",
-    "format": "eslint -c .eslintrc.js --ext .ts,.tsx --fix pages src",
+    "lint": "eslint -c .eslintrc.js --ext .ts,.tsx src",
+    "format": "eslint -c .eslintrc.js --ext .ts,.tsx --fix src",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
