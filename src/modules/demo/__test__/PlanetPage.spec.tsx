@@ -9,10 +9,26 @@ import { Provider } from 'react-redux';
 import { demoReducer } from '../redux/reducers/demoReducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { Http } from '@onr/shared';
+import nock from 'nock'
 
 describe('PlanetPage component test', () => {
   beforeAll(() => {
     Http.setBaseUrl('http://localhost:3000/api')
+  })
+  beforeEach(() => {
+    nock('http://localhost:3000')
+      .get('/api/planetary/apod')
+      .query({ api_key: 'NNKOjkoul8n1CH18TWA9gwngW1s1SmjESPjNoUFo', hd: true })
+      .reply(200, {
+        copyright: "Pankod",
+        date: "2019-05-23",
+        explanation: "test",
+        hdurl: "",
+        media_type: "",
+        service_version: "",
+        title: "test",
+        url: ""
+      });
   })
   test('Render Component work fine', () => {
     const planetProps: IPlanetImage = {
