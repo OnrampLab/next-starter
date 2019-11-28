@@ -19,10 +19,17 @@ export const Planet: React.FC<IPlanetProps> = ({ image }: IPlanetProps) => {
 
   return (
     <>
-      <Button onClick={() => setDetailVisible(!detailVisible)}>Toggle Daily Planet Detail</Button>
+      <Button data-testid="planet-btn" onClick={() => setDetailVisible(!detailVisible)}>
+        Toggle Daily Planet Detail
+      </Button>
       <Divider />
       {detailVisible && (
-        <Card hoverable className="max-w-lg" cover={<CoverImage image={image} />}>
+        <Card
+          hoverable
+          className="max-w-lg"
+          data-testid="planet-card"
+          cover={<CoverImage image={image} />}
+        >
           <Meta title={image.title} description={image.explanation} />
         </Card>
       )}
