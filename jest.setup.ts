@@ -5,16 +5,17 @@ require('enzyme').configure({ adapter: new Adapter() })
 const nock = require('nock');
 
 nock('http://localhost:3000')
+  .persist()
   .get('/api/planetary/apod')
   .query({ api_key: 'NNKOjkoul8n1CH18TWA9gwngW1s1SmjESPjNoUFo', hd: true })
   .reply(200, {
     copyright: "Pankod",
     date: "2019-05-23",
-    explanation: "",
+    explanation: "test",
     hdurl: "",
     media_type: "",
     service_version: "",
-    title: "",
+    title: "test",
     url: ""
   });
 

@@ -1,10 +1,20 @@
-import { render } from '@testing-library/react';
+import { render, waitForElement, fireEvent } from '@testing-library/react';
 import { Planet } from '../components';
 import { IPlanetImage } from '../entities';
-import React from 'react'
+import thunkMiddleware from 'redux-thunk';
+import React from 'react';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { DailyPlanetPage } from '../pages';
+import { Provider } from 'react-redux';
+import { demoReducer } from '../redux/reducers/demoReducer';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { Http } from '@onr/shared';
 
 describe('PlanetPage component test', () => {
-  test('Render hook work fine', () => {
+  beforeAll(() => {
+    Http.setBaseUrl('http://localhost:3000/api')
+  })
+  test('Render Component work fine', () => {
     const planetProps: IPlanetImage = {
       copyright: 'test',
       date: '2019/12/01',
@@ -19,5 +29,20 @@ describe('PlanetPage component test', () => {
     expect(() => result.getByTestId('planet-card')).toThrowError();
     result.getByTestId('planet-btn').click();
     expect(result.getByTestId('planet-card')).not.toBeUndefined();
+  });
+
+  test('Render Page Work fine', async () => {
+    const mockFn = jest.fn()
+    const store: any = createStore(combineReducers({ demoStore: (...arg ) => {mockFn();return demoReducer(...arg)} }), {}, composeWithDevTools(applyMiddleware(thunkMiddleware)));
+    const result = render(
+      <Provider store={store}>
+        <DailyPlanetPage></DailyPlanetPage>
+      </Provider>,
+    );
+    expect(mockFn).toBeCalled();
+    await waitForElement(() => result.getByTestId('planet-btn'))
+    fireEvent.click(result.getByTestId('planet-btn'));
+    expect(result.getByTestId('planet-card')).not.toBeUndefined()
+    expect(result.getAllByText('test').length).toBe(2)
   });
 });
