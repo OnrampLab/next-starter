@@ -9,11 +9,11 @@ export const demoActions = {
   }),
 
   getPlanetImage: (payload: any) => async (dispatch: Dispatch) => {
-    const image = await DemoService.getPlanetImage({
-      params: payload.params,
-    });
-
+    
     try {
+      const image = await DemoService.getPlanetImage({
+        params: payload.params,
+      });
       dispatch(
         demoActions.setPlanetImage({
           image,
@@ -21,6 +21,7 @@ export const demoActions = {
       );
     } catch (error) {
       // NOTE: ignore test error due to localStorge issues
+      console.log(error)
     }
   },
 };
