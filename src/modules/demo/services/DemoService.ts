@@ -8,8 +8,13 @@ export class DemoService {
   }
 
   static async getMarsPhotos(payload: PlanetaryModel.GetMarsPhotosPayload): Promise<IMarsPhoto[]> {
-    const response = await PlanetaryApiService.getMarsPhotos(payload);
+    try {
+      const response = await PlanetaryApiService.getMarsPhotos(payload);
+      return response.photos;
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
 
-    return response.photos;
   }
 }

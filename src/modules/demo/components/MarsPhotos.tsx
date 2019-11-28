@@ -9,7 +9,7 @@ interface IMarsPhotoProps {
 export const MarsPhotos: React.FC<IMarsPhotoProps> = ({ photos }: IMarsPhotoProps) => {
   return (
     <>
-      <Row>
+      <Row data-testid="row">
         {photos.map((photo, index) => (
           <Col key={index} span={6}>
             <Card className="max-w-sm" cover={<img alt="example" src={photo.img_src} />} />
