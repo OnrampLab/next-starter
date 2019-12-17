@@ -4,7 +4,7 @@
  "description": "",
  "main": "index.js",
  "scripts": {
-  "build": "tsc",
+  "build": "tsc && cp -r ./lib/templates ./dist/lib",
   "test": "jest --coverage",
   "start": "node ./dist/index.js a",
   "watch": "tsc -w"
@@ -16,12 +16,15 @@
   "commander": "^4.0.1",
   "figlet": "^1.2.4",
   "inquirer": "^7.0.0",
+  "inquirer-fuzzy-path": "^2.2.0",
   "log-symbols": "^3.0.0",
   "memfs": "^2.16.1",
   "mustache": "^3.1.0"
  },
  "devDependencies": {
+  "@types/inquirer": "^6.5.0",
   "@types/jest": "^24.0.23",
+  "@types/mustache": "^0.8.32",
   "@types/node": "^12.12.14",
   "jest": "^24.9.0",
   "jest-cli": "^24.9.0",
