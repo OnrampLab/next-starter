@@ -1,50 +1,34 @@
 #!/usr/bin/env node
-
+/* eslint-disable complexity */
 import * as chalk from 'chalk';
 /* import * as clear from 'clear'; */
 import * as program from 'commander';
 import * as figlet from 'figlet';
 import * as inquirer from 'inquirer';
+import * as inquirerFuzzyPath from 'inquirer-fuzzy-path';
+import { Common } from './lib/commonQuestion';
+import { TemplateCreator, createCustomRoute } from './lib/helper';
 
-import { classComp } from './src/definitions/class-component';
-import { funcComp } from './src/definitions/functional-component';
-import { pageComp } from './src/definitions/page-component';
-
+inquirer.registerPrompt('fuzzypath', inquirerFuzzyPath);
 console.clear();
 
-console.log(
-  chalk(
-    figlet.textSync('Pankod CLI Boilerplate')
-  )
-);
+console.log(chalk(figlet.textSync('Onramplab CLI Boilerplate')));
 
-const questions = [
-  {
-    choices: ['page', 'functional component', 'class component'],
-    message: 'What do you want to add?',
-    name: 'fileType',
-    type: 'list'
-  }
-];
+inquirer.prompt;
 
 program
   .command('addFile')
   .alias('a')
   .description('Add a file')
   .action(async () => {
-    const answers: { fileType: string } = await inquirer.prompt(questions);
-    switch (answers.fileType) {
-      case 'functional component':
-        await funcComp.showQuestions();
-        break;
-      case 'class component':
-        await classComp.showQuestions();
-        break;
-      case 'page':
-        await pageComp.showQuestions();
-        break;
-      default:
-        break;
+    const answers = await inquirer.prompt(Common.commonQuestion);
+    if (answers.isPage) {
+      TemplateCreator.pageWriter(answers.name, process.cwd(), answers.hasStyle);
+      if (answers.hasCustomRoute) {
+        createCustomRoute(answers.customRouteName, `/${answers.name}/index`);
+      }
+    } else if (answers.name !== '') {
+      TemplateCreator.component(answers.name, answers.componentBasedOnModuleName, answers.hasStyle);
     }
   });
 
