@@ -1,0 +1,27 @@
+import React from 'react';
+{{^isComponent}}
+import { I{{name}} } from '../entities';
+{{/isComponent}}
+{{#hasStyle}}
+import { {{styleName}} } from './styles';
+{{/hasStyle}}
+{{#isComponent}}
+declare interface IProps {
+
+}
+{{/isComponent}}
+
+const {{name}}: React.FC<{{^isComponent}}I{{definitionName}}.{{/isComponent}}IProps> = props => {
+  {{#hasStyle}}
+  return (
+    <{{styleName}}>
+      <div>{{name}}</div>
+    </{{styleName}}>
+  )
+  {{/hasStyle}}
+  {{^hasStyle}}
+  return (<div>{{name}}</div>)
+  {{/hasStyle}}
+};
+
+export { {{name}} };
