@@ -46,8 +46,6 @@ CLI boilerplate for create  project file and content with predefined templates f
    
   -  Add predefined content to newly created file by using built-in mustache templating engine.
 
-  - Append new line of content on the desired position to existing file by using regex algorithms.
-
 <br/>
 
 ## Getting Started
@@ -90,23 +88,27 @@ Run the following command for compile typescript code anytime you made changes i
 
     More info about [mustache.js](https://github.com/janl/mustache.js)
 
-- Define file path into config.ts
-
-- You should define new regex keys in order to catch existing content and append new content to spesicific position in the file which is already exist.
-
-
 <br/>
 
 #### Outline of some logics behind the methods:
 
-- To create new file:
+#### With supported features
 
-Set file name -> Send properties to template method -> Define file path -> Generate string content from template -> Send the string content to fs module method -> Create new file with predefined content.
+  ##### 1. Page create
 
-- To append content to existing file:
+    - Create page and module place
 
- Set regex key for catch spesific position in the file content.
-    -> Send properties to template method -> Generate string content from template
-      -> Send the string content to fs module method -> Append content to existing file.
+    - Custom alias path for the page
 
+    - Auto generate definition file
+
+  ##### 2. Component create
+
+    - can specific component place
+
+  ##### 3. For both
+
+    - can auto export and append to index
+
+    - use styled component
 
