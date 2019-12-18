@@ -7,7 +7,7 @@ import * as figlet from 'figlet';
 import * as inquirer from 'inquirer';
 import * as inquirerFuzzyPath from 'inquirer-fuzzy-path';
 import { Common } from './lib/commonQuestion';
-import { TemplateCreator, createCustomRoute } from './lib/helper';
+import { TemplateCreator, createCustomRoute, caseTransform } from './lib/helper';
 
 inquirer.registerPrompt('fuzzypath', inquirerFuzzyPath);
 console.clear();
@@ -25,7 +25,8 @@ program
     if (answers.isPage) {
       TemplateCreator.pageWriter(answers.name, process.cwd(), answers.hasStyle);
       if (answers.hasCustomRoute) {
-        createCustomRoute(answers.customRouteName, `/${answers.name}/index`);
+        const routeName = answers.customRouteName.replace(/^\//, '');
+        createCustomRoute(routeName, `${caseTransform(answers.name)}`);
       }
     } else if (answers.name !== '') {
       TemplateCreator.component(answers.name, answers.componentBasedOnModuleName, answers.hasStyle);

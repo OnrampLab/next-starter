@@ -153,4 +153,4 @@ class TemplateCreator {
   }
 }
 
-export { TemplateCreator, createCustomRoute };
+export { TemplateCreator, createCustomRoute, caseTransform };
