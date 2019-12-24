@@ -56,11 +56,11 @@ function writeFileRecursive(data: string, absPath: string) {
 }
 
 function indexAppend(folderPath: string, nameOfFile: string) {
-  appendFileSync(resolve(folderPath, 'index.ts'), `export * from './${nameOfFile}';`);
+  appendFileSync(resolve(folderPath, 'index.ts'), `export * from './${nameOfFile}';\n`);
 }
 
 function caseTransform(str: string) {
-  return str.replace(/([A-Z0-9])/g, $1 => `-${$1.toLowerCase()}`).replace('-', '');
+  return str.replace(/([A-Z0-9])/g, $1 => `-${$1.toLowerCase()}`).replace(/^\-/, '');
 }
 
 function firstLetter(str: string) {
