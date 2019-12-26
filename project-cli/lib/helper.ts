@@ -18,7 +18,7 @@ function createComponentTemplate(props: {
   return result;
 }
 
-function createPageTemplate(props: { name: string }) {
+function createPageTemplate(props: { name: string; moduleName: string }) {
   const template = readFileSync(
     resolve(__dirname, './templates/functional/pages.mustache'),
     'utf8',
@@ -110,18 +110,24 @@ class TemplateCreator {
     const _path = resolve(rootPath, 'src', 'pages', caseTransform(name), `index.tsx`);
     const definitionName = firstLetter(name).upper;
     if (!checkExists(_path)) {
-      const _pageTemplate = createPageTemplate({ name });
+      const componentName = `${firstLetter(name).upper}Page`;
+      const moduleName = `${caseTransform(name)}`;
+      const styleName = `${firstLetter(name).upper}Style`;
+      const _pageTemplate = createPageTemplate({
+        name: componentName,
+        moduleName,
+      });
       const _componentTemplate = createComponentTemplate({
         hasStyle,
-        name,
+        name: componentName,
         definitionName,
         isComponent: false,
-        styleName: `${name}Style`,
+        styleName,
         tag: 'div',
       });
       const _defFiles = createDefinitionTemplate({ name: definitionName });
 
-      const _modulePath = resolve(rootPath, 'src', 'modules', name);
+      const _modulePath = resolve(rootPath, 'src', 'modules', moduleName);
       // Write page
       writeFileRecursive(_pageTemplate, _path);
       // Write definition
@@ -132,17 +138,17 @@ class TemplateCreator {
       // Write Component
       writeFileRecursive(
         _componentTemplate,
-        resolve(_modulePath, 'pages', `${firstLetter(name).upper}.tsx`),
+        resolve(_modulePath, 'pages', `${firstLetter(name).upper}Page.tsx`),
       );
 
       if (hasStyle) {
-        const _styleTemplate = createStyleTemplate({ name: `${name}Style`, tag: 'div' });
+        const _styleTemplate = createStyleTemplate({ name: styleName, tag: 'div' });
         writeFileRecursive(_styleTemplate, resolve(_modulePath, 'pages/styles', `${name}.ts`));
         indexAppend(resolve(_modulePath, 'pages/styles'), name);
       }
 
       // pages index append
-      indexAppend(resolve(_modulePath, 'pages'), `${firstLetter(name).upper}`);
+      indexAppend(resolve(_modulePath, 'pages'), componentName);
       // module index append
       indexAppend(_modulePath, 'pages');
       // entities index append
