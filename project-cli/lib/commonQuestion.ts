@@ -34,6 +34,7 @@ export namespace Common {
       excludeFilter: nodePath => nodePath === '.',
       itemType: 'directory',
       depth: 7,
+      suggestOnly: true,
       rootPath: './src/modules',
     },
     {

@@ -90,6 +90,10 @@ Run the following command for compile typescript code anytime you made changes i
 
 <br/>
 
+#### TODO:
+
+- add child page
+
 #### Outline of some logics behind the methods:
 
 #### With supported features
