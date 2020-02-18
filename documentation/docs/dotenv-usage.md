@@ -41,32 +41,6 @@ const withConfig = nextRuntimeDotenv({
 })
 ```
 <br>
-İf you use unit testing you should add keys to ```setConfig``` in ```jest.setup.js``` file.
-
-```
-setConfig({
-  publicRuntimeConfig:
-  {
-    'API_URL': process.env.API_URL,
-    'API_KEY': process.env.API_KEY
-  },
-  serverRuntimeConfig: {
-    'ANY_SECRET_TOKEN': process.env.ANY_SECRET_TOKEN
-  }
-})
-```
-<br>
-To use within in the code:
-
-```
-import getConfig from 'next/config';
-
-const { publicRuntimeConfig: { API_KEY, API_URL },  serverRuntimeConfig: { ANY_SECRET_TOKEN } } = getConfig();
-````
-
-To use server only config you need to push the same keys to array of server in scope of ```withConfig``` in  ```next.config.js``` file.
-
-It's accessible from serverRuntimeConfig.
 
 > **WARNING**:
 

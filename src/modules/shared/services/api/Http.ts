@@ -1,4 +1,3 @@
-import getConfig from 'next/config';
 import { stringify } from 'query-string';
 import Axios from 'axios';
 
@@ -18,16 +17,14 @@ declare type RequestMethods =
   | 'patch'
   | 'PATCH';
 
-const {
-  publicRuntimeConfig: { API_KEY } = { API_KEY: '' },
-}: { publicRuntimeConfig: { API_KEY: string } } = getConfig();
-// const { publicRuntimeConfig: { API_KEY } = {} } = getConfig() || {};
+const apiKey = process.env.API_KEY;
 let BaseUrl = `/api`;
 
 let headers = {
   'content-type': 'application/json',
-  authorization: `Bearer ${API_KEY}`,
+  authorization: `Bearer ${apiKey}`,
 };
+
 
 export const Http = {
   setBaseUrl: (url: string) => (BaseUrl = url),
@@ -38,7 +35,7 @@ export const Http = {
     params?: any,
     payload?: any,
   ): Promise<A> => {
-    const query = params ? `?${stringify({ ...params, api_key: API_KEY })}` : '';
+    const query = params ? `?${stringify({ ...params, api_key: apiKey })}` : '';
 
     return Axios(`${BaseUrl}${url}${query}`, {
       method: methodType,

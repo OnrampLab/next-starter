@@ -5,12 +5,7 @@ const withCSS = require('@zeit/next-css');
 const withSass = require('@zeit/next-sass');
 const withLess = require('@zeit/next-less');
 const withBundleAnalyzer = require('@zeit/next-bundle-analyzer');
-const nextRuntimeDotenv = require('next-runtime-dotenv');
 /* eslint-enable @typescript-eslint/no-var-requires */
-
-const withConfig = nextRuntimeDotenv({
-  public: ['API_URL', 'API_KEY'],
-});
 
 if (typeof require !== 'undefined') {
   require.extensions['.less'] = () => {};
@@ -18,8 +13,8 @@ if (typeof require !== 'undefined') {
 
 const nextConfig = {
   env: {
-    weatherApi: '',
-    mapBoxApi: '',
+    API_URL: process.env.API_URL,
+    API_KEY: process.env.API_KEY,
   },
   onDemandEntries: {
     maxInactiveAge: 1000 * 60 * 60,
@@ -46,12 +41,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withConfig(withPlugins(
-  [
-    [withCSS],
-    [withSass],
-    [withLess],
-    [withBundleAnalyzer]
-  ],
-  nextConfig,
-));
+module.exports = withPlugins([[withCSS], [withSass], [withLess], [withBundleAnalyzer]], nextConfig);

@@ -81,3 +81,6 @@ documentation/website/build
 
 # reports
 reports
+
+# storybooks
+storybook-static

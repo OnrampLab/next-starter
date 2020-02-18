@@ -3175,6 +3175,13 @@
   dependencies:
     next "*"
 
+"@types/nock@^11.1.0":
+  version "11.1.0"
+  resolved "https://registry.yarnpkg.com/@types/nock/-/nock-11.1.0.tgz#0a8c1056a31ba32a959843abccf99626dd90a538"
+  integrity sha512-jI/ewavBQ7X5178262JQR0ewicPAcJhXS/iFaNJl0VHLfyosZ/kwSrsa6VNQNSO8i9d8SqdRgOtZSOKJ/+iNMw==
+  dependencies:
+    nock "*"
+
 "@types/node@*", "@types/node@^12.0.8":
   version "12.12.14"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.14.tgz#1c1d6e3c75dba466e0326948d56e8bd72a1903d2"
@@ -11642,6 +11649,11 @@ mkdirp@0.5.1, mkdirp@0.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp
   dependencies:
     minimist "0.0.8"
 
+mkdirp@^1.0.0:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.3.tgz#4cf2e30ad45959dddea53ad97d518b6c8205e1ea"
+  integrity sha512-6uCP4Qc0sWsgMLy1EOqqS/3rjDHOEnsStVr/4vtAIK2Y5i2kA7lFFejYrpIyiN9w0pYf4ckeCYT9f1r1P9KX5g==
+
 moment@2.x, moment@^2.24.0:
   version "2.24.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
@@ -11778,13 +11790,6 @@ next-routes@^1.4.2:
   dependencies:
     path-to-regexp "^2.1.0"
 
-next-runtime-dotenv@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/next-runtime-dotenv/-/next-runtime-dotenv-1.2.0.tgz#8392d99a639f49d2ee48e086f000321632280653"
-  integrity sha512-5Tnoey7U0JZb6M5StHtcFjT0ZBWXRbwnWZgbXqI+XKmMMUVH3lD1ogPSMoXMZcH2Q5stZUsyyfQfzDOIoHPBHw==
-  dependencies:
-    dotenv "^8.0.0"
-
 next-tick@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
@@ -11893,6 +11898,17 @@ no-case@^2.2.0:
   integrity sha512-rmTZ9kz+f3rCvK2TD1Ue/oZlns7OGoIWP4fc3llxxRXlOkHKoWPPWJOfFYpITabSow43QJbRIoHQXtt10VldyQ==
   dependencies:
     lower-case "^1.1.1"
+
+nock@*:
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/nock/-/nock-12.0.0.tgz#f405309bbf305d9a5bba2e9718aab4463edc9572"
+  integrity sha512-aTzDlXFH/Xq4m2V5x5nV13RTvYX8RXXcurCx6z4+y8IsloFMizZsDe/189GX1pSMJ99HBFZAokS5sMiMX/qfaQ==
+  dependencies:
+    debug "^4.1.0"
+    json-stringify-safe "^5.0.1"
+    lodash "^4.17.13"
+    mkdirp "^1.0.0"
+    propagate "^2.0.0"
 
 nock@^10.0.6:
   version "10.0.6"
@@ -14021,6 +14037,11 @@ propagate@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/propagate/-/propagate-1.0.0.tgz#00c2daeedda20e87e3782b344adba1cddd6ad709"
   integrity sha1-AMLa7t2iDofjeCs0Stuhzd1q1wk=
+
+propagate@^2.0.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/propagate/-/propagate-2.0.1.tgz#40cdedab18085c792334e64f0ac17256d38f9a45"
+  integrity sha512-vGrhOavPSTz4QVNuBNdcNXePNdNMaO1xj9yBeH1ScQPjk/rhg9sSlCXPhMkFuaNNW/syTvYqsnbIJxMBfRbbag==
 
 property-information@^5.0.0, property-information@^5.3.0:
   version "5.3.0"
