@@ -56,7 +56,15 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            yarn test
+            yarn test:ci
+          environment:
+            JEST_JUNIT_OUTPUT_DIR: "reports/jest/js-test-results.xml"
+
+      - store_test_results:
+          path: reports
+
+      - store_artifacts:
+          path: reports
 
       - deploy:
           command: |

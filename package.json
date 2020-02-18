@@ -13,6 +13,7 @@
     "cli": "node ./project-cli/dist/index.js a",
     "postinstall": "cd project-cli && npm i && npm run build",
     "test": "jest --coverage",
+    "test:ci": "jest --ci --runInBand --reporters=default --reporters=jest-junit --coverage",
     "lint": "eslint -c .eslintrc.js --ext .ts,.tsx src",
     "format": "eslint -c .eslintrc.js --ext .ts,.tsx --fix src",
     "storybook": "start-storybook -p 6006",
