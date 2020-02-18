@@ -48,11 +48,19 @@ commands:
           environment:
             JEST_JUNIT_OUTPUT_DIR: "reports/jest/js-test-results.xml"
 
+      - run:
+          name: Build storybooks
+          command: |
+            yarn build-storybook
+
       - store_test_results:
           path: reports
 
       - store_artifacts:
           path: reports
+
+      - store_artifacts:
+          path: storybook-static
 
   deploy_to_server:
     description: "Deploy"
