@@ -95,7 +95,7 @@ jobs:
   build:
     working_directory: ~/project
     docker:
-      - image: circleci/node:10.13.0
+      - image: circleci/node:12.15.0
 
     steps:
       - build_and_test
@@ -103,7 +103,7 @@ jobs:
   build_prod:
     working_directory: ~/project
     docker:
-      - image: circleci/node:10.13.0
+      - image: circleci/node:12.15.0
 
     steps:
       - build_and_test

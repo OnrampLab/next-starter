@@ -22,7 +22,7 @@ set :linked_files, %w(.env)
 
 # nvm settings
 set :nvm_type, :user # or :system, depends on your nvm setup
-set :nvm_node, 'v10.13.0'
+set :nvm_node, 'v12.15.0'
 set :nvm_map_bins, %w{node yarn pm2}
 set :nvm_node_path, -> {
   if fetch(:nvm_type, :user) == :system
