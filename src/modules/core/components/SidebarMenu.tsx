@@ -348,9 +348,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setWeak: bindActionCreators(wrapperActions.setWeak, dispatch),
 });
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(SidebarContent),
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SidebarContent));

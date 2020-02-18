@@ -78,7 +78,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setMobileDrawer: bindActionCreators(wrapperActions.setMobileDrawer, dispatch),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(MainHeader);
+export default connect(mapStateToProps, mapDispatchToProps)(MainHeader);

@@ -9,27 +9,27 @@ import { Provider } from 'react-redux';
 import { demoReducer } from '../redux/reducers/demoReducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { Http } from '@onr/shared';
-import nock from 'nock'
+import nock from 'nock';
 
 describe('PlanetPage component test', () => {
   beforeAll(() => {
-    Http.setBaseUrl('http://localhost:3000/api')
-  })
+    Http.setBaseUrl('http://localhost:3000/api');
+  });
   beforeEach(() => {
     nock('http://localhost:3000')
       .get('/api/planetary/apod')
       .query({ api_key: 'NNKOjkoul8n1CH18TWA9gwngW1s1SmjESPjNoUFo', hd: true })
       .reply(200, {
-        copyright: "Pankod",
-        date: "2019-05-23",
-        explanation: "test",
-        hdurl: "",
-        media_type: "",
-        service_version: "",
-        title: "test",
-        url: ""
+        copyright: 'Pankod',
+        date: '2019-05-23',
+        explanation: 'test',
+        hdurl: '',
+        media_type: '',
+        service_version: '',
+        title: 'test',
+        url: '',
       });
-  })
+  });
   test('Render Component work fine', () => {
     const planetProps: IPlanetImage = {
       copyright: 'test',
@@ -48,17 +48,26 @@ describe('PlanetPage component test', () => {
   });
 
   test('Render Page Work fine', async () => {
-    const mockFn = jest.fn()
-    const store: any = createStore(combineReducers({ demoStore: (...arg ) => {mockFn();return demoReducer(...arg)} }), {}, composeWithDevTools(applyMiddleware(thunkMiddleware)));
+    const mockFn = jest.fn();
+    const store: any = createStore(
+      combineReducers({
+        demoStore: (...arg) => {
+          mockFn();
+          return demoReducer(...arg);
+        },
+      }),
+      {},
+      composeWithDevTools(applyMiddleware(thunkMiddleware)),
+    );
     const result = render(
       <Provider store={store}>
         <DailyPlanetPage></DailyPlanetPage>
       </Provider>,
     );
     expect(mockFn).toBeCalled();
-    await waitForElement(() => result.getByTestId('planet-btn'))
+    await waitForElement(() => result.getByTestId('planet-btn'));
     fireEvent.click(result.getByTestId('planet-btn'));
-    expect(result.getByTestId('planet-card')).not.toBeUndefined()
-    expect(result.getAllByText('test').length).toBe(2)
+    expect(result.getByTestId('planet-card')).not.toBeUndefined();
+    expect(result.getAllByText('test').length).toBe(2);
   });
 });
