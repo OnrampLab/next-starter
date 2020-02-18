@@ -1,26 +1,14 @@
-# https://discuss.circleci.com/t/build-on-tag/9864/42
-# NOTE: a workaround that make circle-ci 2.0 support $CIRCLE_TAG environment variable
-deployment:
-  fake_deploy_for_production:
-    tag: /.*/
-    commands:
-      - echo "make tags run in 2.0"
+version: 2.1
 
-version: 2
-jobs:
-  build:
-    working_directory: ~/project
-    docker:
-      - image: circleci/node:10.13.0
-        cmd: ["/bin/bash"]
-
+commands:
+  build_and_test:
+    description: "Build and test"
     steps:
       - run:
           name: Install System Libs
           command: |
             sudo apt -qq update
-            sudo apt install -y -qq bcrypt ruby-full
-            sudo chmod -R 777 /var/lib/gems /usr/local/bin
+            sudo apt install -y -qq bcrypt
 
       - checkout
 
@@ -66,16 +54,89 @@ jobs:
       - store_artifacts:
           path: reports
 
+  deploy_to_server:
+    description: "Deploy"
+    steps:
+      - checkout
+
+      - run:
+          name: Copy Env File
+          command: |
+            cp .env.example .env
+
+      - run:
+          name: Fix host authenticity for wiki.onramplab.com
+          command: |
+            ssh-keyscan wiki.onramplab.com >> ~/.ssh/known_hosts
+
       - deploy:
           command: |
-            # /usr/bin/gem install bundler -v 1.16.0
-            # bundle install
+            gem install bundler -v 1.17.3
+            bundle check || bundle install
 
             echo "current branch is ${CIRCLE_BRANCH}"
             echo "current tag is ${CIRCLE_TAG}"
 
-            # if [[ -n "${CIRCLE_TAG}" ]]; then
-            #   CI_BRANCH="${CIRCLE_TAG}" cap production deploy
-            # elif [[ "${CIRCLE_BRANCH}" == "master" ]]; then
-            #   CI_BRANCH=master cap staging deploy
-            # fi
+            if [[ -n "${CIRCLE_TAG}" ]]; then
+              USERNAME=${CIRCLE_USERNAME} VIA_BASTION=1 CI_BRANCH="${CIRCLE_TAG}" cap production deploy --trace
+            elif [[ "${CIRCLE_BRANCH}" == "master" ]]; then
+              USERNAME=${CIRCLE_USERNAME} VIA_BASTION=1 CI_BRANCH=master cap staging deploy --trace
+            fi
+
+jobs:
+  build:
+    working_directory: ~/project
+    docker:
+      - image: circleci/node:10.13.0
+
+    steps:
+      - build_and_test
+
+  build_prod:
+    working_directory: ~/project
+    docker:
+      - image: circleci/node:10.13.0
+
+    steps:
+      - build_and_test
+
+  deploy_staging:
+    docker:
+      - image: circleci/ruby:2.4.2-jessie-node
+
+    steps:
+      - deploy_to_server
+
+  deploy_prod:
+    docker:
+      - image: circleci/ruby:2.4.2-jessie-node
+
+    steps:
+      - deploy_to_server
+
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      # - deploy_staging:
+      #     requires:
+      #       - build
+      #     filters:
+      #       branches:
+      #         only: master
+      - build_prod:
+          filters:  # required since `deploy` has tag filters AND requires `build`
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      # - deploy_prod:
+      #     requires:
+      #       - build_prod
+      #     filters:
+      #       tags:
+      #         only: /^v.*/
+      #       branches:
+      #         ignore: /.*/
