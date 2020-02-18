@@ -3,7 +3,7 @@ import nock from 'nock';
 
 describe('Axios request tests', () => {
   beforeAll(() => {
-    Http.setBaseUrl('http://localhost:3000/api')
+    Http.setBaseUrl('http://localhost:3000/api');
     nock('http://localhost:3000')
       .get('/api/200')
       .reply(200, { success: true });
@@ -22,7 +22,7 @@ describe('Axios request tests', () => {
     try {
       await Http.request('get', '/404');
     } catch (error) {
-      expect(error).not.toBeUndefined()
+      expect(error).not.toBeUndefined();
     }
   });
 

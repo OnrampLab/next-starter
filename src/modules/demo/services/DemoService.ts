@@ -12,9 +12,8 @@ export class DemoService {
       const response = await PlanetaryApiService.getMarsPhotos(payload);
       return response.photos;
     } catch (error) {
-      console.log(error)
-      throw error
+      console.log(error);
+      throw error;
     }
-
   }
 }

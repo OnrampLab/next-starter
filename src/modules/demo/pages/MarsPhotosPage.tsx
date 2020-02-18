@@ -9,7 +9,9 @@ const getMarsPhotos = async (dateString: string) => {
       earth_date: dateString,
       camera: 'NAVCAM',
     },
-  }).catch(err => {throw err});
+  }).catch(err => {
+    throw err;
+  });
 };
 
 export const MarsPhotosPage: React.FC = () => {
@@ -22,7 +24,7 @@ export const MarsPhotosPage: React.FC = () => {
       const photos = await getMarsPhotos(dateString);
       setMarsPhotos(photos);
     } catch (error) {
-      message.error(error.message)
+      message.error(error.message);
     } finally {
       setLoading(false);
     }
