@@ -34,7 +34,7 @@
     "next-compose-plugins": "^2.2.0",
     "next-redux-wrapper": "^4.0.0",
     "next-routes": "^1.4.2",
-    "nock": "^10.0.6",
+    "nock": "^12.0.0",
     "node-sass": "^4.12.0",
     "nprogress": "^0.2.0",
     "postcss-easy-import": "^3.0.0",
