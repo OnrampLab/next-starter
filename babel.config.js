@@ -34,13 +34,5 @@ module.exports = {
           "libraryName": "antd"
         }, "ant"
       ],
-      [
-        "import",
-        {
-          "libraryName": "react-feather",
-          "libraryDirectory": "dist/icons"
-        },
-        "react-feather"
-      ]
     ]
 }
