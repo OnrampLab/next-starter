@@ -13,6 +13,7 @@ module.exports = {
       jsx: true,
     },
     project: './tsconfig.json',
+    createDefaultProgram: true,
   },
   rules: {
     // Disabled Rules
