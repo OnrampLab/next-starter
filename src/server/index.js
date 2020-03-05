@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const express = require('express');
+const bodyParser = require('body-parser');
 const next = require('next');
 const path = require('path');
 const devProxy = require('./proxy');
@@ -13,6 +14,12 @@ const app = next({
 
 const routes = require('./routes');
 const handler = routes.getRequestHandler(app);
+const fakeUser = {
+  id: 1,
+  email: 'admin@test.com',
+  password: 'test',
+  token: 'fake_token',
+};
 
 app.prepare().then(() => {
   const server = express();
@@ -20,6 +27,7 @@ app.prepare().then(() => {
   app.setAssetPrefix(process.env.STATIC_PATH);
 
   server.use(express.static(path.join(__dirname, '../../public')));
+  server.use(bodyParser());
 
   if (process.env.PROXY_MODE === 'local') {
     const proxyMiddleware = require('http-proxy-middleware');
@@ -29,11 +37,18 @@ app.prepare().then(() => {
   }
 
   server.post('/onr-login', (req, res) => {
-    res.send({
-      id: 111,
-      token: '1111',
-    });
-    res.end();
+    const { email, password } = req.body || {};
+
+    if (email === fakeUser.email && password === fakeUser.password) {
+      res.json({
+        id: fakeUser.id,
+        token: fakeUser.token,
+      });
+    } else {
+      res.status(409).json({
+        message: 'Wrong email or password',
+      });
+    }
   });
 
   server.use(function(req, res) {
