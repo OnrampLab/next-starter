@@ -5,6 +5,7 @@ const withCSS = require('@zeit/next-css');
 const withSass = require('@zeit/next-sass');
 const withLess = require('@zeit/next-less');
 const withBundleAnalyzer = require('@zeit/next-bundle-analyzer');
+const withPWA = require('next-pwa');
 /* eslint-enable @typescript-eslint/no-var-requires */
 
 if (typeof require !== 'undefined') {
@@ -39,6 +40,12 @@ const nextConfig = {
     ignoreDevErrors: true,
     ignoreBuildErrors: true,
   },
+  pwa: {
+    dest: 'public',
+  },
 };
 
-module.exports = withPlugins([[withCSS], [withSass], [withLess], [withBundleAnalyzer]], nextConfig);
+module.exports = withPlugins(
+  [[withCSS], [withSass], [withLess], [withBundleAnalyzer], [withPWA]],
+  nextConfig,
+);
