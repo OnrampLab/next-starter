@@ -17,6 +17,13 @@ declare type RequestMethods =
   | 'patch'
   | 'PATCH';
 
+interface IRequest {
+  method: RequestMethods;
+  url: string;
+  params?: any;
+  data?: any;
+}
+
 const apiKey = process.env.API_KEY;
 let BaseUrl = `/api`;
 
@@ -25,28 +32,28 @@ let headers = {
   authorization: `Bearer ${apiKey}`,
 };
 
-
 export const Http = {
   setBaseUrl: (url: string) => (BaseUrl = url),
+
   setHeader: (params: any) => (headers = params),
-  request: async <A>(
-    methodType: RequestMethods,
-    url: string,
-    params?: any,
-    payload?: any,
-  ): Promise<A> => {
+
+  request: async <A>({ method, url, params = {}, data = {} }: IRequest): Promise<A> => {
     const query = params ? `?${stringify({ ...params, api_key: apiKey })}` : '';
 
-    return Axios(`${BaseUrl}${url}${query}`, {
-      method: methodType,
-      data: JSON.stringify(payload),
+    const res = Axios(`${BaseUrl}${url}${query}`, {
+      method: method,
+      data: JSON.stringify(data),
       headers,
-    })
-      .then(res =>
-        res.status >= 200 && res.status <= 302 ? res.data : Promise.reject(res.statusText),
-      )
-      .catch(e => {
-        throw e;
-      });
+    });
+
+    return res.status >= 200 && res.status <= 302 ? res.data : Promise.reject(res.data?.message);
+  },
+
+  get: async <A>(url: string, { params = {} } = {}): Promise<A> => {
+    return Http.request({ method: 'GET', url, params });
+  },
+
+  post: async <A>(url: string, { params = {}, data = {} } = {}): Promise<A> => {
+    return Http.request({ method: 'POST', url, params, data });
   },
 };
