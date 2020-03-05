@@ -17,24 +17,28 @@ const AuthProvider: React.FC = props => {
   useEffect(() => {
     const id = +(sessionStorage.getItem('onr_id') || '-1');
     const token: string = sessionStorage.getItem('onr_token') || '';
+
     if (id && id !== -1 && token) {
       setData({ id, token });
     }
+
     setState(AuthState.Resolve);
   }, []);
-  const login = (form: AuthModel.SigninPayload) => {
+
+  const login = async (form: AuthModel.SigninPayload) => {
     setState(AuthState.Prepare);
-    return AuthService.login(form)
-      .then(response => {
-        setData(response);
-        setState(AuthState.Resolve);
-        return response;
-      })
-      .catch(err => {
-        setState(AuthState.Resolve);
-        throw err.message;
-      });
+
+    try {
+      const response = await AuthService.login(form);
+      setData(response);
+      setState(AuthState.Resolve);
+      return response;
+    } catch (error) {
+      setState(AuthState.Resolve);
+      throw error;
+    }
   };
+
   const logout = () => {
     setState(AuthState.Prepare);
     AuthService.logout()
