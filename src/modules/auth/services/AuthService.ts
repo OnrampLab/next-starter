@@ -7,16 +7,14 @@ export const AuthService = {
 
     try {
       Http.setBaseUrl('');
-      response = await Http.request<AuthModel.SigninResponse>('POST', '/onr-login', payload.params);
+      response = await Http.post<AuthModel.SigninResponse>('/onr-login', {
+        data: payload.params,
+      });
       Http.setBaseUrl('/api');
-      response = {
-        id: 111,
-        token: '1111',
-      };
       sessionStorage.setItem('onr_id', `${response.id}`);
       sessionStorage.setItem('onr_token', response.token as string);
     } catch (error) {
-      throw new Error(`Login Error: ${error.message}`);
+      throw new Error(`Login Error: ${error.response.data.message}`);
     }
 
     return response;
@@ -25,7 +23,7 @@ export const AuthService = {
   logout: async () => {
     let response: AuthModel.SignoutResponse;
     try {
-      // response = await Http.request<AuthModel.SignoutResponse>('GET', '/logout')
+      // response = await Http.get<AuthModel.SignoutResponse>('/logout');
       response = {
         message: 'ok',
       };

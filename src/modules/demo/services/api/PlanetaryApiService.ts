@@ -10,11 +10,9 @@ export const PlanetaryApiService = {
     let response: PlanetaryModel.GetApodResponse;
 
     try {
-      response = await Http.request<PlanetaryModel.GetApodResponse>(
-        'GET',
-        '/planetary/apod',
-        payload.params,
-      );
+      response = await Http.get<PlanetaryModel.GetApodResponse>('/planetary/apod', {
+        params: payload.params,
+      });
     } catch (error) {
       console.error(error);
       throw new Error(`[PlanetaryApiService] getPlanetImage Error: ${JSON.stringify(error)}`);
@@ -29,10 +27,11 @@ export const PlanetaryApiService = {
     let response: PlanetaryModel.GetMarsPhotosResponse;
 
     try {
-      response = await Http.request<PlanetaryModel.GetMarsPhotosResponse>(
-        'GET',
+      response = await Http.get<PlanetaryModel.GetMarsPhotosResponse>(
         '/mars-photos/api/v1/rovers/curiosity/photos',
-        payload.params,
+        {
+          params: payload.params,
+        },
       );
     } catch (error) {
       console.error(error);
