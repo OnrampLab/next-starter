@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button, Checkbox, Form, Input, message as Message, Row, Spin } from 'antd';
 import { Eye, Mail, Triangle } from 'react-feather';
 
@@ -47,8 +48,8 @@ const Component = ({ form }) => {
                   auth
                     .login({
                       params: {
-                        email: form.email,
-                        password: form.password,
+                        email: values.email,
+                        password: values.password,
                       },
                     })
                     .then(response => {
