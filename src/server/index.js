@@ -3,6 +3,7 @@ const express = require('express');
 const next = require('next');
 const path = require('path');
 const devProxy = require('./proxy');
+const { parse } = require('url');
 
 const PORT = process.env.PORT || 3000;
 
@@ -18,11 +19,11 @@ app.prepare().then(() => {
 
   app.setAssetPrefix(process.env.STATIC_PATH);
 
-  server.use(express.static(path.join(__dirname, '../../static')));
+  server.use(express.static(path.join(__dirname, '../../public')));
 
   if (process.env.PROXY_MODE === 'local') {
     const proxyMiddleware = require('http-proxy-middleware');
-    Object.keys(devProxy).forEach(function(context, a) {
+    Object.keys(devProxy).forEach(function(context) {
       server.use(proxyMiddleware(context, devProxy[context]));
     });
   }
@@ -30,10 +31,22 @@ app.prepare().then(() => {
   server.post('/onr-login', (req, res) => {
     res.send({
       id: 111,
-      token: '1111'
-    })
-    res.end()
-  })
+      token: '1111',
+    });
+    res.end();
+  });
+
+  server.use(function(req, res) {
+    const parsedUrl = parse(req.url, true);
+    const { pathname } = parsedUrl;
+
+    if (pathname === '/sw.js' || pathname.startsWith('/workbox-')) {
+      const filePath = path.join(__dirname, '.next', pathname);
+      app.serveStatic(req, res, filePath);
+    } else {
+      handler(req, res, parsedUrl);
+    }
+  });
 
   server.get('*', async (req, res) => {
     return handler(req, res);
