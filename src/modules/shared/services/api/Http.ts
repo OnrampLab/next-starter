@@ -40,7 +40,7 @@ export const Http = {
   request: async <A>({ method, url, params = {}, data = {} }: IRequest): Promise<A> => {
     const query = params ? `?${stringify({ ...params, api_key: apiKey })}` : '';
 
-    const res = Axios(`${BaseUrl}${url}${query}`, {
+    const res = await Axios(`${BaseUrl}${url}${query}`, {
       method: method,
       data: JSON.stringify(data),
       headers,
