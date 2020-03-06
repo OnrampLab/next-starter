@@ -5,7 +5,7 @@ import { LoginPayload, LoginResponse } from '../interfaces';
  */
 declare namespace AuthModel {
   export interface SigninPayload {
-    params: LoginPayload;
+    data: LoginPayload;
   }
 
   export interface SigninResponse extends LoginResponse {}
