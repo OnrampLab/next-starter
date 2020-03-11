@@ -4,6 +4,7 @@ import { Eye, Mail, Triangle } from 'react-feather';
 
 import Link from 'next/link';
 import styled from 'styled-components';
+import styles from './Signin.module.scss';
 
 import { useAuth, AuthState } from './Auth';
 
@@ -36,7 +37,7 @@ const Component = ({ form }) => {
             </Link>
             <h5 className="mb-0 mt-3">Sign in</h5>
 
-            <p className="text-muted">get started with our service</p>
+            <p className={styles.error}>get started with our service</p>
           </div>
 
           <Form
