@@ -38,7 +38,7 @@ export const Http = {
   setHeader: (params: any) => (headers = params),
 
   request: async <A>({ method, url, params = {}, data = {} }: IRequest): Promise<A> => {
-    const query = params ? `?${stringify({ ...params, api_key: apiKey })}` : '';
+    const query = Object.keys(params).length > 0 ? `?${stringify({ ...params, api_key: apiKey })}` : '';
 
     const res = await Axios(`${BaseUrl}${url}${query}`, {
       method: method,
