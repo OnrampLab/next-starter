@@ -14,13 +14,19 @@ describe('Axios request tests', () => {
   });
 
   test('200 test', async () => {
-    const result = await Http.request<{ success: boolean }>('get', '/200');
+    const result = await Http.request<{ success: boolean }>({
+      method: 'get',
+      url: '/200',
+    });
     expect(result.success).toEqual(true);
   });
 
   test('404 test', async () => {
     try {
-      await Http.request('get', '/404');
+      await Http.request({
+        method: 'get',
+        url: '/404',
+      });
     } catch (error) {
       expect(error).not.toBeUndefined();
     }
@@ -28,7 +34,10 @@ describe('Axios request tests', () => {
 
   test('Catch test', async () => {
     try {
-      await Http.request('get', '');
+      await Http.request({
+        method: 'get',
+        url: '',
+      });
     } catch (error) {
       expect(error.code).toBeUndefined();
     }

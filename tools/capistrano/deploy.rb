@@ -17,7 +17,7 @@ set :format, :pretty
 set :log_level, :debug
 set :pty, true
 set :keep_releases, 5
-set :linked_dirs, %w{node_modules}
+set :linked_dirs, %w{node_modules logs}
 set :linked_files, %w(.env)
 
 # nvm settings

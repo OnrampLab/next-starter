@@ -10,7 +10,6 @@ set :php_fpm, 'php7.0-fpm'
 
 set :ssh_options, {
   user: fetch(:user),
-  auth_methods: %w(publickey),
   keys: [
     File.join(ENV['HOME'], '.ssh', 'id_rsa'),
     File.join(ENV['HOME'], '.ssh', ENV['STAGING_PEM'])

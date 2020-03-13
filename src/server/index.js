@@ -67,9 +67,36 @@ app.prepare().then(() => {
     return handler(req, res);
   });
 
-  server.listen(PORT, err => {
+  const instance = server.listen(PORT, err => {
     if (err) throw err;
     console.log(`> Ready on http://localhost:${PORT}`);
+
+    // NOTE: we enabled the cluster mode of pm2.
+    //       http://pm2.keymetrics.io/docs/usage/cluster-mode/#cluster-mode
+    //       it required slave processes to notify master process if it's ready to accept requests.
+    if (process.send) {
+      console.log(`process(${process.pid}) is ready`);
+      process.send('ready');
+    }
+  });
+
+  const shutdown = async () => {
+    console.log('server is closing now');
+
+    instance.close(error => {
+      if (error) {
+        console.error('server closed with error', error);
+        process.exit(1);
+      }
+
+      console.log('server closed');
+      process.exit(0);
+    });
+  };
+
+  process.on('SIGINT', async () => {
+    console.error(`SIGINT ${process.pid}`);
+    shutdown();
   });
 });
 
