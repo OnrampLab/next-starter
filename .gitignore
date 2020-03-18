@@ -85,3 +85,7 @@ reports
 
 # storybooks
 storybook-static
+
+# public
+public/*
+!public/static
