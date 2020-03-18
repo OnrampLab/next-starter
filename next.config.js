@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const withPlugins = require('next-compose-plugins');
-
 const withCSS = require('@zeit/next-css');
 const withSass = require('@zeit/next-sass');
 const withLess = require('@zeit/next-less');
 const withBundleAnalyzer = require('@zeit/next-bundle-analyzer');
 const withPWA = require('next-pwa');
+const Dotenv = require('dotenv-webpack');
+const path = require('path');
 /* eslint-enable @typescript-eslint/no-var-requires */
 
 if (typeof require !== 'undefined') {
@@ -13,10 +14,6 @@ if (typeof require !== 'undefined') {
 }
 
 const nextConfig = {
-  env: {
-    API_URL: process.env.API_URL,
-    API_KEY: process.env.API_KEY,
-  },
   onDemandEntries: {
     maxInactiveAge: 1000 * 60 * 60,
     pagesBufferLength: 5,
@@ -42,6 +39,16 @@ const nextConfig = {
   },
   pwa: {
     dest: 'public',
+  },
+  webpack: config => {
+    config.plugins.push(
+      new Dotenv({
+        path: path.join(__dirname, '.env'),
+        systemvars: true,
+      }),
+    );
+
+    return config;
   },
 };
 
