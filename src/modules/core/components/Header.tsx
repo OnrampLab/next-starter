@@ -1,3 +1,4 @@
+import React from 'react';
 import { Avatar, Layout, Menu } from 'antd';
 import { BarChart, ChevronsDown, Settings, Triangle } from 'react-feather';
 import Link from 'next/link';

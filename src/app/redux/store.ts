@@ -33,12 +33,13 @@ const _store: Store = createStore(
 
 export const afterComponentDidMount = () => {
   // TODO: window initialize
+  const mql = window.matchMedia(`(min-width: 992px)`);
+
   const mediaQueryChanged = () => {
     _store.dispatch(wrapperActions.setMobile(!mql.matches));
     return () => mql.removeListener(mediaQueryChanged);
   };
 
-  const mql = window.matchMedia(`(min-width: 992px)`);
   mql.addListener(mediaQueryChanged);
   _store.dispatch(
     wrapperActions.setup({

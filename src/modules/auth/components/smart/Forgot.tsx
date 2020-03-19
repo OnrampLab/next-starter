@@ -1,9 +1,11 @@
+import React from 'react';
 import { Button, Form, Input, Message, Row } from 'antd';
 import { Mail, Triangle } from 'react-feather';
 
 import Link from 'next/link';
 import Router from 'next/router';
 import styled from 'styled-components';
+import { FormComponentProps } from 'antd/lib/form';
 
 const FormItem = Form.Item;
 
@@ -13,7 +15,7 @@ const Content = styled.div`
   min-width: 300px;
 `;
 
-const Forgot = ({ form }) => (
+const Forgot: React.FC<FormComponentProps> = ({ form }) => (
   <Row
     type="flex"
     align="middle"
@@ -39,7 +41,7 @@ const Forgot = ({ form }) => (
           e.preventDefault();
           form.validateFields((err, values) => {
             if (!err) {
-              Message.success('Reset email sent. Please check your inbox!').then(() =>
+              Message.success('Reset email sent. Please check your inbox!').then(async () =>
                 Router.push('/signin'),
               );
             }
@@ -75,7 +77,7 @@ const Forgot = ({ form }) => (
 
         <div className="text-center">
           <small className="text-muted text-center">
-            <span>Don't have an account yet?</span>
+            <span>{`Don't have an account yet?`}</span>
             <Link href="/signup">
               <a>&nbsp;Create one now!</a>
             </Link>

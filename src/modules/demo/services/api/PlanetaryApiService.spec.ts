@@ -35,9 +35,9 @@ describe('Planetary Service tests', () => {
 
   test('500 test', async () => {
     await expect(
-      PlanetaryApiService.getPlanetImage({ params: { hd: false } }).catch(err =>
-        Promise.reject(err.message),
-      ),
+      PlanetaryApiService.getPlanetImage({ params: { hd: false } }).catch(err => {
+        throw err;
+      }),
     ).rejects.toMatch(/^\[PlanetaryApiService\] getPlanetImage Error/);
   });
 });

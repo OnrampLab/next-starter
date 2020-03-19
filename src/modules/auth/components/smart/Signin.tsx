@@ -118,7 +118,7 @@ const Component = ({ form }) => {
 
             <div className="text-center">
               <small className="text-muted">
-                <span>Don't have an account yet?</span>{' '}
+                <span>{`Don't have an account yet?`}</span>{' '}
                 <Link href="/signup">
                   <a>&nbsp;Create one now!</a>
                 </Link>

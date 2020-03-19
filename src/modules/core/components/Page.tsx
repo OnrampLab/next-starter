@@ -15,7 +15,7 @@ import { IWrapperPage, IStore } from '@onr/core';
 const { Content } = Layout;
 
 const NonDashboardRoutes = ['/auth/signin', '/auth/signup', '/forgot', '/lockscreen', '/_error'];
-
+/* eslint-disable complexity*/
 const Component = (props: IWrapperPage.IProps & WithRouterProps) => {
   const { router, menuItems, children } = props;
   const state = props;
