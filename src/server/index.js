@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable complexity */
 const express = require('express');
 const bodyParser = require('body-parser');
 const next = require('next');
@@ -27,7 +28,12 @@ app.prepare().then(() => {
   app.setAssetPrefix(process.env.STATIC_PATH);
 
   server.use(express.static(path.join(__dirname, '../../public')));
-  server.use(bodyParser());
+  server.use(
+    bodyParser.urlencoded({
+      extended: true,
+    }),
+  );
+  server.use(bodyParser.json({}));
 
   if (process.env.PROXY_MODE === 'local') {
     const proxyMiddleware = require('http-proxy-middleware');
