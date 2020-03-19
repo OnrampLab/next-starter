@@ -1,5 +1,4 @@
 import React from 'react';
-import '@ant-design/compatible/assets/index.css';
 import { Button, Input, message as Message, Row, Form } from 'antd';
 import { Mail, Triangle } from 'react-feather';
 
