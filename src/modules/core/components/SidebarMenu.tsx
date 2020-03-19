@@ -13,7 +13,7 @@ import {
   Tooltip,
 } from 'antd';
 import { Book, LogOut, Triangle } from 'react-feather';
-import * as React from 'react';
+import React from 'react';
 import { withRouter, WithRouterProps } from 'next/router';
 import Link from 'next/link';
 import { connect } from 'react-redux';
@@ -25,7 +25,7 @@ import { capitalize, lowercase } from '../../../lib/helpers';
 
 import { wrapperActions, IWrapperPage, IStore } from '@onr/core';
 import { useAuth } from '@onr/auth/components/smart/Auth';
-
+/* eslint-disable complexity  */
 interface ISidebarMenuProps extends IWrapperPage.IProps, WithRouterProps {
   sidebarTheme: 'dark' | 'light';
   sidebarMode: 'vertical' | 'inline';
@@ -275,13 +275,16 @@ const SidebarContent = (props: ISidebarMenuProps) => {
           visible={state.optionDrawer}
         >
           <List.Item
-            actions={[<Switch size="small" checked={!!state.boxed} onChange={() => setBoxed()} />]}
+            actions={[
+              <Switch key={1} size="small" checked={!!state.boxed} onChange={() => setBoxed()} />,
+            ]}
           >
             <span style={ListItemSpanStylye}>Boxed view</span>
           </List.Item>
           <List.Item
             actions={[
               <Switch
+                key={1}
                 size="small"
                 checked={!!state.darkSidebar}
                 disabled={state.weakColor}
@@ -298,6 +301,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
                 checked={!!state.sidebarPopup}
                 disabled={state.collapsed}
                 onChange={() => setSidebarPopup()}
+                key={1}
               />,
             ]}
           >
@@ -306,6 +310,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
           <List.Item
             actions={[
               <Switch
+                key={1}
                 size="small"
                 checked={!!state.sidebarIcons}
                 disabled={state.collapsed}
@@ -317,14 +322,24 @@ const SidebarContent = (props: ISidebarMenuProps) => {
           </List.Item>
           <List.Item
             actions={[
-              <Switch size="small" checked={!!state.collapsed} onChange={() => setCollapse()} />,
+              <Switch
+                key={1}
+                size="small"
+                checked={!!state.collapsed}
+                onChange={() => setCollapse()}
+              />,
             ]}
           >
             <span style={ListItemSpanStylye}>Collapsed sidebar menu</span>
           </List.Item>
           <List.Item
             actions={[
-              <Switch size="small" checked={!!state.weakColor} onChange={() => setWeak()} />,
+              <Switch
+                key={1}
+                size="small"
+                checked={!!state.weakColor}
+                onChange={() => setWeak()}
+              />,
             ]}
           >
             <span style={ListItemSpanStylye}>Weak colors</span>
