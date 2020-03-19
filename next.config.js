@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const withPlugins = require('next-compose-plugins');
 const withLess = require('@zeit/next-less');
+const withCSS = require('@zeit/next-css');
+const withSASS = require('@zeit/next-sass');
 const withBundleAnalyzer = require('@zeit/next-bundle-analyzer');
 const withPWA = require('next-pwa');
 const Dotenv = require('dotenv-webpack');
@@ -51,6 +53,6 @@ const nextConfig = {
 };
 
 module.exports = withPlugins(
-  [[withLess], [withBundleAnalyzer], [withPWA]],
+  [[withLess], [withBundleAnalyzer], [withPWA], [withCSS], [withSASS]],
   nextConfig,
 );

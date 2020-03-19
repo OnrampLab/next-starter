@@ -11,6 +11,20 @@ module.exports = ({ config, mode }) => {
 
   config.module.rules.push(
     {
+      test: /\.(scss|sass)$/,
+      use: [
+        {
+          loader: 'style-loader',
+        },
+        {
+          loader: 'css-loader',
+        },
+        {
+          loader: 'sass-loader'
+        }
+      ]
+    },
+    {
       test: /\.less$/,
       use: [
         {
