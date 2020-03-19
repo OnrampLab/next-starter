@@ -1,5 +1,7 @@
 import React from 'react';
-import { Button, Form, Input, message as Message, Row, Tooltip } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Button, Input, message as Message, Row, Tooltip } from 'antd';
 import { Eye, HelpCircle, Mail, Triangle, User } from 'react-feather';
 
 import Link from 'next/link';

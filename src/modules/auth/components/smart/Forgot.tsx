@@ -1,11 +1,13 @@
 import React from 'react';
-import { Button, Form, Input, Message, Row } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Button, Input, message as Message, Row } from 'antd';
 import { Mail, Triangle } from 'react-feather';
 
 import Link from 'next/link';
 import Router from 'next/router';
 import styled from 'styled-components';
-import { FormComponentProps } from 'antd/lib/form';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 
 const FormItem = Form.Item;
 
@@ -41,8 +43,9 @@ const Forgot: React.FC<FormComponentProps> = ({ form }) => (
           e.preventDefault();
           form.validateFields((err, values) => {
             if (!err) {
-              Message.success('Reset email sent. Please check your inbox!').then(async () =>
-                Router.push('/signin'),
+              Message.success('Reset email sent. Please check your inbox!').then(
+                async () => Router.push('/signin'),
+                () => {},
               );
             }
           });
