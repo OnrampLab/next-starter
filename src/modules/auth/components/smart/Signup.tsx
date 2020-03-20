@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input, message as Message, Row, Tooltip } from 'antd';
+import { Button, Input, message as Message, Row, Tooltip, Form } from 'antd';
 import { Eye, HelpCircle, Mail, Triangle, User } from 'react-feather';
 
 import Link from 'next/link';
@@ -14,12 +14,11 @@ const Content = styled.div`
   min-width: 300px;
 `;
 
-const Component = ({ form }) => (
+const Signup = () => (
   <Row
-    type="flex"
     align="middle"
     justify="center"
-    className="px-3 bg-white"
+    className="px-3 bg-white flex"
     style={{ minHeight: '100vh' }}
   >
     <Content>
@@ -36,16 +35,21 @@ const Component = ({ form }) => (
 
       <Form
         layout="vertical"
-        onSubmit={e => {
-          e.preventDefault();
-          form.validateFields((err, values) => {
-            if (!err) {
-              Message.success('Account created. Please check your inbox!').then(
-                async () => Router.push('/signin'),
-                () => {},
-              );
-            }
-          });
+        onFinish={e => {
+          console.log(e);
+          Message.success('Account created. Please check your inbox!').then(
+            async () => Router.push('/signin'),
+            () => {},
+          );
+        }}
+        onFinishFailed={err => {
+          Message.error(
+            err instanceof Error
+              ? err.message
+              : typeof err === 'object'
+              ? JSON.stringify(err)
+              : err,
+          );
         }}
       >
         <FormItem
@@ -57,80 +61,72 @@ const Component = ({ form }) => (
               </Tooltip>
             </span>
           }
+          name="nickname"
+          rules={[{ required: true, message: 'Please input your nickname!', whitespace: true }]}
         >
-          {form.getFieldDecorator('nickname', {
-            rules: [
-              {
-                required: true,
-                message: 'Please input your nickname!',
-                whitespace: true,
-              },
-            ],
-          })(
-            <Input
-              prefix={<User size={16} strokeWidth={1} style={{ color: 'rgba(0,0,0,.25)' }} />}
-              placeholder="Nickname"
-            />,
-          )}
+          <Input
+            prefix={<User size={16} strokeWidth={1} style={{ color: 'rgba(0,0,0,.25)' }} />}
+            placeholder="Nickname"
+          />
         </FormItem>
 
-        <FormItem label="Email">
-          {form.getFieldDecorator('email', {
-            rules: [
-              {
-                type: 'email',
-                message: 'The input is not valid E-mail!',
-              },
-              {
-                required: true,
-                message: 'Please input your E-mail!',
-              },
-            ],
-          })(
-            <Input
-              prefix={<Mail size={16} strokeWidth={1} style={{ color: 'rgba(0,0,0,.25)' }} />}
-              type="email"
-              placeholder="Email"
-            />,
-          )}
+        <FormItem
+          label="Email"
+          name="email"
+          rules={[
+            {
+              type: 'email',
+              message: 'The input is not valid E-mail!',
+            },
+            {
+              required: true,
+              message: 'Please input your E-mail!',
+            },
+          ]}
+        >
+          <Input
+            prefix={<Mail size={16} strokeWidth={1} style={{ color: 'rgba(0,0,0,.25)' }} />}
+            type="email"
+            placeholder="Email"
+          />
         </FormItem>
 
-        <FormItem label="Password">
-          {form.getFieldDecorator('password', {
-            rules: [{ required: true, message: 'Please input your Password!' }],
-          })(
-            <Input
-              prefix={<Eye size={16} strokeWidth={1} style={{ color: 'rgba(0,0,0,.25)' }} />}
-              type="password"
-              placeholder="Password"
-            />,
-          )}
+        <FormItem
+          label="Password"
+          name="password"
+          rules={[{ required: true, message: 'Please input your Password!' }]}
+        >
+          <Input
+            prefix={<Eye size={16} strokeWidth={1} style={{ color: 'rgba(0,0,0,.25)' }} />}
+            type="password"
+            placeholder="Password"
+          />
         </FormItem>
 
-        <FormItem label="Confirm password">
-          {form.getFieldDecorator('confirm', {
-            rules: [
-              {
-                required: true,
-                message: 'Please confirm your password!',
+        <FormItem
+          label="Confirm password"
+          name="confirm"
+          rules={[
+            {
+              required: true,
+              message: 'Please confirm your password!',
+            },
+            form => ({
+              validator: (rule, value, callback) => {
+                if (value && value !== form.getFieldValue('password')) {
+                  callback("Passwords don't match!");
+                } else {
+                  callback();
+                }
               },
-              {
-                validator: (rule, value, callback) => {
-                  if (value && value !== form.getFieldValue('password')) {
-                    callback("Passwords don't match!");
-                  } else {
-                    callback();
-                  }
-                },
-              },
-            ],
-          })(
-            <Input
-              prefix={<Eye size={16} strokeWidth={1} style={{ color: 'rgba(0,0,0,.25)' }} />}
-              type="password"
-              placeholder="Confirm password"
-            />,
-          )}
+            }),
+          ]}
+        >
+          <Input
+            prefix={<Eye size={16} strokeWidth={1} style={{ color: 'rgba(0,0,0,.25)' }} />}
+            type="password"
+            placeholder="Confirm password"
+          />
         </FormItem>
 
         <FormItem>
@@ -152,4 +148,4 @@ const Component = ({ form }) => (
   </Row>
 );
 
-export const Signup = Form.create()(Component);
+export { Signup };

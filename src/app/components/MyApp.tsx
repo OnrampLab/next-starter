@@ -6,7 +6,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
 import Head from 'next/head';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import NProgress from 'nprogress';
 
 import { Page, GlobalStyles } from '@onr/core';
@@ -27,9 +27,11 @@ Router.events.on(
 const PageContainer: React.FC = (props: any) => {
   const user = useUser();
   const { Component, pageProps, store } = props;
+  const isForgot = useRouter().pathname.startsWith('/forgot');
+  const isSignup = useRouter().pathname.startsWith('/auth/signup');
   return (
     <>
-      {user ? (
+      {user || isForgot || isSignup ? (
         <Page {...props} menuItems={menuItems}>
           <Component {...pageProps} />
         </Page>

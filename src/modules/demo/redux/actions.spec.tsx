@@ -7,6 +7,11 @@ import nock from 'nock';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'content-Type': 'application/json',
+  'access-control-allow-headers': 'Authorization',
+};
 
 describe('Home action tests', () => {
   beforeAll(() => {
@@ -15,8 +20,11 @@ describe('Home action tests', () => {
   beforeEach(() => {
     nock('http://localhost:3000')
       .persist()
+      .intercept('/api/planetary/apod', 'OPTIONS')
+      .query(true)
+      .reply(200, undefined, headers)
       .get('/api/planetary/apod')
-      .query({ api_key: 'NNKOjkoul8n1CH18TWA9gwngW1s1SmjESPjNoUFo', hd: true })
+      .query({ hd: true })
       .reply(200, {
         copyright: 'Pankod',
         date: '2019-05-23',
@@ -50,7 +58,7 @@ describe('Home action tests', () => {
     ];
 
     // eslint-disable-next-line
-		await store.dispatch<any>(demoActions.getPlanetImage({ params: { hd: true } }));
+    await store.dispatch<any>(demoActions.getPlanetImage({ params: { hd: true } }));
 
     expect(store.getActions()).toEqual(expectedActions);
   });

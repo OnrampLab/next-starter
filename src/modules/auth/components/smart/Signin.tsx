@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Checkbox, Form, Input, message as Message, Row, Spin } from 'antd';
+import { Button, Checkbox, Input, message as Message, Row, Spin, Form } from 'antd';
 import { Eye, Mail, Triangle } from 'react-feather';
 
 import Link from 'next/link';
@@ -16,16 +16,35 @@ const Content = styled.div`
   min-width: 300px;
 `;
 
-const Component = ({ form }) => {
+type FormFields = {
+  email: string;
+  password: string;
+  remember: boolean;
+};
+
+const Signin: React.FC = () => {
   const auth = useAuth();
+
+  async function onFinish(params: FormFields) {
+    try {
+      await auth.login({
+        params: {
+          email: params.email,
+          password: params.password,
+        },
+      });
+      Message.success('Sign complete. Taking you to your dashboard!');
+    } catch (error) {
+      Message.error(error.message);
+    }
+  }
 
   return (
     <Spin spinning={auth.authState === AuthState.Prepare}>
       <Row
-        type="flex"
         align="middle"
         justify="center"
-        className="px-3 bg-white mh-page"
+        className="px-3 bg-white mh-page flex"
         style={{ minHeight: '100vh' }}
       >
         <Content>
@@ -42,70 +61,55 @@ const Component = ({ form }) => {
 
           <Form
             layout="vertical"
-            onSubmit={e => {
-              e.preventDefault();
-              form.validateFields((err, values) => {
-                if (!err) {
-                  auth
-                    .login({
-                      params: {
-                        email: values.email,
-                        password: values.password,
-                      },
-                    })
-                    .then(response => {
-                      Message.success(
-                        'Sign complete. Taking you to your dashboard!',
-                      ); /* .then(
-                        () => Router.push('/'),
-                        () => {},
-                      ); */
-                    })
-                    .catch((err: Error) => {
-                      Message.error(err.message);
-                    });
-                }
-              });
+            onFinish={e => {
+              onFinish(e as any);
+            }}
+            onFinishFailed={err => {
+              Message.error(err);
+            }}
+            initialValues={{
+              email: '',
+              password: '',
+              remember: true,
             }}
           >
-            <FormItem label="Email">
-              {form.getFieldDecorator('email', {
-                rules: [
-                  {
-                    type: 'email',
-                    message: 'The input is not valid E-mail!',
-                  },
-                  {
-                    required: true,
-                    message: 'Please input your E-mail!',
-                  },
-                ],
-              })(
-                <Input
-                  prefix={<Mail size={16} strokeWidth={1} style={{ color: 'rgba(0,0,0,.25)' }} />}
-                  type="email"
-                  placeholder="Email"
-                />,
-              )}
+            <FormItem
+              label="Email"
+              name="email"
+              rules={[
+                {
+                  type: 'email',
+                  message: 'The input is not valid E-mail!',
+                },
+                {
+                  required: true,
+                  message: 'Please input your E-mail!',
+                },
+              ]}
+            >
+              <Input
+                prefix={<Mail size={16} strokeWidth={1} style={{ color: 'rgba(0,0,0,.25)' }} />}
+                type="email"
+                placeholder="Email"
+              />
             </FormItem>
 
-            <FormItem label="Password">
-              {form.getFieldDecorator('password', {
-                rules: [{ required: true, message: 'Please input your Password!' }],
-              })(
-                <Input
-                  prefix={<Eye size={16} strokeWidth={1} style={{ color: 'rgba(0,0,0,.25)' }} />}
-                  type="password"
-                  placeholder="Password"
-                />,
-              )}
+            <FormItem
+              label="Password"
+              name="password"
+              rules={[{ required: true, message: 'Please input your Password!' }]}
+            >
+              <Input
+                prefix={<Eye size={16} strokeWidth={1} style={{ color: 'rgba(0,0,0,.25)' }} />}
+                type="password"
+                placeholder="Password"
+              />
             </FormItem>
 
             <FormItem>
-              {form.getFieldDecorator('remember', {
-                valuePropName: 'checked',
-                initialValue: true,
-              })(<Checkbox>Remember me</Checkbox>)}
+              <FormItem name="remember" noStyle valuePropName="checked">
+                <Checkbox>Remember me</Checkbox>
+              </FormItem>
               <Link href="/forgot">
                 <a className="text-xs-right">
                   <small>Forgot password</small>
@@ -131,4 +135,4 @@ const Component = ({ form }) => {
   );
 };
 
-export const Signin = Form.create()(Component);
+export { Signin };
