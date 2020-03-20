@@ -11,14 +11,26 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { Http } from '@onr/shared';
 import nock from 'nock';
 
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'content-Type': 'application/json',
+  'access-control-allow-headers': 'Authorization',
+};
+
 describe('PlanetPage component test', () => {
   beforeAll(() => {
     Http.setBaseUrl('http://localhost:3000/api');
   });
   beforeEach(() => {
     nock('http://localhost:3000')
+      .intercept('/api/planetary/apod', 'OPTIONS')
+      .query(true)
+      .reply(200, undefined, headers);
+    nock('http://localhost:3000')
       .get('/api/planetary/apod')
-      .query({ api_key: 'NNKOjkoul8n1CH18TWA9gwngW1s1SmjESPjNoUFo', hd: true })
+      .twice()
+      .query(true)
+      // .query({ api_key: 'NNKOjkoul8n1CH18TWA9gwngW1s1SmjESPjNoUFo', hd: true })
       .reply(200, {
         copyright: 'Pankod',
         date: '2019-05-23',
