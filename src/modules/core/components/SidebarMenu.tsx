@@ -179,13 +179,14 @@ const SidebarContent = (props: ISidebarMenuProps) => {
           {!collapsed && (
             <>
               <span className="mr-auto" />
-              <Link href="https://one-readme.fusepx.com">
-                <a className={`px-3 ${sidebarTheme === 'dark' ? 'text-white' : 'text-body'}`}>
-                  <Tooltip title="Help">
-                    <Book size={20} strokeWidth={1} />
-                  </Tooltip>
-                </a>
-              </Link>
+              <a
+                className={`px-3 ${sidebarTheme === 'dark' ? 'text-white' : 'text-body'}`}
+                href="https://one-readme.fusepx.com"
+              >
+                <Tooltip title="Help">
+                  <Book size={20} strokeWidth={1} />
+                </Tooltip>
+              </a>
 
               <Popconfirm
                 placement="top"

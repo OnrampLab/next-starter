@@ -60,9 +60,7 @@ const MainHeader = (props: IWrapperPage.IProps) => {
             <Menu.Item>Profile</Menu.Item>
             <Menu.Divider />
             <Menu.Item>
-              <Link href="https://one-readme.fusepx.com">
-                <a>Help?</a>
-              </Link>
+              <a href="https://one-readme.fusepx.com">Help?</a>
             </Menu.Item>
             <Menu.Item onClick={() => logout()}>Signout</Menu.Item>
           </SubMenu>
