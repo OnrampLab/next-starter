@@ -52,7 +52,10 @@ const nextConfig = {
   },
 };
 
-module.exports = withPlugins(
-  [[withLess], [withBundleAnalyzer], [withPWA], [withCSS], [withSASS]],
-  nextConfig,
-);
+const plugins = [[withLess], [withBundleAnalyzer], [withCSS], [withSASS]];
+
+if (process.env.NODE_ENV !== 'development') {
+  plugins.push([withPWA]);
+}
+
+module.exports = withPlugins(plugins, nextConfig);
