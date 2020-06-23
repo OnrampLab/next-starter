@@ -25,7 +25,7 @@ interface IRequest {
 }
 
 const apiKey = process.env.API_KEY;
-let BaseUrl = `/api`;
+let BaseUrl = process.env.API_URL || '/api';
 
 let headers = {
   'content-type': 'application/json',
