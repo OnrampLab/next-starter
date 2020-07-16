@@ -1,7 +1,7 @@
 /**
  * @export @interface HttpModel
  */
-declare namespace HttpModel {
+export declare namespace HttpModel {
   /**
    * @interface Request
    */
@@ -16,5 +16,9 @@ declare namespace HttpModel {
 
   export interface IRequestQueryPayload {
     [key: string]: {};
+  }
+
+  export interface IResponse<T> {
+    data: T;
   }
 }
