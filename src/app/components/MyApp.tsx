@@ -13,7 +13,7 @@ import { Page, GlobalStyles } from '@onr/core';
 import { store, afterComponentDidMount } from '../redux';
 import { menuItems } from '../configs';
 import { AuthenticationProvider } from './AuthProvider';
-import { useUser } from '@onr/auth/components/smart/User';
+import { useUser, AuthModel } from '@onr/auth';
 import { Signin } from '@onr/auth';
 
 Router.events.on('routeChangeStart', () => NProgress.start());
@@ -26,7 +26,7 @@ Router.events.on(
 
 const PageContainer: React.FC = (props: any) => {
   const user = useUser();
-  const { Component, pageProps, store } = props;
+  const { Component, pageProps } = props;
   const isForgot = useRouter().pathname.startsWith('/forgot');
   const isSignup = useRouter().pathname.startsWith('/auth/signup');
   return (
