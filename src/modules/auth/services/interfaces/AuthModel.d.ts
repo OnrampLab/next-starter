@@ -14,6 +14,10 @@ declare namespace AuthModel {
     message: string;
   }
 
+  export interface SessionData extends LoginResponse {
+    email: string;
+  }
+
   export interface IAuthContext {
     login: Function;
     logout: Function;
