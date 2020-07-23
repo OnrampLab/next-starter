@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { AuthModel } from '@onr/auth/services/interfaces';
-import { AuthService } from '@onr/auth/services';
+import { AuthModel, AuthService } from '@onr/auth';
 import { message, Modal } from 'antd';
 
 enum AuthState {
   Prepare,
-  Resolve,
+  Authorized,
+  Unauthorized,
   NeedRefresh,
 }
-
 interface IAuthContext extends AuthModel.IAuthContext {
   authState: AuthState;
 }
-
 const AuthContext = React.createContext<IAuthContext | undefined>(undefined);
 
 const AuthProvider: React.FC = props => {
@@ -42,9 +40,10 @@ const AuthProvider: React.FC = props => {
               const renewData = await AuthService.loginWithJWT(token);
               setData(Object.assign({}, data as AuthModel.SigninResponse, renewData));
               localStorage.setItem('session', JSON.stringify(renewData));
-              setState(AuthState.Resolve);
+              setState(AuthState.Authorized);
             } catch (error) {
               message.error(error.message);
+              setState(AuthState.Unauthorized);
             }
           }
         },
@@ -57,21 +56,22 @@ const AuthProvider: React.FC = props => {
     const localSession: string|null = localStorage.getItem('session');
     if (localSession) {
       (async (token: string) => {
-        const session: AuthModel.SigninResponse = JSON.parse(token);
+        const session: AuthModel.SessionData = JSON.parse(token);
         try {
           const renewData = await AuthService.loginWithJWT(session.access_token);
           const sessionData = Object.assign(renewData, { email: session.email });
           setExpiredTimeout(sessionData.expires_in * 1000);
           setData(sessionData);
           localStorage.setItem('session', JSON.stringify(sessionData));
+          setState(AuthState.Authorized);
         } catch (error) {
           console.error(error);
           message.info('Token expired.');
+          setState(AuthState.Unauthorized);
         }
-        setState(AuthState.Resolve);
       })(localSession);
     } else {
-      setState(AuthState.Resolve);
+      setState(AuthState.Unauthorized);
     }
     return () => {
       if (refreshTimeout !== -1) {
@@ -89,10 +89,10 @@ const AuthProvider: React.FC = props => {
       setData(sessionData);
       setExpiredTimeout(sessionData.expires_in * 1000);
       localStorage.setItem('session', JSON.stringify(sessionData));
+      setState(AuthState.Authorized);
     } catch (error) {
+      setState(AuthState.Unauthorized);
       throw error;
-    } finally {
-      setState(AuthState.Resolve);
     }
     return loginData;
   };
@@ -108,7 +108,7 @@ const AuthProvider: React.FC = props => {
       setData(null);
       localStorage.removeItem('session');
       localStorage.removeItem('settings');
-      setState(AuthState.Resolve);
+      setState(AuthState.Unauthorized);
     }
   };
 

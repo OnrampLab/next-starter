@@ -25,11 +25,4 @@ export interface LoginResponse {
    * @memberof LoginResponse
    */
   token_type: string;
-
-  /**
-   *
-   * @type {string|null}
-   * @memberof LoginResponse
-   */
-  email: string;
 }
