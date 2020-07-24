@@ -10,12 +10,19 @@ export interface LoginResponse {
    * @type {number|null}
    * @memberof LoginResponse
    */
-  id: number | null;
+  expires_in: number;
 
   /**
    *
    * @type {string|null}
    * @memberof LoginResponse
    */
-  token: string | null;
+  access_token: string;
+
+  /**
+   *
+   * @type {string|null}
+   * @memberof LoginResponse
+   */
+  token_type: string;
 }

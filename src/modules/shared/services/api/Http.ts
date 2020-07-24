@@ -1,5 +1,6 @@
 import { stringify } from 'qs';
 import Axios from 'axios';
+import { HttpModel } from './interfaces';
 
 declare type RequestMethods =
   | 'get'
@@ -24,39 +25,69 @@ interface IRequest {
   data?: any;
 }
 
-const apiKey = process.env.API_KEY;
-let BaseUrl = `/api`;
-
-let headers = {
-  'content-type': 'application/json',
-  authorization: `Bearer ${apiKey}`,
-};
+let BaseUrl = `${process.env.API_URL}/api`;
 
 export const Http = {
+  apiToken: process.env.API_KEY,
+
   setBaseUrl: (url: string) => (BaseUrl = url),
 
-  setHeader: (params: any) => (headers = params),
-
-  request: async <A>({ method, url, params = {}, data = {} }: IRequest): Promise<A> => {
-    const query =
-      Object.keys(params).length > 0
-        ? `?${stringify({ ...params, api_key: apiKey }, { encode: false })}`
-        : '';
-
-    const res = await Axios(`${BaseUrl}${url}${query}`, {
-      method: method,
-      data: JSON.stringify(data),
-      headers,
-    });
-
-    return res.status >= 200 && res.status <= 302 ? res.data : Promise.reject(res.data?.message);
+  setToken(token: string) {
+    Http.apiToken = token;
   },
 
-  get: async <A>(url: string, { params = {} } = {}): Promise<A> => {
+  request: async <A>({
+    method,
+    url,
+    params = {},
+    data = {},
+  }: IRequest): Promise<HttpModel.IResponse<A>> => {
+    try {
+      const query = Object.keys(params).length > 0 ? `?${stringify(params, { encode: false })}` : '';
+      const apiUrl = `${BaseUrl}${url}${query}`;
+
+      const res = await Axios(apiUrl, {
+        method: method,
+        headers: {
+          'content-type': 'application/json',
+          authorization: `Bearer ${Http.apiToken}`,
+        },
+        data: JSON.stringify(data),
+      });
+
+      if (res.status >= 200 && res.status <= 302) {
+        return res.data;
+      } else {
+        throw new Error(res.data?.message);
+      }
+    } catch (error) {
+      throw new Error(error.response?.data?.message || error.message);
+    }
+  },
+
+  get: async <A>(url: string, { params = {} } = {}): Promise<HttpModel.IResponse<A>> => {
     return Http.request({ method: 'GET', url, params });
   },
 
-  post: async <A>(url: string, { params = {}, data = {} } = {}): Promise<A> => {
+  post: async <A>(
+    url: string,
+    { params = {}, data = {} } = {},
+  ): Promise<HttpModel.IResponse<A>> => {
     return Http.request({ method: 'POST', url, params, data });
+  },
+
+  patch: async <A>(
+    url: string,
+    { params = {}, data = {} } = {},
+  ): Promise<HttpModel.IResponse<A>> => {
+    return Http.request({ method: 'PATCH', url, params, data });
+  },
+
+  put: async <A>(url: string, { params = {}, data = {} } = {}): Promise<HttpModel.IResponse<A>> => {
+    return Http.request({ method: 'PUT', url, params, data });
+  },
+
+  delete: async <A>(url: string, { params = {} } = {}): Promise<HttpModel.IResponse<A>> => {
+    return Http.request({ method: 'DELETE', url, params });
   },
 };

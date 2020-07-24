@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { AuthModel } from '@onr/auth/services/interfaces';
-import { AuthService } from '@onr/auth/services';
-import { message } from 'antd';
+import { AuthModel, AuthService } from '@onr/auth';
+import { message, Modal } from 'antd';
+
 enum AuthState {
   Prepare,
-  Resolve,
+  Authorized,
+  Unauthorized,
+  NeedRefresh,
 }
 interface IAuthContext extends AuthModel.IAuthContext {
   authState: AuthState;
@@ -14,43 +16,100 @@ const AuthContext = React.createContext<IAuthContext | undefined>(undefined);
 const AuthProvider: React.FC = props => {
   const [data, setData] = useState<AuthModel.SigninResponse | null>(null);
   const [state, setState] = useState<AuthState>(AuthState.Prepare);
-  useEffect(() => {
-    const id = +(sessionStorage.getItem('onr_id') || '-1');
-    const token: string = sessionStorage.getItem('onr_token') || '';
+  const [refreshTimeout, setRefreshTimeout] = useState(-1);
 
-    if (id && id !== -1 && token) {
-      setData({ id, token });
+  const setExpiredTimeout = (expiredTime: number) => {
+    // Add expired time detect. When achieved expired time show confirm modal
+    const timeId = setTimeout(() => {
+      setState(AuthState.NeedRefresh);
+    }, expiredTime);
+    if (refreshTimeout !== -1) {
+      clearTimeout(refreshTimeout);
     }
+    setRefreshTimeout(timeId);
+  };
 
-    setState(AuthState.Resolve);
+  useEffect(() => {
+    if (state === AuthState.NeedRefresh) {
+      Modal.confirm({
+        title: 'This page has expired due to inactivity. Please refresh and try again.',
+        onOk: async () => {
+          const token = data?.access_token;
+          if (token) {
+            try {
+              const renewData = await AuthService.loginWithJWT(token);
+              setData(Object.assign({}, data as AuthModel.SigninResponse, renewData));
+              localStorage.setItem('session', JSON.stringify(renewData));
+              setState(AuthState.Authorized);
+            } catch (error) {
+              message.error(error.message);
+              setState(AuthState.Unauthorized);
+            }
+          }
+        },
+        cancelButtonProps: { style: { display: 'none' } },
+      });
+    }
+  }, [state]);
+
+  useEffect(() => {
+    const localSession: string|null = localStorage.getItem('session');
+    if (localSession) {
+      (async (token: string) => {
+        const session: AuthModel.SessionData = JSON.parse(token);
+        try {
+          const renewData = await AuthService.loginWithJWT(session.access_token);
+          const sessionData = Object.assign(renewData, { email: session.email });
+          setExpiredTimeout(sessionData.expires_in * 1000);
+          setData(sessionData);
+          localStorage.setItem('session', JSON.stringify(sessionData));
+          setState(AuthState.Authorized);
+        } catch (error) {
+          console.error(error);
+          message.info('Token expired.');
+          setState(AuthState.Unauthorized);
+        }
+      })(localSession);
+    } else {
+      setState(AuthState.Unauthorized);
+    }
+    return () => {
+      if (refreshTimeout !== -1) {
+        clearTimeout(refreshTimeout);
+      }
+    };
   }, []);
 
   const login = async (form: AuthModel.SigninPayload) => {
     setState(AuthState.Prepare);
-
+    let loginData: AuthModel.SigninResponse;
     try {
-      const response = await AuthService.login(form);
-      setData(response);
-      setState(AuthState.Resolve);
-      return response;
+      loginData = await AuthService.login(form);
+      const sessionData = Object.assign(loginData, { email: form.params.email });
+      setData(sessionData);
+      setExpiredTimeout(sessionData.expires_in * 1000);
+      localStorage.setItem('session', JSON.stringify(sessionData));
+      setState(AuthState.Authorized);
     } catch (error) {
-      setState(AuthState.Resolve);
+      setState(AuthState.Unauthorized);
       throw error;
     }
+    return loginData;
   };
 
-  const logout = () => {
+  const logout = async () => {
     setState(AuthState.Prepare);
-    AuthService.logout()
-      .then(response => {
-        setData(null);
-        setState(AuthState.Resolve);
-        return response;
-      })
-      .catch(err => {
-        setState(AuthState.Resolve);
-        message.error(err.message);
-      });
+    try {
+      await AuthService.logout();
+      return true;
+    } catch (error) {
+      throw error;
+    } finally {
+      setData(null);
+      localStorage.removeItem('session');
+      localStorage.removeItem('settings');
+      setState(AuthState.Unauthorized);
+    }
   };
 
   return (
