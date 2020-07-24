@@ -17,7 +17,8 @@
     "lint": "eslint -c .eslintrc.js --ext .ts,.tsx src",
     "format": "eslint -c .eslintrc.js --ext .ts,.tsx --fix src",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "lint-staged": "lint-staged"
   },
   "dependencies": {
     "@babel/plugin-syntax-typescript": "^7.7.4",
@@ -102,10 +103,12 @@
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.18.0",
     "http-proxy-middleware": "^0.19.1",
+    "husky": "^4.2.5",
     "jest": "^24.8.0",
     "jest-junit": "^10.0.0",
     "less": "^3.9.0",
     "less-vars-to-js": "^1.3.0",
+    "lint-staged": "^10.2.11",
     "minimist": "^1.2.5",
     "nodemon": "^1.19.1",
     "nyc": "^14.1.1",
@@ -125,5 +128,15 @@
     "minimist": "^1.2.5"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.js": ["eslint -c .eslintrc.js --fix"],
+    "src/**/*.tsx": ["eslint -c .eslintrc.js --fix"],
+    "src/**/*.ts": ["eslint -c .eslintrc.js --fix"]
+  }
 }
