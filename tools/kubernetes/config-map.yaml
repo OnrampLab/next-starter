@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+data:
+  NODE_ENV: production
+  PROXY_MODE: production
+  API_URL: api.neo.onramplab.com
+  API_KEY: NNKOjkoul8n1CH18TWA9gwngW1s1SmjESPjNoUFo

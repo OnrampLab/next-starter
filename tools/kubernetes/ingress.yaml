@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: next-starter
+  annotations:
+    kubernetes.io/ingress.class: alb
+  labels:
+    app: frontend
+  name: frontend
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /*
+            backend:
+              serviceName: next-starter-service
+              servicePort: 3000
