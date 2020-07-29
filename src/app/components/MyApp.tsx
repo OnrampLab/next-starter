@@ -1,10 +1,9 @@
 import '../../assets/styles.less';
 import '../../assets/tailwind-extension.css';
 
-import App, { AppContext } from 'next/app';
+import App from 'next/app';
 import React from 'react';
-import { Provider } from 'react-redux';
-import withRedux from 'next-redux-wrapper';
+import { MakeStore, createWrapper, Context } from 'next-redux-wrapper';
 import Head from 'next/head';
 import Router, { useRouter } from 'next/router';
 import NProgress from 'nprogress';
@@ -13,8 +12,12 @@ import { Page, GlobalStyles } from '@onr/core';
 import { store, afterComponentDidMount } from '../redux';
 import { menuItems } from '../configs';
 import { AuthenticationProvider } from './AuthProvider';
-import { useUser, AuthModel } from '@onr/auth';
+import { useUser } from '@onr/auth';
 import { Signin } from '@onr/auth';
+
+const makeStore: MakeStore = (context: Context) => store();
+
+const wrapper = createWrapper(makeStore, { debug: false });
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
@@ -43,12 +46,28 @@ const PageContainer: React.FC = (props: any) => {
 };
 
 export class AppComponent extends App<any> {
+  public static getInitialProps = async ({ Component, ctx }: AppContext) => {
+    // Keep in mind that this will be called twice on server, one for page and second for error page
+    // ctx.store.dispatch({ type: "DEMO.SET_PLANT_IMAGE", payload: { demos:[] } });
+
+    return {
+      pageProps: {
+        // Call page-level getInitialProps
+        ...(Component.getInitialProps
+          ? await Component.getInitialProps(ctx)
+          : {}),
+        // Some custom thing for all pages
+        appProp: ctx.pathname
+      }
+    };
+  };
+
   componentDidMount() {
     afterComponentDidMount();
   }
 
   render(): JSX.Element {
-    const { Component, pageProps, store } = this.props;
+    const { pageProps } = this.props;
 
     return (
       <>
@@ -71,14 +90,12 @@ export class AppComponent extends App<any> {
             <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.2.5/polyfill.min.js" />
           )}
         </Head>
-        <Provider store={store}>
-          <AuthenticationProvider>
-            <PageContainer {...this.props}></PageContainer>
-          </AuthenticationProvider>
-        </Provider>
+        <AuthenticationProvider>
+          <PageContainer {...this.props}></PageContainer>
+        </AuthenticationProvider>
       </>
     );
   }
 }
 
-export const MyApp = withRedux(store)(AppComponent);
+export const MyApp = wrapper.withRedux(AppComponent);
