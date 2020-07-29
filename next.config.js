@@ -2,6 +2,7 @@
 const withPlugins = require('next-compose-plugins');
 const withLess = require('@zeit/next-less');
 const withCSS = require('@zeit/next-css');
+const withPurgeCss = require('next-purgecss');
 const withSASS = require('@zeit/next-sass');
 const withBundleAnalyzer = require('@zeit/next-bundle-analyzer');
 const withPWA = require('next-pwa');
@@ -52,10 +53,12 @@ const nextConfig = {
   },
 };
 
-const plugins = [[withLess], [withBundleAnalyzer], [withCSS], [withSASS]];
+const plugins = [[withLess], [withBundleAnalyzer], [withSASS]];
 
 if (process.env.NODE_ENV !== 'development') {
-  plugins.push([withPWA]);
+  plugins.push([withPWA], [withCSS, withPurgeCss]);
+} else {
+  plugins.push([withCSS]);
 }
 
 module.exports = withPlugins(plugins, nextConfig);
