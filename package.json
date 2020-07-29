@@ -33,6 +33,7 @@
     "date-fns": "^1.30.1",
     "next": "^9.5.0",
     "next-compose-plugins": "^2.2.0",
+    "next-purgecss": "^4.0.0",
     "next-pwa": "^2.6.1",
     "next-redux-wrapper": "^5.0.0",
     "next-routes": "^1.4.2",
@@ -135,8 +136,14 @@
     }
   },
   "lint-staged": {
-    "src/**/*.js": ["eslint -c .eslintrc.js --fix"],
-    "src/**/*.tsx": ["eslint -c .eslintrc.js --fix"],
-    "src/**/*.ts": ["eslint -c .eslintrc.js --fix"]
+    "src/**/*.js": [
+      "eslint -c .eslintrc.js --fix"
+    ],
+    "src/**/*.tsx": [
+      "eslint -c .eslintrc.js --fix"
+    ],
+    "src/**/*.ts": [
+      "eslint -c .eslintrc.js --fix"
+    ]
   }
 }
