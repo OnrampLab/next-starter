@@ -43,16 +43,6 @@ const PageContainer: React.FC = (props: any) => {
 };
 
 export class AppComponent extends App<any> {
-  static async getInitialProps(props: AppContext) {
-    let pageProps = {};
-
-    if (props.Component.getInitialProps) {
-      pageProps = await props.Component.getInitialProps(props.ctx);
-    }
-
-    return { pageProps };
-  }
-
   componentDidMount() {
     afterComponentDidMount();
   }
