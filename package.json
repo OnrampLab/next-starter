@@ -35,7 +35,7 @@
     "next-compose-plugins": "^2.2.0",
     "next-purgecss": "^4.0.0",
     "next-pwa": "^2.6.1",
-    "next-redux-wrapper": "^5.0.0",
+    "next-redux-wrapper": "^6.0.0",
     "next-routes": "^1.4.2",
     "nock": "^12.0.0",
     "node-sass": "^4.14.1",

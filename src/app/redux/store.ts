@@ -7,6 +7,10 @@ import { wrapperActions, IStore } from '@onr/core';
 import reducers from './reducers';
 
 const saveToLocal = (state: IStore) => {
+  if (typeof localStorage === 'undefined') {
+    return;
+  }
+
   localStorage.setItem(
     'settings',
     JSON.stringify({
