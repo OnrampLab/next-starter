@@ -7,6 +7,10 @@ RUN yarn
 
 RUN yarn build
 
+RUN npm install modclean -g
+RUN modclean
+RUN yarn autoclean --force
+
 # And then copy over node_modules, etc from that stage to the smaller base image
 FROM mhart/alpine-node:base
 WORKDIR /app
