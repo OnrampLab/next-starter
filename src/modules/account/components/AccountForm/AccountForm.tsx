@@ -1,49 +1,50 @@
 import React from 'react';
 import { Switch, Form, Input, Button } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import { FormProps } from 'antd/lib/form';
 import { IAccount } from '@onr/account';
 
-interface IAccountFormProps extends FormComponentProps {
+interface IAccountFormProps extends FormProps {
   currentAccount: IAccount;
   handleSubmit: (account: IAccount) => void;
 }
 
-export const Component: React.FC<IAccountFormProps> = ({
+export const AccountForm: React.FC<IAccountFormProps> = ({
   form,
   currentAccount,
   handleSubmit,
 }: IAccountFormProps) => {
-  const { getFieldDecorator } = form;
   const formItemLayout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 18 },
   };
-  const onSubmit = (e: MouseEvent) => {
-    e.preventDefault();
+  const onSubmit = (values: { account: IAccount }) => {
+    handleSubmit(values.account);
+    console.log('Received values of form: ', values);
 
-    form.validateFields(async (err, values) => {
-      if (err) {
-        return;
-      }
-      console.log('Received values of form: ', values);
-
-      handleSubmit(values.account);
-      form.resetFields();
-    });
-  };
-
-  const onEmailValidationChange = (checked: bool): void => {
-    currentAccount.email_validation_enabled = checked;
+    form?.resetFields();
   };
 
   return (
     <>
-      <Form {...formItemLayout} onSubmit={onSubmit}>
-        <Form.Item label="Name" hasFeedback>
-          {getFieldDecorator('account.name', {
+      <Form
+        {...formItemLayout}
+        onFinish={v => onSubmit(v as { account: IAccount })}
+        initialValues={{
+          account: {
+            ...currentAccount,
+            redirect_domain: currentAccount.redirect_domain || 'https://g17.net',
+          },
+        }}
+      >
+        <Form.Item
+          label="Name"
+          hasFeedback
+          name={['account', 'name']}
+          {...{
             rules: [{ required: true, message: 'Please input a name!' }],
-            initialValue: currentAccount.name,
-          })(<Input style={{ width: 400 }} />)}
+          }}
+        >
+          <Input style={{ width: 400 }} />
         </Form.Item>
 
         <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
@@ -55,7 +56,3 @@ export const Component: React.FC<IAccountFormProps> = ({
     </>
   );
 };
-
-export const AccountForm = Form.create<IAccountFormProps>({
-  name: 'account_form',
-})(Component);
