@@ -1,1 +1,7 @@
-export interface IStore {}
+import { IAccount } from '@onr/account';
+
+export interface IStore {
+  accountStore: {
+    accounts: IAccount[];
+  };
+}
