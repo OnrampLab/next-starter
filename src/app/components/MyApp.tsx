@@ -48,7 +48,7 @@ export class AppComponent extends App<any> {
   }
 
   render(): JSX.Element {
-    const { Component, pageProps, store } = this.props;
+    const { pageProps, store } = this.props;
 
     return (
       <>
