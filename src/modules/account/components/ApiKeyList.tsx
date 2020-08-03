@@ -1,8 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
 import { useAppState } from '@onr/core';
 import { AccountService, IAccountApiKey } from '@onr/account';
-import { Table, Button, Card, Modal, message, Popconfirm, Icon } from 'antd';
+import { Table, Button, Card, Modal, message, Popconfirm } from 'antd';
+
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 export const ApiKeyList: React.FC = () => {
   const [accountApiKeys, setAccountApiKeys] = useState<IAccountApiKey[] | []>([]);
@@ -15,56 +16,6 @@ export const ApiKeyList: React.FC = () => {
 
     setAccountApiKeys(apiKeys);
   };
-
-  const apiKeysColumns = [
-    {
-      title: 'Account ID',
-      dataIndex: 'account_id',
-    },
-    {
-      title: 'Token ID',
-      dataIndex: 'id',
-    },
-    {
-      title: 'API Token',
-      dataIndex: 'token',
-    },
-    {
-      title: 'Create at',
-      dataIndex: 'created_at',
-    },
-    {
-      title: 'Operations',
-      render: (_text: any, apiKey: IAccountApiKey) => {
-        return (
-          state.accountId && (
-            <Popconfirm
-              title="If deleted, all apps using this key will no longer have access to this account to post leads."
-              onConfirm={async () => deleteToken(apiKey)}
-              okText="Delete"
-              okType="danger"
-              icon={
-                <>
-                  <div>
-                    <Icon type="exclamation-circle" />{' '}
-                    <b>Are you sure you want to delete this key ?</b>
-                  </div>
-                </>
-              }
-            >
-              <a>Delete</a>
-            </Popconfirm>
-          )
-        );
-      },
-    },
-  ];
-
-  useEffect(() => {
-    if (state.accountId) {
-      fetchData();
-    }
-  }, [state.accountId]);
 
   const openAddTokenModal = () => {
     Modal.confirm({
@@ -100,6 +51,55 @@ export const ApiKeyList: React.FC = () => {
       message.error(`Failed to delete token${e.message && `: ${e.message}`}`);
     }
   };
+
+  const apiKeysColumns = [
+    {
+      title: 'Account ID',
+      dataIndex: 'account_id',
+    },
+    {
+      title: 'Token ID',
+      dataIndex: 'id',
+    },
+    {
+      title: 'API Token',
+      dataIndex: 'token',
+    },
+    {
+      title: 'Create at',
+      dataIndex: 'created_at',
+    },
+    {
+      title: 'Operations',
+      render: function confirmModal(_text: any, apiKey: IAccountApiKey) {
+        return (
+          state.accountId && (
+            <Popconfirm
+              title="If deleted, all apps using this key will no longer have access to this account to post leads."
+              onConfirm={async () => deleteToken(apiKey)}
+              okText="Delete"
+              okType="danger"
+              icon={
+                <>
+                  <div>
+                    <ExclamationCircleOutlined /> <b>Are you sure you want to delete this key ?</b>
+                  </div>
+                </>
+              }
+            >
+              <a>Delete</a>
+            </Popconfirm>
+          )
+        );
+      },
+    },
+  ];
+
+  useEffect(() => {
+    if (state.accountId) {
+      fetchData();
+    }
+  }, [state.accountId]);
 
   return (
     <Card
