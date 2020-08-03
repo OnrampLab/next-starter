@@ -4,7 +4,7 @@ import { FormProps } from 'antd/lib/form';
 import { IAccount } from '@onr/account';
 
 interface IAccountFormProps extends FormProps {
-  currentAccount: IAccount;
+  currentAccount: Partial<IAccount>;
   handleSubmit: (account: IAccount) => void;
 }
 
