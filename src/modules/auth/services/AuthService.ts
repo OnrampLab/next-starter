@@ -1,5 +1,6 @@
 import { Http, HttpModel } from '@onr/shared';
 import { AuthModel } from './interfaces';
+// import { IUser } from '@onr/user';
 
 export const AuthService = {
   login: async (payload: AuthModel.SigninPayload): Promise<AuthModel.SigninResponse> => {
@@ -41,6 +42,18 @@ export const AuthService = {
       return response.data;
     } catch (error) {
       throw error;
+    }
+  },
+
+  getCurrentUser: async (): Promise<IUser> => {
+    let response: IUser;
+
+    try {
+      response = await Http.post<IUser>('/auth/me');
+
+      return response;
+    } catch (error) {
+      throw new Error(`Get current auth Error: ${error.response.data.message}`);
     }
   },
 };
