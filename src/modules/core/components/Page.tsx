@@ -1,11 +1,15 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect, useState, useContext } from 'react';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { Dispatch } from 'redux';
+import { useRouter } from 'next/router';
 import { Layout, Spin } from 'antd';
 import { useEffect, useState } from 'react';
-import { withRouter, WithRouterProps } from 'next/router';
+import { IStore, useAppState } from '@onr/core';
+import { authActions } from '@onr/auth';
+import { DefaultPubSubContext } from '@onr/core';
 
 import Header from './Header';
-import SidebarMenu from './SidebarMenu';
+import { SidebarMenu } from './SidebarMenu';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/GlobalStyles';
 import { Container, Inner } from './styles/Page';
@@ -14,13 +18,31 @@ import { IWrapperPage, IStore } from '@onr/core';
 
 const { Content } = Layout;
 
-const NonDashboardRoutes = ['/auth/signin', '/auth/signup', '/forgot', '/lockscreen', '/_error'];
+const NonDashboardRoutes = [
+  '/auth/signin',
+  '/auth/signup',
+  '/forgot',
+  '/lockscreen',
+  '/_error',
+];
+
+interface IPageProps {
+  routes: any;
+}
+
 /* eslint-disable complexity*/
-const Component = (props: IWrapperPage.IProps & WithRouterProps) => {
-  const { router, menuItems, children } = props;
-  const state = props;
+const Component = ({ children, routes }: IPageProps) => {
+  const dispatch = useDispatch();
+  // const currentUser = useSelector((store: IStore) => store.authStore.currentUser);
+  const context = useContext(DefaultPubSubContext);
+
   const [loading, setLoading] = useState(true);
-  const isNotDashboard = router && NonDashboardRoutes.includes(router.pathname);
+  const [state] = useAppState();
+  const { pathname } = useRouter();
+  const isNotDashboard = NonDashboardRoutes.includes(pathname);
+  // const { router, menuItems, children } = props;
+  // const [loading, setLoading] = useState(true);
+  // const isNotDashboard = router && NonDashboardRoutes.includes(router.pathname);
 
   useEffect(() => {
     setTimeout(() => {
@@ -40,10 +62,12 @@ const Component = (props: IWrapperPage.IProps & WithRouterProps) => {
           <Layout className="workspace">
             {!isNotDashboard && (
               <SidebarMenu
-                {...props}
+                // currentUser={currentUser}
                 menuItems={menuItems}
                 sidebarTheme={state.darkSidebar ? 'dark' : 'light'}
                 sidebarMode={state.sidebarPopup ? 'vertical' : 'inline'}
+                sidebarIcons={state.sidebarIcons}
+                collapsed={state.collapsed}
               />
             )}
 
@@ -57,6 +81,8 @@ const Component = (props: IWrapperPage.IProps & WithRouterProps) => {
   );
 };
 
-const mapStateToProps = (state: IStore) => state.wrapper;
+const mapStateToProps = (state: IStore) => ({});
 
-export const Page = withRouter(connect(mapStateToProps)(Component));
+const mapDispatchToProps = (dispatch: Dispatch) => ({});
+
+export const Page = connect(mapStateToProps, mapDispatchToProps)(Component);

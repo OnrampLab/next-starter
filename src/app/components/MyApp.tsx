@@ -1,7 +1,7 @@
 import '../../assets/styles.less';
 import '../../assets/tailwind-extension.css';
 
-import App, { AppContext } from 'next/app';
+import App from 'next/app';
 import React from 'react';
 import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
@@ -9,11 +9,11 @@ import Head from 'next/head';
 import Router, { useRouter } from 'next/router';
 import NProgress from 'nprogress';
 
-import { Page, GlobalStyles } from '@onr/core';
+import { AppProvider, Page, GlobalStyles } from '@onr/core';
 import { store, afterComponentDidMount } from '../redux';
 import { menuItems } from '../configs';
 import { AuthenticationProvider } from './AuthProvider';
-import { useUser, AuthModel } from '@onr/auth';
+import { useUser } from '@onr/auth';
 import { Signin } from '@onr/auth';
 
 Router.events.on('routeChangeStart', () => NProgress.start());
@@ -72,9 +72,11 @@ export class AppComponent extends App<any> {
           )}
         </Head>
         <Provider store={store}>
-          <AuthenticationProvider>
-            <PageContainer {...this.props}></PageContainer>
-          </AuthenticationProvider>
+          <AppProvider>
+            <AuthenticationProvider>
+              <PageContainer {...this.props}></PageContainer>
+            </AuthenticationProvider>
+          </AppProvider>
         </Provider>
       </>
     );

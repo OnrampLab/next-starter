@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {
   Avatar,
   Badge,
@@ -10,31 +11,24 @@ import {
   Popconfirm,
   Row,
   Switch,
-  Tooltip,
 } from 'antd';
-import { Book, LogOut, Triangle } from 'react-feather';
-import React from 'react';
-import { withRouter, WithRouterProps } from 'next/router';
+import { Settings, LogOut, Triangle } from 'react-feather';
 import Link from 'next/link';
-import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
+import { capitalize } from '../../../lib/helpers';
+import { has } from 'lodash';
 
 import DashHeader from './styles/Header';
 import Inner from './styles/Sidebar';
-import { capitalize, lowercase } from '../../../lib/helpers';
-
-import { wrapperActions, IWrapperPage, IStore } from '@onr/core';
-import { useAuth } from '@onr/auth/components/smart/Auth';
-/* eslint-disable complexity  */
-interface ISidebarMenuProps extends IWrapperPage.IProps, WithRouterProps {
-  sidebarTheme: 'dark' | 'light';
-  sidebarMode: 'vertical' | 'inline';
-}
+import { useAppState } from '@onr/core';
+// import { IUser } from '@onr/user';
+import { useAuth } from '@onr/auth';
+import Router, { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
 
-const rootSubMenuKeys: any[] = [];
+const rootSubMenuKeys: string[] = [];
 
 const getKey = (name: string, index: number) => {
   const string = `${name}-${index}`;
@@ -44,73 +38,169 @@ const getKey = (name: string, index: number) => {
 
 const UserMenu = (
   <Menu>
-    <Menu.Item>Settings</Menu.Item>
-    <Menu.Item>Profile</Menu.Item>
+    <Menu.Item>
+      <Link href="/profile">
+        <a>Profile</a>
+      </Link>
+    </Menu.Item>
+    <Menu.Divider />
+    <Menu.Item>
+      <a href="https://one-readme.fusepx.com" target="_blank">
+        Help?
+      </a>
+    </Menu.Item>
   </Menu>
 );
 
-const SidebarContent = (props: ISidebarMenuProps) => {
-  const {
-    menuItems,
-    sidebarTheme,
-    sidebarMode,
-    sidebarIcons,
-    collapsed,
-    router,
-    setOptionDrawer,
-    setMobileDrawer,
-    setBoxed,
-    setSidebarTheme,
-    setSidebarPopup,
-    setSidebarIcons,
-    setCollapse,
-    setWeak,
-  } = props;
-  const state = props;
+interface ISidebarMenuProps {
+  sidebarTheme: 'dark' | 'light';
+  sidebarMode: 'vertical' | 'inline';
+  sidebarIcons: boolean;
+  collapsed: boolean;
+  menuItems: any[];
+  router?: any;
+  // currentUser: IUser;
+}
+
+export const SidebarMenu: React.FC<ISidebarMenuProps> = ({
+  sidebarTheme,
+  sidebarMode,
+  sidebarIcons,
+  collapsed,
+  menuItems,
+  // currentUser,
+}: ISidebarMenuProps) => {
+  const [state, dispatch] = useAppState();
+  const [accountId, setAccountId] = React.useState(state.accountId);
+  const [currentUserRoles, setCurrentUserRoles] = React.useState<string[]>([]);
+  const [selectedKeys, setSelectedKeys] = React.useState<string[]>([]);
   const [openKeys, setOpenKeys] = React.useState<string[]>([]);
   const [appRoutes] = React.useState(menuItems);
-  const { pathname = '' } = router || {};
+  const { pathname } = useRouter();
+  const auth = useAuth();
 
-  const { logout } = useAuth();
+  // useEffect(() => {
+  //   if (currentUser.roles) {
+  //     setCurrentUserRoles(currentUser.roles.map(x => x.name));
+  //   }
+  // }, [currentUser.roles]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     appRoutes.forEach((route, index) => {
-      const isCurrentPath = pathname.indexOf(lowercase(route.name)) > -1 ? true : false;
       const key = getKey(route.name, index);
+      const routePaths = has(route, 'children')
+        ? route.children.map((child: any) => child.path)
+        : [route.path];
+      const isCurrentPath = routePaths.find((path: string) => path === pathname) ? true : false;
+
       rootSubMenuKeys.push(key);
-      if (isCurrentPath) setOpenKeys([...openKeys, key]);
+
+      if (isCurrentPath) {
+        setOpenKeys([key]);
+      }
     });
-  }, []);
+
+    // When account changed, need to reset selected keys and open keys of menu
+    if (accountId && accountId !== state.accountId) {
+      const homeKey = getKey('Home', 0);
+
+      setSelectedKeys([homeKey]);
+      setOpenKeys([]);
+      setAccountId(state.accountId);
+    }
+  }, [state.accountId]);
 
   const onOpenChange = (openKeys: string[]) => {
     const latestOpenKey = openKeys.slice(-1);
-    if (rootSubMenuKeys.indexOf(latestOpenKey) === -1) {
+
+    if (rootSubMenuKeys.indexOf(latestOpenKey[0]) === -1) {
       setOpenKeys([...latestOpenKey]);
     } else {
       setOpenKeys(latestOpenKey ? [...latestOpenKey] : []);
     }
   };
 
-  const menu = (
+  const onSelect = (params: { selectedKeys: string[] }) => {
+    setSelectedKeys(params.selectedKeys);
+  };
+
+  const SideMenu = (
     <>
       <Menu
         theme={sidebarTheme}
-        className="border-0 scroll-y"
-        style={{ flex: 1, height: '100%' }}
         mode={sidebarMode}
+        className="border-0 scroll-y"
+        style={{ flex: 1, height: '100%', paddingTop: '15px' }}
+        selectedKeys={selectedKeys}
+        onSelect={onSelect}
         openKeys={openKeys}
         onOpenChange={onOpenChange}
       >
-        {appRoutes.map((route, index) => {
-          const hasChildren = route.children ? true : false;
-          if (!hasChildren)
+        {appRoutes
+          .filter(route => {
+            if (!route.roles) {
+              return true;
+            }
+            for (const role of route.roles) {
+              if (currentUserRoles.indexOf(role) !== -1) {
+                return true;
+              }
+            }
+            return false;
+          })
+          .map((route, index) => {
+            const isDivider = route.name === 'divider';
+            const hasChildren = route.children ? true : false;
+
+            if (isDivider) {
+              return (
+                <Divider
+                  key={getKey(route.name, index)}
+                  className={`m-2`}
+                  style={{
+                    display: `${sidebarTheme === 'dark' ? 'none' : ''}`,
+                  }}
+                />
+              );
+            }
+
+            if (hasChildren) {
+              return (
+                <SubMenu
+                  key={getKey(route.name, index)}
+                  title={
+                    <span>
+                      {sidebarIcons && <span className="anticon">{route.icon}</span>}
+                      <span>{capitalize(route.name)}</span>
+                    </span>
+                  }
+                >
+                  {route.children.map((subitem: any, index: number) => (
+                    <Menu.Item
+                      key={getKey(subitem.name, index)}
+                      className={pathname === subitem.path ? 'ant-menu-item-selected' : ''}
+                      onClick={() => {
+                        if (state.mobile) dispatch({ type: 'mobileDrawer' });
+                      }}
+                    >
+                      <Link href={`${subitem.path ? subitem.path : ''}`}>
+                        <a>
+                          <span className="mr-auto">{capitalize(subitem.name)}</span>
+                        </a>
+                      </Link>
+                    </Menu.Item>
+                  ))}
+                </SubMenu>
+              );
+            }
+
             return (
               <Menu.Item
                 key={getKey(route.name, index)}
                 className={pathname === route.path ? 'ant-menu-item-selected' : ''}
                 onClick={() => {
                   setOpenKeys([getKey(route.name, index)]);
-                  if (state.mobile) setMobileDrawer();
+                  if (state.mobile) dispatch({ type: 'mobileDrawer' });
                 }}
               >
                 <Link href={route.path}>
@@ -121,37 +211,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
                 </Link>
               </Menu.Item>
             );
-
-          if (hasChildren)
-            return (
-              <SubMenu
-                key={getKey(route.name, index)}
-                title={
-                  <span>
-                    {sidebarIcons && <span className="anticon">{route.icon}</span>}
-                    <span>{capitalize(route.name)}</span>
-                  </span>
-                }
-              >
-                {route.children &&
-                  route.children.map((subitem, index) => (
-                    <Menu.Item
-                      key={getKey(subitem.name, index)}
-                      className={pathname === subitem.path ? 'ant-menu-item-selected' : ''}
-                      onClick={() => {
-                        if (state.mobile) setMobileDrawer();
-                      }}
-                    >
-                      <Link href={`${subitem.path ? subitem.path : ''}`}>
-                        <a>
-                          <span className="mr-auto">{capitalize(subitem.name)}</span>
-                        </a>
-                      </Link>
-                    </Menu.Item>
-                  ))}
-              </SubMenu>
-            );
-        })}
+          })}
       </Menu>
 
       <Divider
@@ -176,22 +236,26 @@ const SidebarContent = (props: ISidebarMenuProps) => {
               </Badge>
             </span>
           </Dropdown>
+
           {!collapsed && (
             <>
               <span className="mr-auto" />
+
               <a
                 className={`px-3 ${sidebarTheme === 'dark' ? 'text-white' : 'text-body'}`}
-                href="https://one-readme.fusepx.com"
+                onClick={() => dispatch({ type: 'options' })}
               >
-                <Tooltip title="Help">
-                  <Book size={20} strokeWidth={1} />
-                </Tooltip>
+                <Settings size={20} strokeWidth={1} />
               </a>
 
               <Popconfirm
                 placement="top"
                 title="Are you sure you want to sign out?"
-                onConfirm={() => logout()}
+                onConfirm={() =>
+                  auth.logout().then(() => {
+                    Router.push('/signin');
+                  })
+                }
                 okText="Yes"
                 cancelText="Cancel"
               >
@@ -206,21 +270,6 @@ const SidebarContent = (props: ISidebarMenuProps) => {
     </>
   );
 
-  const InnerDivStyle: React.CSSProperties = {
-    overflow: 'hidden',
-    flex: '1 1 auto',
-    flexDirection: 'column',
-    display: 'flex',
-    height: '100vh',
-  };
-
-  const ListItemSpanStylye: React.CSSProperties = {
-    WebkitBoxFlex: 1,
-    WebkitFlex: '1 0',
-    msFlex: '1 0',
-    flex: '1 0',
-  };
-
   return (
     <>
       <Inner>
@@ -231,7 +280,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
             theme={sidebarTheme}
             collapsed={collapsed}
           >
-            {menu}
+            {SideMenu}
           </Sider>
         )}
 
@@ -239,12 +288,20 @@ const SidebarContent = (props: ISidebarMenuProps) => {
           closable={false}
           width={240}
           placement="left"
-          onClose={() => setMobileDrawer()}
+          onClose={() => dispatch({ type: 'mobileDrawer' })}
           visible={state.mobileDrawer}
           className="chat-drawer"
         >
           <Inner>
-            <div style={InnerDivStyle}>
+            <div
+              css={`
+                overflow: hidden;
+                flex: 1 1 auto;
+                flex-direction: column;
+                display: flex;
+                height: 100vh;
+              `}
+            >
               <DashHeader>
                 <Header>
                   <Link href="/">
@@ -252,9 +309,9 @@ const SidebarContent = (props: ISidebarMenuProps) => {
                       <Triangle size={24} strokeWidth={1} />
                       <strong
                         className="mx-1"
-                        style={{
-                          display: 'inline',
-                        }}
+                        css={`
+                          display: inline;
+                        `}
                       >
                         {state.name}
                       </strong>
@@ -262,7 +319,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
                   </Link>
                 </Header>
               </DashHeader>
-              {menu}
+              {SideMenu}
             </div>
           </Inner>
         </Drawer>
@@ -272,96 +329,75 @@ const SidebarContent = (props: ISidebarMenuProps) => {
           placement="right"
           closable={true}
           width={300}
-          onClose={() => setOptionDrawer()}
+          onClose={() => dispatch({ type: 'options' })}
           visible={state.optionDrawer}
         >
           <List.Item
             actions={[
-              <Switch key={1} size="small" checked={!!state.boxed} onChange={() => setBoxed()} />,
+              <Switch
+                key="collapsed-sidebar-menu-switch"
+                size="small"
+                checked={!!state.collapsed}
+                onChange={() => dispatch({ type: 'collapse' })}
+              />,
             ]}
           >
-            <span style={ListItemSpanStylye}>Boxed view</span>
+            <span
+              css={`
+                -webkit-box-flex: 1;
+                -webkit-flex: 1 0;
+                -ms-flex: 1 0;
+                flex: 1 0;
+              `}
+            >
+              Collapsed sidebar menu
+            </span>
           </List.Item>
           <List.Item
             actions={[
               <Switch
-                key={1}
+                key="dark-sidebar-menu-switch"
                 size="small"
                 checked={!!state.darkSidebar}
                 disabled={state.weakColor}
-                onChange={() => setSidebarTheme()}
+                onChange={() => dispatch({ type: 'sidebarTheme' })}
               />,
             ]}
           >
-            <span style={ListItemSpanStylye}>Dark sidebar menu</span>
+            <span
+              css={`
+                -webkit-box-flex: 1;
+                -webkit-flex: 1 0;
+                -ms-flex: 1 0;
+                flex: 1 0;
+              `}
+            >
+              Dark sidebar menu
+            </span>
           </List.Item>
           <List.Item
             actions={[
               <Switch
-                size="small"
-                checked={!!state.sidebarPopup}
-                disabled={state.collapsed}
-                onChange={() => setSidebarPopup()}
-                key={1}
-              />,
-            ]}
-          >
-            <span style={ListItemSpanStylye}>Popup sub menus</span>
-          </List.Item>
-          <List.Item
-            actions={[
-              <Switch
-                key={1}
-                size="small"
-                checked={!!state.sidebarIcons}
-                disabled={state.collapsed}
-                onChange={() => setSidebarIcons()}
-              />,
-            ]}
-          >
-            <span style={ListItemSpanStylye}>Sidebar menu icons</span>
-          </List.Item>
-          <List.Item
-            actions={[
-              <Switch
-                key={1}
-                size="small"
-                checked={!!state.collapsed}
-                onChange={() => setCollapse()}
-              />,
-            ]}
-          >
-            <span style={ListItemSpanStylye}>Collapsed sidebar menu</span>
-          </List.Item>
-          <List.Item
-            actions={[
-              <Switch
-                key={1}
+                key="dark-mode-switch"
                 size="small"
                 checked={!!state.weakColor}
-                onChange={() => setWeak()}
+                onChange={checked => dispatch({ type: 'weak', value: checked })}
               />,
             ]}
           >
-            <span style={ListItemSpanStylye}>Weak colors</span>
+            <span
+              css={`
+                -webkit-box-flex: 1;
+                -webkit-flex: 1 0;
+                -ms-flex: 1 0;
+                flex: 1 0;
+              `}
+            >
+              Dark mode
+            </span>
           </List.Item>
         </Drawer>
       </Inner>
     </>
   );
 };
-
-const mapStateToProps = (state: IStore) => state.wrapper;
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setOptionDrawer: bindActionCreators(wrapperActions.setOptionDrawer, dispatch),
-  setMobileDrawer: bindActionCreators(wrapperActions.setMobileDrawer, dispatch),
-  setBoxed: bindActionCreators(wrapperActions.setBoxed, dispatch),
-  setSidebarTheme: bindActionCreators(wrapperActions.setSidebarTheme, dispatch),
-  setSidebarPopup: bindActionCreators(wrapperActions.setSidebarPopup, dispatch),
-  setSidebarIcons: bindActionCreators(wrapperActions.setSidebarIcons, dispatch),
-  setCollapse: bindActionCreators(wrapperActions.setCollapse, dispatch),
-  setWeak: bindActionCreators(wrapperActions.setWeak, dispatch),
-});
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SidebarContent));
