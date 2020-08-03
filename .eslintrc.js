@@ -56,6 +56,7 @@ module.exports = {
     '@typescript-eslint/semi': 'error',
     '@typescript-eslint/type-annotation-spacing': 'error',
     '@typescript-eslint/unified-signatures': 'error',
+    '@typescript-eslint/no-use-before-define': ['error', { functions: false, classes: false }],
     complexity: ['error', { max: 10 }],
     'max-depth': ['error', { max: 4 }],
     'prefer-const': [
