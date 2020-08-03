@@ -26,7 +26,7 @@ type TPublishFunction = <T>(
 type TSubscribingFunction = <T>(
   channel: TChannelName,
   handler: T extends Function ? T : Function,
-) => void | Function;
+) => () => void;
 
 //Provide an app wide pub sub context
 export const DefaultPubSubContext = createContext(null);
@@ -80,13 +80,15 @@ export const usePubSub = <T>(context: T extends Context<{}> ? T : Context<T>) =>
 
   const unsubscribe: TSubscribingFunction = (channel, handler) => {
     if (!ref.current) return () => {};
-    ref.current.dispatch({ type: 'Unsubscribe', channel, handler });
+    return () => ref.current.dispatch({ type: 'Unsubscribe', channel, handler });
   };
 
   const subscribe: TSubscribingFunction = (channel, handler) => {
     if (!ref.current) return () => {};
     ref.current.dispatch({ type: 'Subscribe', channel, handler });
-    return () => unsubscribe(channel, handler);
+    return () => {
+      unsubscribe(channel, handler);
+    };
   };
 
   const publish: TPublishFunction = (channel, message) => {
