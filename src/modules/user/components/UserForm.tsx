@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Form, Button, Input, Spin, Select, Transfer } from 'antd';
 import { EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
@@ -24,13 +24,18 @@ const layout = {
 };
 
 const UserForm: React.FC<IUserFormProps> = ({ currentUser, handleSubmit }: IUserFormProps) => {
+  const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const accounts: IAccount[] = useSelector((store: IStore) => store.accountStore.accounts);
 
-  const onFinish = async (values: { user: UserRequestPayload['data'] }) => {
+  useEffect(() => {
+    form?.resetFields();
+  }, [currentUser]);
+
+  const onFinish = async (values: UserRequestPayload['data']) => {
     console.log('Received values of form: ', values);
     setLoading(true);
-    const formData = values.user;
+    const formData = values;
     Object.keys(formData).forEach(key => {
       formData[key as keyof typeof formData] || delete formData[key as keyof typeof formData];
     });
@@ -52,39 +57,31 @@ const UserForm: React.FC<IUserFormProps> = ({ currentUser, handleSubmit }: IUser
           roles: currentUser?.roles?.map(role => role.name) || [],
           accounts: currentUser?.accounts?.map(x => `${x.id}`) || [],
         }}
+        form={form}
       >
         <Form.Item
           label="Name"
-          name={['user', 'name']}
+          name="name"
           hasFeedback
-          {...{
-            rules: [{ required: true, message: 'Please input name!', type: 'string' }],
-            initialValue: currentUser.name,
-          }}
+          rules={[{ required: true, message: 'Please input name!', type: 'string' }]}
         >
           <Input style={{ width: 300 }} />
         </Form.Item>
 
         <Form.Item
           label="Email"
-          name={['user', 'email']}
+          name="email"
           hasFeedback
-          {...{
-            rules: [{ required: true, message: 'Please input email!', type: 'email' }],
-            initialValue: currentUser.email,
-          }}
+          rules={[{ required: true, message: 'Please input email!', type: 'email' }]}
         >
           <Input style={{ width: 300 }} />
         </Form.Item>
 
         <Form.Item
           label="Password"
-          name={['user', 'password']}
+          name="password"
           hasFeedback
-          {...{
-            rules: [{ required: isCreateForm, message: 'Please input password!', type: 'string' }],
-            initialValue: null,
-          }}
+          rules={[{ required: isCreateForm, message: 'Please input password!', type: 'string' }]}
         >
           <Input.Password
             style={{ width: 300 }}
@@ -92,20 +89,30 @@ const UserForm: React.FC<IUserFormProps> = ({ currentUser, handleSubmit }: IUser
           />
         </Form.Item>
 
-        <Form.Item label="Roles" hasFeedback rules={[{ required: false, type: 'array' }]}>
+        <Form.Item
+          label="Roles"
+          name="roles"
+          hasFeedback
+          rules={[{ required: false, type: 'array' }]}
+        >
           <Select mode="multiple" style={{ width: 300 }}>
-            {Object.entries(UserRoleName).map((ele, i) => {
+            {/* {Object.entries(UserRoleName).map((ele, i) => {
               <Select.Option key={i.toString()} value={ele[1]}>
                 {ele[1].replace('-', ' ')}
               </Select.Option>;
-            })}
+            })} */}
+            {Object.keys(UserRoleName).map((key, i) => (
+              <Select.Option key={i.toString()} value={UserRoleName[key]}>
+                {UserRoleName[key].replace('-', ' ')}
+              </Select.Option>
+            ))}
           </Select>
         </Form.Item>
 
         <Form.Item
           label="Accounts"
           hasFeedback
-          name={['user', 'accounts']}
+          name="accounts"
           rules={[{ type: 'array' }]}
           valuePropName="targetKeys"
         >

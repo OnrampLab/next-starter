@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { Layout, Spin } from 'antd';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { withRouter, WithRouterProps } from 'next/router';
 
 import { Header } from './Header';
@@ -10,7 +10,8 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/GlobalStyles';
 import { Container, Inner } from './styles/Page';
 
-import { IWrapperPage, IStore } from '@onr/core';
+import { IWrapperPage, IStore, DefaultPubSubContext } from '@onr/core';
+import { authActions } from '@onr/auth';
 
 const { Content } = Layout;
 
@@ -19,14 +20,31 @@ const NonDashboardRoutes = ['/auth/signin', '/auth/signup', '/forgot', '/lockscr
 const Component = (props: IWrapperPage.IProps & WithRouterProps) => {
   const { router, menuItems, children } = props;
   const state = props;
+  const dispatch = useDispatch();
+  const currentUser = useSelector((store: IStore) => store.authStore.currentUser);
   const [loading, setLoading] = useState(true);
   const isNotDashboard = router && NonDashboardRoutes.includes(router.pathname);
+  const context = useContext(DefaultPubSubContext);
 
   useEffect(() => {
+    fetchData();
+
+    const unsub = context.subscribe('auth.updated', fetchData);
+
     setTimeout(() => {
       setLoading(false);
     }, 1000);
+
+    return unsub;
   }, [loading]);
+
+  async function fetchData() {
+    dispatch(
+      authActions.getCurrentUser({
+        params: {},
+      }),
+    );
+  }
 
   return (
     <Spin tip="Loading..." size="large" spinning={loading}>
@@ -41,6 +59,7 @@ const Component = (props: IWrapperPage.IProps & WithRouterProps) => {
             {!isNotDashboard && (
               <SidebarMenu
                 {...props}
+                currentUser={currentUser}
                 menuItems={menuItems}
                 sidebarTheme={state.darkSidebar ? 'dark' : 'light'}
                 sidebarMode={state.sidebarPopup ? 'vertical' : 'inline'}

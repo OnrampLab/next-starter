@@ -1,6 +1,6 @@
 import { Http, HttpModel } from '@onr/shared';
 import { AuthModel } from './interfaces';
-// import { IUser } from '@onr/user';
+import { IUser } from '@onr/user';
 
 export const AuthService = {
   login: async (payload: AuthModel.SigninPayload): Promise<AuthModel.SigninResponse> => {
