@@ -12,8 +12,7 @@ import { Page, GlobalStyles } from '@onr/core';
 import { store, afterComponentDidMount } from '../redux';
 import { menuItems } from '../configs';
 import { AuthenticationProvider } from './AuthProvider';
-import { useUser } from '@onr/auth';
-import { Signin } from '@onr/auth';
+import { Signin, useUser } from '@onr/auth';
 
 const makeStore: MakeStore = (context: Context) => store();
 

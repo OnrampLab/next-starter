@@ -26,7 +26,7 @@ export const AccountListPage: React.FC = () => {
 
   return (
     <>
-      <AccountList accounts={accounts} />
+      <AccountList accounts={accounts} fetchAccounts={fetchData} />
     </>
   );
 };

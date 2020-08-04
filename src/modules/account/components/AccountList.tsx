@@ -6,9 +6,13 @@ import { usePubSub, DefaultPubSubContext } from '@onr/core';
 
 interface IAccountListProps {
   accounts: IAccount[];
+  fetchAccounts: () => {};
 }
 
-export const AccountList: React.FC<IAccountListProps> = ({ accounts }: IAccountListProps) => {
+export const AccountList: React.FC<IAccountListProps> = ({
+  accounts,
+  fetchAccounts,
+}: IAccountListProps) => {
   const [currentAccount, setCurrentAccount] = useState<IAccount>(accounts[0]);
   const [createAccountModalVisible, setCreateAccountModalVisible] = useState(false);
   const [updateAccountModalVisible, setUpdateAccountModalVisible] = useState(false);
@@ -92,7 +96,12 @@ export const AccountList: React.FC<IAccountListProps> = ({ accounts }: IAccountL
           onCancel={() => setCreateAccountModalVisible(false)}
           footer={null}
         >
-          <CreateAccountForm onSubmit={() => setCreateAccountModalVisible(false)} />
+          <CreateAccountForm
+            onSubmit={() => {
+              fetchAccounts();
+              setCreateAccountModalVisible(false);
+            }}
+          />
         </Modal>
       )}
 
@@ -106,7 +115,10 @@ export const AccountList: React.FC<IAccountListProps> = ({ accounts }: IAccountL
         >
           <UpdateAccountForm
             currentAccount={currentAccount}
-            onSubmit={() => setUpdateAccountModalVisible(false)}
+            onSubmit={() => {
+              fetchAccounts();
+              setUpdateAccountModalVisible(false);
+            }}
           />
         </Modal>
       )}
