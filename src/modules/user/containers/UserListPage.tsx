@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Card, Modal, Button, message } from 'antd';
+import { Table, Card, Modal, Button, message, Popconfirm } from 'antd';
 import { IUser, UserService, CreateUserForm, UpdateUserForm, UserRole } from '@onr/user';
 import { DefaultPubSubContext, usePubSub } from '@onr/core';
 import { ColumnProps } from 'antd/lib/table';
@@ -58,9 +58,9 @@ export const UserListPage: React.FC = () => {
           <>
             <span className="operations">
               <a onClick={() => openEditDialog(user)}>Edit</a>
-              {/* <Popconfirm title="Confirm delete user" onConfirm={() => deleteUser(user)}>
+              <Popconfirm title="Confirm delete user" onConfirm={() => deleteUser(user)}>
                 <a>Delete</a>
-              </Popconfirm> */}
+              </Popconfirm>
             </span>
           </>
         );

@@ -18,10 +18,6 @@ export const AccountList: React.FC<IAccountListProps> = ({
   const [updateAccountModalVisible, setUpdateAccountModalVisible] = useState(false);
   const { publish } = usePubSub(DefaultPubSubContext);
 
-  const logoStyle = {
-    maxHeight: '60px',
-  };
-
   const openCreateDialog = () => {
     setCreateAccountModalVisible(true);
   };
