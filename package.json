@@ -11,7 +11,7 @@
     "export": "NODE_ENV=production next export",
     "analyze": "BUNDLE_ANALYZE=both npm run build",
     "cli": "node ./project-cli/dist/index.js a",
-    "postinstall": "cd project-cli && npm i && npm run build",
+    "install:cli": "cd project-cli && npm i && npm run build",
     "test": "jest --coverage",
     "test:ci": "jest --ci --runInBand --reporters=default --reporters=jest-junit --coverage",
     "lint": "eslint -c .eslintrc.js --ext .ts,.tsx src",
@@ -19,6 +19,11 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "lint-staged": "lint-staged"
+  },
+  "bin": "src/server/index.js",
+  "pkg": {
+    "assets": [".next/**/*", "node_modules/**/*.ejs"],
+    "scripts": [".next/dist/**/*.js"]
   },
   "dependencies": {
     "@babel/plugin-syntax-typescript": "^7.7.4",

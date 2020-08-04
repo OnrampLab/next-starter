@@ -39,7 +39,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: frontend-config
-          image: "229934743898.dkr.ecr.us-east-1.amazonaws.com/next-starter:v1.0.3"
+          image: "229934743898.dkr.ecr.us-east-1.amazonaws.com/next-starter:v1.0.4"
           imagePullPolicy: Always
           livenessProbe:
             initialDelaySeconds: 10

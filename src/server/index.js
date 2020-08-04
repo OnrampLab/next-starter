@@ -5,9 +5,12 @@ const path = require('path');
 const devProxy = require('./proxy');
 
 const PORT = process.env.PORT || 3000;
+const nextConfig = require('../../next.config');
 
 const app = next({
   dev: process.env.NODE_ENV !== 'production',
+  dir: path.join(__dirname, '../../'),
+  conf: nextConfig,
 });
 
 const routes = require('./routes');

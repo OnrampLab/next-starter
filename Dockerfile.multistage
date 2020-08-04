@@ -7,15 +7,20 @@ RUN yarn
 
 RUN yarn build
 
-RUN npm install modclean -g
-RUN modclean
-RUN yarn autoclean --force
+RUN npm install modclean pkg -g
+RUN modclean -r ; yarn autoclean --force
+
+RUN pkg . --targets node12-alpine-x64 --out-path pkg
 
 # And then copy over node_modules, etc from that stage to the smaller base image
-FROM mhart/alpine-node:base
+FROM alpine
+RUN apk update && \
+  apk add --no-cache libstdc++ libgcc ca-certificates && \
+  rm -rf /var/cache/apk/*
 WORKDIR /app
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
+# COPY --from=builder /app/node_modules ./node_modules
+# COPY --from=builder /app/.next ./.next
+# COPY --from=builder /app/public ./public
+COPY --from=builder /app/pkg .
 EXPOSE 3000
-CMD ["node_modules/.bin/next", "start"]
+CMD ["./next-starter"]
