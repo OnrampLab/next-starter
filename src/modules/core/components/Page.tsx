@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { withRouter, WithRouterProps } from 'next/router';
 
 import Header from './Header';
-import SidebarMenu from './SidebarMenu';
+import { SidebarMenu } from './SidebarMenu';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/GlobalStyles';
 import { Container, Inner } from './styles/Page';

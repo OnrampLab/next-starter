@@ -14,7 +14,7 @@ import {
 } from 'antd';
 import { Book, LogOut, Triangle } from 'react-feather';
 import React from 'react';
-import { withRouter, WithRouterProps } from 'next/router';
+import { withRouter, NextRouter } from 'next/router';
 import Link from 'next/link';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
@@ -25,10 +25,17 @@ import { capitalize, lowercase } from '../../../lib/helpers';
 
 import { wrapperActions, IWrapperPage, IStore } from '@onr/core';
 import { useAuth } from '@onr/auth/components/smart/Auth';
+import { MenuItem } from '@app';
+
+declare type WithRouterProps = {
+  router: NextRouter;
+};
+
 /* eslint-disable complexity  */
 interface ISidebarMenuProps extends IWrapperPage.IProps, WithRouterProps {
   sidebarTheme: 'dark' | 'light';
   sidebarMode: 'vertical' | 'inline';
+  menuItems: MenuItem[];
 }
 
 const { SubMenu } = Menu;
@@ -364,4 +371,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setWeak: bindActionCreators(wrapperActions.setWeak, dispatch),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SidebarContent));
+export const SidebarMenu = withRouter(connect(mapStateToProps, mapDispatchToProps)(SidebarContent));

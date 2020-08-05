@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Home } from 'react-feather';
 
-interface MenuItem {
+export interface MenuItem {
   name: string;
   path?: string;
   icon?: ReactElement;
