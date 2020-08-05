@@ -52,4 +52,9 @@ export const wrapperActions: IWrapperPage.IDispatchProps = {
     type: ActionConsts.Wrapper.Setup,
     payload,
   }),
+
+  setAccountId: (payload?: number) => ({
+    type: ActionConsts.Wrapper.SetAccountId,
+    payload,
+  }),
 };

@@ -10,7 +10,7 @@ export interface IAccount {
    * @type {number}
    * @memberof IAccount
    */
-  id?: number;
+  id: number;
 
   /**
    *
