@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { Layout, Spin } from 'antd';
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { withRouter, WithRouterProps } from 'next/router';
 
 import { Header } from './Header';
@@ -10,7 +10,7 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/GlobalStyles';
 import { Container, Inner } from './styles/Page';
 
-import { IWrapperPage, IStore, DefaultPubSubContext } from '@onr/core';
+import { IWrapperPage, IStore, DefaultPubSubContext, usePubSub } from '@onr/core';
 import { authActions } from '@onr/auth';
 
 const { Content } = Layout;
@@ -24,12 +24,12 @@ const Component = (props: IWrapperPage.IProps & WithRouterProps) => {
   const currentUser = useSelector((store: IStore) => store.authStore.currentUser);
   const [loading, setLoading] = useState(true);
   const isNotDashboard = router && NonDashboardRoutes.includes(router.pathname);
-  const context = useContext(DefaultPubSubContext);
+  const { subscribe } = usePubSub(DefaultPubSubContext);
 
   useEffect(() => {
     fetchData();
 
-    const unsub = context.subscribe('auth.updated', fetchData);
+    const unsub = subscribe('auth.updated', fetchData);
 
     setTimeout(() => {
       setLoading(false);
