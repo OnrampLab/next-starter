@@ -9,7 +9,7 @@ export enum UserRoleName {
 export interface UserRole {
   created_at?: string;
   id?: number;
-  name?: string;
+  name: string;
   updated_at?: string;
 }
 

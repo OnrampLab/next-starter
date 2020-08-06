@@ -39,11 +39,7 @@ const Component = (props: IWrapperPage.IProps & WithRouterProps) => {
   }, [loading]);
 
   async function fetchData() {
-    dispatch(
-      authActions.getCurrentUser({
-        params: {},
-      }),
-    );
+    dispatch(authActions.getCurrentUser());
   }
 
   return (

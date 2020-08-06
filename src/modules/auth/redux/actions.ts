@@ -8,7 +8,7 @@ export const authActions = {
     type: actionConsts.auth.setCurrentUser,
   }),
 
-  getCurrentUser: (payload: any) => async (dispatch: Dispatch) => {
+  getCurrentUser: () => async (dispatch: Dispatch) => {
     const currentUser = await AuthService.getCurrentUser();
 
     dispatch(

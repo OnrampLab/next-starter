@@ -44,7 +44,7 @@ interface ISidebarMenuProps extends IWrapperPage.IProps, WithRouterProps {
 const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
 
-const rootSubMenuKeys: any[] = [];
+const rootSubMenuKeys: string[] = [];
 
 const getKey = (name: string, index: number) => {
   const string = `${name}-${index}`;
@@ -78,17 +78,27 @@ const SidebarContent = (props: ISidebarMenuProps) => {
     setWeak,
   } = props;
   const state = props;
-  const [currentUserRoles, setCurrentUserRoles] = React.useState<string[]>([]);
   const [openKeys, setOpenKeys] = React.useState<string[]>([]);
-  const [appRoutes] = React.useState(menuItems);
+  const [appRoutes, setAppRoutes] = React.useState(menuItems);
   const { pathname = '' } = router || {};
   const { logout } = useAuth();
 
   useEffect(() => {
-    if (currentUser.roles) {
-      setCurrentUserRoles(currentUser.roles.map(x => x.name));
-    }
-  }, [currentUser.roles]);
+    const roles = currentUser.roles || [];
+    setAppRoutes(
+      menuItems.filter(route => {
+        if (!route.roles) {
+          return true;
+        }
+        for (const role of route.roles) {
+          if (roles.map(x => x.name).indexOf(role) !== -1) {
+            return true;
+          }
+        }
+        return false;
+      }),
+    );
+  }, [currentUser?.roles]);
 
   React.useEffect(() => {
     appRoutes.forEach((route, index) => {
@@ -101,7 +111,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
 
   const onOpenChange = (openKeys: string[]) => {
     const latestOpenKey = openKeys.slice(-1);
-    if (rootSubMenuKeys.indexOf(latestOpenKey) === -1) {
+    if (rootSubMenuKeys.includes(latestOpenKey[0])) {
       setOpenKeys([...latestOpenKey]);
     } else {
       setOpenKeys(latestOpenKey ? [...latestOpenKey] : []);
@@ -118,68 +128,56 @@ const SidebarContent = (props: ISidebarMenuProps) => {
         openKeys={openKeys}
         onOpenChange={onOpenChange}
       >
-        {appRoutes
-          .filter(route => {
-            if (!route.roles) {
-              return true;
-            }
-            for (const role of route.roles) {
-              if (currentUserRoles.indexOf(role) !== -1) {
-                return true;
-              }
-            }
-            return false;
-          })
-          .map((route, index) => {
-            const hasChildren = route.children ? true : false;
-            if (!hasChildren)
-              return (
-                <Menu.Item
-                  key={getKey(route.name, index)}
-                  className={pathname === route.path ? 'ant-menu-item-selected' : ''}
-                  onClick={() => {
-                    setOpenKeys([getKey(route.name, index)]);
-                    if (state.mobile) setMobileDrawer();
-                  }}
-                >
-                  <Link href={route.path}>
-                    <a>
-                      {sidebarIcons && <span className="anticon">{route.icon}</span>}
-                      <span className="mr-auto">{capitalize(route.name)}</span>
-                    </a>
-                  </Link>
-                </Menu.Item>
-              );
+        {appRoutes.map((route, index) => {
+          const hasChildren = route.children ? true : false;
+          if (!hasChildren)
+            return (
+              <Menu.Item
+                key={getKey(route.name, index)}
+                className={pathname === route.path ? 'ant-menu-item-selected' : ''}
+                onClick={() => {
+                  setOpenKeys([getKey(route.name, index)]);
+                  if (state.mobile) setMobileDrawer();
+                }}
+              >
+                <Link href={route.path}>
+                  <a>
+                    {sidebarIcons && <span className="anticon">{route.icon}</span>}
+                    <span className="mr-auto">{capitalize(route.name)}</span>
+                  </a>
+                </Link>
+              </Menu.Item>
+            );
 
-            if (hasChildren)
-              return (
-                <SubMenu
-                  key={getKey(route.name, index)}
-                  title={
-                    <span>
-                      {sidebarIcons && <span className="anticon">{route.icon}</span>}
-                      <span>{capitalize(route.name)}</span>
-                    </span>
-                  }
-                >
-                  {route.children &&
-                    route.children.map((subitem, index) => (
-                      <Menu.Item
-                        key={getKey(subitem.name, index)}
-                        className={pathname === subitem.path ? 'ant-menu-item-selected' : ''}
-                        onClick={() => {
-                          if (state.mobile) setMobileDrawer();
-                        }}
-                      >
-                        <Link href={`${subitem.path ? subitem.path : ''}`}>
-                          <a>
-                            <span className="mr-auto">{capitalize(subitem.name)}</span>
-                          </a>
-                        </Link>
-                      </Menu.Item>
-                    ))}
-                </SubMenu>
-              );
+          if (hasChildren)
+            return (
+              <SubMenu
+                key={getKey(route.name, index)}
+                title={
+                  <span>
+                    {sidebarIcons && <span className="anticon">{route.icon}</span>}
+                    <span>{capitalize(route.name)}</span>
+                  </span>
+                }
+              >
+                {route.children &&
+                  route.children.map((subitem, index) => (
+                    <Menu.Item
+                      key={getKey(subitem.name, index)}
+                      className={pathname === subitem.path ? 'ant-menu-item-selected' : ''}
+                      onClick={() => {
+                        if (state.mobile) setMobileDrawer();
+                      }}
+                    >
+                      <Link href={`${subitem.path ? subitem.path : ''}`}>
+                        <a>
+                          <span className="mr-auto">{capitalize(subitem.name)}</span>
+                        </a>
+                      </Link>
+                    </Menu.Item>
+                  ))}
+              </SubMenu>
+            );
         })}
       </Menu>
 

@@ -46,10 +46,8 @@ export const AuthService = {
   },
 
   getCurrentUser: async (): Promise<IUser> => {
-    let response: IUser;
-
     try {
-      response = await Http.post<IUser>('/auth/me');
+      const response: IUser = await Http.post<IUser>('/auth/me');
 
       return response;
     } catch (error) {
