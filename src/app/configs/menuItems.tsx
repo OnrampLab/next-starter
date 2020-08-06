@@ -1,11 +1,13 @@
 import React, { ReactElement } from 'react';
-import { Home, MessageCircle, Star } from 'react-feather';
+import { Home, Server } from 'react-feather';
+import { UserRoleName } from '@onr/user';
 
-interface MenuItem {
+export interface MenuItem {
   name: string;
   path?: string;
   icon?: ReactElement;
   children?: MenuItem[];
+  roles?: UserRoleName[];
 }
 
 export const menuItems: MenuItem[] = [
@@ -15,16 +17,17 @@ export const menuItems: MenuItem[] = [
     icon: <Home strokeWidth={1} size={16} />,
   },
   {
-    name: 'Demo',
-    icon: <MessageCircle strokeWidth={1} size={16} />,
+    name: 'Admin',
+    icon: <Server strokeWidth={1} size={16} />,
+    roles: [UserRoleName.SystemAdmin],
     children: [
       {
-        path: '/demo/planet',
-        name: 'Daily Planet',
+        path: '/admin/accounts',
+        name: 'Accounts',
       },
       {
-        path: '/demo/mars',
-        name: 'Mars Photos',
+        path: '/admin/users',
+        name: 'Users',
       },
     ],
   },

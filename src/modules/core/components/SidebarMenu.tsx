@@ -13,28 +13,38 @@ import {
   Tooltip,
 } from 'antd';
 import { Book, LogOut, Triangle } from 'react-feather';
-import React from 'react';
-import { withRouter, WithRouterProps } from 'next/router';
+import React, { useEffect } from 'react';
+import { withRouter, NextRouter } from 'next/router';
 import Link from 'next/link';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
+
+import { IUser } from '@onr/user';
 
 import DashHeader from './styles/Header';
 import Inner from './styles/Sidebar';
 import { capitalize, lowercase } from '../../../lib/helpers';
 
 import { wrapperActions, IWrapperPage, IStore } from '@onr/core';
-import { useAuth } from '@onr/auth/components/smart/Auth';
+import { useAuth } from '@onr/auth';
+import { MenuItem } from '@app';
+
+declare type WithRouterProps = {
+  router: NextRouter;
+};
+
 /* eslint-disable complexity  */
 interface ISidebarMenuProps extends IWrapperPage.IProps, WithRouterProps {
   sidebarTheme: 'dark' | 'light';
   sidebarMode: 'vertical' | 'inline';
+  menuItems: MenuItem[];
+  currentUser: IUser;
 }
 
 const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
 
-const rootSubMenuKeys: any[] = [];
+const rootSubMenuKeys: string[] = [];
 
 const getKey = (name: string, index: number) => {
   const string = `${name}-${index}`;
@@ -57,6 +67,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
     sidebarIcons,
     collapsed,
     router,
+    currentUser,
     setOptionDrawer,
     setMobileDrawer,
     setBoxed,
@@ -68,10 +79,26 @@ const SidebarContent = (props: ISidebarMenuProps) => {
   } = props;
   const state = props;
   const [openKeys, setOpenKeys] = React.useState<string[]>([]);
-  const [appRoutes] = React.useState(menuItems);
+  const [appRoutes, setAppRoutes] = React.useState(menuItems);
   const { pathname = '' } = router || {};
-
   const { logout } = useAuth();
+
+  useEffect(() => {
+    const roles = currentUser.roles || [];
+    setAppRoutes(
+      menuItems.filter(route => {
+        if (!route.roles) {
+          return true;
+        }
+        for (const role of route.roles) {
+          if (roles.map(x => x.name).indexOf(role) !== -1) {
+            return true;
+          }
+        }
+        return false;
+      }),
+    );
+  }, [currentUser?.roles]);
 
   React.useEffect(() => {
     appRoutes.forEach((route, index) => {
@@ -84,7 +111,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
 
   const onOpenChange = (openKeys: string[]) => {
     const latestOpenKey = openKeys.slice(-1);
-    if (rootSubMenuKeys.indexOf(latestOpenKey) === -1) {
+    if (rootSubMenuKeys.includes(latestOpenKey[0])) {
       setOpenKeys([...latestOpenKey]);
     } else {
       setOpenKeys(latestOpenKey ? [...latestOpenKey] : []);
@@ -364,4 +391,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setWeak: bindActionCreators(wrapperActions.setWeak, dispatch),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SidebarContent));
+export const SidebarMenu = withRouter(connect(mapStateToProps, mapDispatchToProps)(SidebarContent));

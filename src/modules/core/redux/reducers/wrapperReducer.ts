@@ -88,6 +88,12 @@ export const wrapperReducer = (state = INITIAL_STATE, action: IAction<IMapPayloa
       const { wrapper }: IStore = JSON.parse(localStorage.getItem('settings') || '{}');
       return { ...state, ...wrapper, ...action.payload };
 
+    case ActionConsts.Wrapper.SetAccountId:
+      return {
+        ...state,
+        accountId: action.payload,
+      };
+
     default:
       return state;
   }

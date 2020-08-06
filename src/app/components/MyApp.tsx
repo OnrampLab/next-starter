@@ -8,12 +8,11 @@ import Head from 'next/head';
 import Router, { useRouter } from 'next/router';
 import NProgress from 'nprogress';
 
-import { Page, GlobalStyles } from '@onr/core';
+import { Page, GlobalStyles, AppProvider } from '@onr/core';
 import { store, afterComponentDidMount } from '../redux';
 import { menuItems } from '../configs';
 import { AuthenticationProvider } from './AuthProvider';
-import { useUser } from '@onr/auth';
-import { Signin } from '@onr/auth';
+import { Signin, useUser } from '@onr/auth';
 
 const makeStore: MakeStore = (context: Context) => store();
 
@@ -90,9 +89,11 @@ export class AppComponent extends App<any> {
             <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.2.5/polyfill.min.js" />
           )}
         </Head>
-        <AuthenticationProvider>
-          <PageContainer {...this.props}></PageContainer>
-        </AuthenticationProvider>
+        <AppProvider>
+          <AuthenticationProvider>
+            <PageContainer {...this.props}></PageContainer>
+          </AuthenticationProvider>
+        </AppProvider>
       </>
     );
   }

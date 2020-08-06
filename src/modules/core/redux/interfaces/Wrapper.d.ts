@@ -21,6 +21,7 @@ declare namespace IWrapperPage {
     optionDrawer: boolean;
     mobileDrawer: boolean;
     fullscreen: boolean;
+    accountId: number;
   }
 
   export interface IDispatchProps {
@@ -34,6 +35,7 @@ declare namespace IWrapperPage {
     setCollapse(payload?: boolean): AnyAction;
     setWeak(payload?: boolean): AnyAction;
     setup(payload?: options): AnyAction;
+    setAccountId(payload?: number): AnyAction;
   }
 
   namespace Actions {

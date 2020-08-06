@@ -10,5 +10,6 @@ export const ActionConsts = {
     SetCollapse: 'Wrapper_SetCollapse',
     SetWeak: 'Wrapper_SetWeak',
     Setup: 'Wrapper_Setup',
+    SetAccountId: 'Wrapper_SetAccountId',
   },
 };
