@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { DefaultPubSubContext, IStore, usePubSub } from '@onr/core';
+import { DefaultPubSubContext, IStore } from '@onr/core';
 import { AccountList, accountActions } from '@onr/account';
 
 export const AccountListPage: React.FC = () => {
   const dispatch = useDispatch();
   const accounts = useSelector((store: IStore) => store.accountStore.accounts);
-  const { subscribe } = usePubSub(DefaultPubSubContext);
+  const { subscribe } = useContext(DefaultPubSubContext);
 
   useEffect(() => {
     fetchData();

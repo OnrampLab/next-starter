@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Table, Card, Modal, Button, message, Popconfirm } from 'antd';
 import { IUser, UserService, CreateUserForm, UpdateUserForm, UserRole } from '@onr/user';
-import { DefaultPubSubContext, usePubSub } from '@onr/core';
+import { DefaultPubSubContext } from '@onr/core';
 import { ColumnProps } from 'antd/lib/table';
 import { IAccount } from '@onr/account';
 
@@ -10,7 +10,7 @@ export const UserListPage: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<IUser>({});
   const [createUserModalVisible, setCreateUserModalVisible] = useState(false);
   const [updateUserModalVisible, setUpdateUserModalVisible] = useState(false);
-  const { publish, subscribe } = usePubSub(DefaultPubSubContext);
+  const { publish, subscribe } = useContext(DefaultPubSubContext);
 
   useEffect(() => {
     fetchUserListData();

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { message } from 'antd';
-import { DefaultPubSubContext, usePubSub } from '@onr/core';
+import { DefaultPubSubContext } from '@onr/core';
 import { IAccount, AccountForm, AccountService } from '@onr/account';
 
 interface UpdateAccountFormProps {
@@ -12,7 +12,7 @@ export const UpdateAccountForm: React.FC<UpdateAccountFormProps> = ({
   onSubmit,
   currentAccount,
 }: UpdateAccountFormProps) => {
-  const { publish } = usePubSub(DefaultPubSubContext);
+  const { publish } = useContext(DefaultPubSubContext);
 
   async function handleSubmit(account: IAccount) {
     await AccountService.updateAccount({
