@@ -4,6 +4,9 @@ import { useAsync } from './useAsync';
 import { Http } from '../api';
 
 describe('Test useAsync work', () => {
+  beforeAll(() => {
+    Http.setBaseUrl('http://localhost:3000/api');
+  });
   beforeEach(() => {
     nock('http://localhost:3000/api')
       .get('/ok')
