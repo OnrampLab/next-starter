@@ -21,6 +21,8 @@ type IMapPayload = IWrapperPage.Actions.IMapPayload;
 
 /* eslint-disable complexity */
 export const wrapperReducer = (state = INITIAL_STATE, action: IAction<IMapPayload>) => {
+  let wrapper = {};
+
   switch (action.type) {
     case ActionConsts.Wrapper.SetOptionDrawer:
       return {
@@ -85,7 +87,10 @@ export const wrapperReducer = (state = INITIAL_STATE, action: IAction<IMapPayloa
       };
 
     case ActionConsts.Wrapper.Setup:
-      const { wrapper }: IStore = JSON.parse(localStorage.getItem('settings') || '{}');
+      if (typeof localStorage !== 'undefined') {
+        const settings: IStore = JSON.parse(localStorage.getItem('settings') || '{}');
+        wrapper = settings.wrapper || {};
+      }
       return { ...state, ...wrapper, ...action.payload };
 
     case ActionConsts.Wrapper.SetAccountId:
@@ -95,7 +100,11 @@ export const wrapperReducer = (state = INITIAL_STATE, action: IAction<IMapPayloa
       };
 
     default:
-      return state;
+      if (typeof localStorage !== 'undefined') {
+        const settings: IStore = JSON.parse(localStorage.getItem('settings') || '{}');
+        wrapper = settings.wrapper || {};
+      }
+      return { ...state, ...wrapper };
   }
 };
 /* eslint-enable complexity */

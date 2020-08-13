@@ -21,7 +21,7 @@ declare namespace IWrapperPage {
     optionDrawer: boolean;
     mobileDrawer: boolean;
     fullscreen: boolean;
-    accountId: number;
+    accountId?: number;
   }
 
   export interface IDispatchProps {
