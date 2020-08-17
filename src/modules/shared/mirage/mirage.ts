@@ -1,11 +1,13 @@
 import { Server } from 'miragejs';
 import authMeJson from '@onr/shared/__mock__/auth.json';
+import accountJSON from '@onr/shared/__mock__/account.json';
+import userJSON from '@onr/shared/__mock__/user.json';
 
 export function makeServer({ environment = 'test' } = {}) {
   const server = new Server({
     environment,
     routes() {
-      this.urlPrefix = `${process.env.API_URL}${process.env.API_URL!.slice(-1) === '/' ? '' : '/'}`;
+      this.urlPrefix = `${process.env.API_URL?.replace(/(.[^\/])$/, '$1/')}`;
       this.namespace = 'api';
       const readJsonMockFile = (json: Record<string, any>) => {
         const methods: any = {
@@ -26,6 +28,8 @@ export function makeServer({ environment = 'test' } = {}) {
       };
 
       readJsonMockFile(authMeJson);
+      readJsonMockFile(accountJSON);
+      readJsonMockFile(userJSON);
     },
   });
 
