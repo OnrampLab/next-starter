@@ -28,7 +28,7 @@ const Signin: React.FC = () => {
   async function onFinish(params: FormFields) {
     try {
       await auth.login({
-        params: {
+        data: {
           email: params.email,
           password: params.password,
         },

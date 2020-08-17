@@ -53,7 +53,7 @@ const AuthProvider: React.FC = props => {
   }, [state]);
 
   useEffect(() => {
-    const localSession: string|null = localStorage.getItem('session');
+    const localSession: string | null = localStorage.getItem('session');
     if (localSession) {
       (async (token: string) => {
         const session: AuthModel.SessionData = JSON.parse(token);
@@ -85,7 +85,7 @@ const AuthProvider: React.FC = props => {
     let loginData: AuthModel.SigninResponse;
     try {
       loginData = await AuthService.login(form);
-      const sessionData = Object.assign(loginData, { email: form.params.email });
+      const sessionData = Object.assign(loginData, { email: form.data.email });
       setData(sessionData);
       setExpiredTimeout(sessionData.expires_in * 1000);
       localStorage.setItem('session', JSON.stringify(sessionData));

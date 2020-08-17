@@ -8,7 +8,7 @@ export const AuthService = {
       const response: HttpModel.IResponse<AuthModel.SigninResponse> = await Http.post<
         AuthModel.SigninResponse
       >('/auth/login', {
-        data: payload.params,
+        data: payload.data,
       });
 
       Http.setToken(response.data.access_token);
@@ -47,9 +47,9 @@ export const AuthService = {
 
   getCurrentUser: async (): Promise<IUser> => {
     try {
-      const response: IUser = await Http.post<IUser>('/auth/me');
+      const response = await Http.post<IUser>('/auth/me');
 
-      return response;
+      return response.data;
     } catch (error) {
       throw new Error(`Get current auth Error: ${error.response.data.message}`);
     }
