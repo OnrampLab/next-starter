@@ -1,6 +1,6 @@
 import { makeServer } from '../server/mirage';
 
-if (process.env.NODE_ENV === 'development' && process.env.API_URL === '/mirage') {
+if (process.env.NODE_ENV === 'development' && process.env.ENABLE_MIRAGE === 'true') {
   makeServer({ environment: 'development' });
 }
 

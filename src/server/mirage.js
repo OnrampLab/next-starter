@@ -5,7 +5,7 @@ export function makeServer({ environment = 'test' } = {}) {
   const server = new Server({
     environment,
     routes() {
-      this.urlPrefix = 'mirage/';
+      this.urlPrefix = `${process.env.API_URL}${process.env.API_URL.slice(-1) === '/' ? '' : '/'}`;
       this.namespace = 'api';
 
       // auth
