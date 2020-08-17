@@ -1,5 +1,5 @@
 import { Server, Model } from 'miragejs';
-import authMeJson from '../assets/mock-data/auth-me.json';
+import authMeJson from '@onr/shared/__mock__/auth.json';
 
 export function makeServer({ environment = 'test' } = {}) {
   const server = new Server({
@@ -34,7 +34,7 @@ export function makeServer({ environment = 'test' } = {}) {
       });
 
       this.post('/auth/me', () => {
-        return authMeJson;
+        return { data: authMeJson };
       });
     },
   });
