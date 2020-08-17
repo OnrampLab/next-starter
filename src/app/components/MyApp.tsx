@@ -1,7 +1,7 @@
 import '../../assets/styles.less';
 import '../../assets/tailwind-extension.css';
 
-import App from 'next/app';
+import App, { AppContext } from 'next/app';
 import React from 'react';
 import { MakeStore, createWrapper, Context } from 'next-redux-wrapper';
 import Head from 'next/head';
@@ -23,7 +23,9 @@ Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 Router.events.on(
   'routeChangeComplete',
-  () => (document.querySelector('.workspace > .ant-layout')!.scrollTop = 0),
+  () =>
+    document.querySelector('.workspace > .ant-layout') &&
+    (document.querySelector('.workspace > .ant-layout')!.scrollTop = 0),
 );
 
 const PageContainer: React.FC = (props: any) => {
@@ -52,12 +54,10 @@ export class AppComponent extends App<any> {
     return {
       pageProps: {
         // Call page-level getInitialProps
-        ...(Component.getInitialProps
-          ? await Component.getInitialProps(ctx)
-          : {}),
+        ...(Component.getInitialProps ? await Component.getInitialProps(ctx) : {}),
         // Some custom thing for all pages
-        appProp: ctx.pathname
-      }
+        appProp: ctx.pathname,
+      },
     };
   };
 
