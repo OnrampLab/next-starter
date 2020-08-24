@@ -1,62 +1,38 @@
-{
-  "get": {
-    "/accounts": {
-      "data": [
-        {
-          "id": 1,
-          "name": "google",
-          "redirect_domain": "google.com",
-          "logo": "/static/images/triangle.png",
-          "signature": null,
-          "address": null,
-          "email_validation_enabled": false,
-          "parent_id": null,
-          "created_at": null,
-          "updated_at": null
-        },
-        {
-          "id": 2,
-          "name": "onramplab 1",
-          "redirect_domain": "http://onramplab.com/",
-          "logo": null,
-          "signature": null,
-          "address": null,
-          "email_validation_enabled": false,
-          "parent_id": null,
-          "created_at": null,
-          "updated_at": "2020-05-12T03:12:41.000000Z"
-        },
-        {
-          "id": 3,
-          "name": "onramplab 2",
-          "redirect_domain": "http://onramplab.com/",
-          "logo": null,
-          "signature": null,
-          "address": null,
-          "email_validation_enabled": false,
-          "parent_id": null,
-          "created_at": null,
-          "updated_at": "2020-05-12T03:12:48.000000Z"
-        }
-      ]
-    }
+[
+  {
+    "id": 1,
+    "name": "google",
+    "redirect_domain": "google.com",
+    "logo": "/static/images/triangle.png",
+    "signature": null,
+    "address": null,
+    "email_validation_enabled": false,
+    "parent_id": null,
+    "created_at": null,
+    "updated_at": null
   },
-  "post": {
-    "/accounts": {
-      "data": {},
-      "message": "success"
-    }
+  {
+    "id": 2,
+    "name": "onramplab 1",
+    "redirect_domain": "http://onramplab.com/",
+    "logo": null,
+    "signature": null,
+    "address": null,
+    "email_validation_enabled": false,
+    "parent_id": null,
+    "created_at": null,
+    "updated_at": "2020-05-12T03:12:41.000000Z"
   },
-  "patch": {
-    "/accounts": {
-      "data": {},
-      "message": "success"
-    }
-  },
-  "delete": {
-    "/accounts": {
-      "data": {},
-      "message": "success"
-    }
+  {
+    "id": 3,
+    "name": "onramplab 2",
+    "redirect_domain": "http://onramplab.com/",
+    "logo": null,
+    "signature": null,
+    "address": null,
+    "email_validation_enabled": false,
+    "parent_id": null,
+    "created_at": null,
+    "updated_at": "2020-05-12T03:12:48.000000Z"
   }
-}
+]

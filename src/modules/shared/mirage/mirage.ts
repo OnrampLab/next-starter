@@ -1,15 +1,60 @@
 import { Server } from 'miragejs';
-import authMeJson from '@onr/shared/__mock__/auth.json';
-import accountJSON from '@onr/shared/__mock__/account.json';
-import userJSON from '@onr/shared/__mock__/user.json';
+import MOCK_JSON, { ModelsDeclaration, RoutesRegistration } from '../__mock__';
 
 export function makeServer({ environment = 'test' } = {}) {
   const server = new Server({
     environment,
+    models: ModelsDeclaration,
+    seeds(server) {
+      for (const resourceName in ModelsDeclaration) {
+        for (const resource of MOCK_JSON[`${resourceName}s`]) {
+          server.create(resourceName, resource);
+        }
+      }
+    },
     routes() {
       this.urlPrefix = `${process.env.API_URL?.replace(/(.[^\/])$/, '$1/')}`;
       this.namespace = 'api';
-      const readJsonMockFile = (json: Record<string, any>) => {
+
+      const registerCRUD = resource => {
+        this.get(`/${resource}`, schema => {
+          return {
+            data: schema[resource].all().models,
+          };
+        });
+
+        this.post(`/${resource}`, (schema, request) => {
+          return {
+            data: [schema[resource].create(JSON.parse(request.requestBody))],
+          };
+        });
+
+        this.patch(`/${resource}/:id`, (schema, request) => {
+          const { id } = request.params;
+
+          schema[resource].find(id).update(JSON.parse(request.requestBody));
+
+          return {
+            message: 'success',
+          };
+        });
+
+        this.delete(`/${resource}/:id`, (schema, request) => {
+          const { id } = request.params;
+
+          schema.db[resource].remove(id);
+
+          return {
+            message: 'success',
+          };
+        });
+      };
+
+      for (const resourceName in ModelsDeclaration) {
+        registerCRUD(`${resourceName}s`);
+      }
+
+      const registerRoute = (json: Record<string, any>) => {
         const methods: any = {
           post: this.post,
           get: this.get,
@@ -27,9 +72,9 @@ export function makeServer({ environment = 'test' } = {}) {
         }
       };
 
-      readJsonMockFile(authMeJson);
-      readJsonMockFile(accountJSON);
-      readJsonMockFile(userJSON);
+      for (const route in RoutesRegistration) {
+        registerRoute(RoutesRegistration[route]);
+      }
     },
   });
 
