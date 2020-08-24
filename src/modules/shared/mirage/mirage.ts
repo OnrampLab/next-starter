@@ -50,8 +50,9 @@ export function makeServer({ environment = 'test' } = {}) {
         });
       };
 
-      registerCRUD('accounts');
-      registerCRUD('users');
+      for (const resourceName in ModelsDeclaration) {
+        registerCRUD(`${resourceName}s`);
+      }
 
       const registerRoute = (json: Record<string, any>) => {
         const methods: any = {
