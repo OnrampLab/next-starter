@@ -1,3 +1,4 @@
-export * from './actionConsts';
+export * from './consts';
 export * from './actions';
-export * from './reducers';
+export * from './reducer';
+export * from './selectors';
