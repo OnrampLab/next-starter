@@ -10,9 +10,9 @@ import NProgress from 'nprogress';
 
 import { Page, GlobalStyles, AppProvider } from '@onr/core';
 import { store, afterComponentDidMount } from '../redux';
-import { menuItems } from '../configs';
-import { AuthenticationProvider } from './AuthProvider';
-import { Signin, useUser } from '@onr/auth';
+
+
+import { PageContainer } from './PageContainer';
 
 const makeStore: MakeStore = (context: Context) => store();
 
@@ -28,38 +28,20 @@ Router.events.on(
     (document.querySelector('.workspace > .ant-layout')!.scrollTop = 0),
 );
 
-const PageContainer: React.FC = (props: any) => {
-  const user = useUser();
-  const { Component, pageProps } = props;
-  const isForgot = useRouter().pathname.startsWith('/forgot');
-  const isSignup = useRouter().pathname.startsWith('/auth/signup');
-  return (
-    <>
-      {user || isForgot || isSignup ? (
-        <Page {...props} menuItems={menuItems}>
-          <Component {...pageProps} />
-        </Page>
-      ) : (
-        <Signin></Signin>
-      )}
-    </>
-  );
-};
+export class AppComponent extends React.Component {
+  // public static getInitialProps = async ({ Component, ctx }: AppContext) => {
+  //   // Keep in mind that this will be called twice on server, one for page and second for error page
+  //   // ctx.store.dispatch({ type: "DEMO.SET_PLANT_IMAGE", payload: { demos:[] } });
 
-export class AppComponent extends App<any> {
-  public static getInitialProps = async ({ Component, ctx }: AppContext) => {
-    // Keep in mind that this will be called twice on server, one for page and second for error page
-    // ctx.store.dispatch({ type: "DEMO.SET_PLANT_IMAGE", payload: { demos:[] } });
-
-    return {
-      pageProps: {
-        // Call page-level getInitialProps
-        ...(Component.getInitialProps ? await Component.getInitialProps(ctx) : {}),
-        // Some custom thing for all pages
-        appProp: ctx.pathname,
-      },
-    };
-  };
+  //   return {
+  //     pageProps: {
+  //       // Call page-level getInitialProps
+  //       ...(Component.getInitialProps ? await Component.getInitialProps(ctx) : {}),
+  //       // Some custom thing for all pages
+  //       appProp: ctx.pathname,
+  //     },
+  //   };
+  // };
 
   componentDidMount() {
     afterComponentDidMount();
@@ -90,9 +72,10 @@ export class AppComponent extends App<any> {
           )}
         </Head>
         <AppProvider>
-          <AuthenticationProvider>
+          <PageContainer {...this.props} />
+          {/*<AuthenticationProvider>
             <PageContainer {...this.props}></PageContainer>
-          </AuthenticationProvider>
+          </AuthenticationProvider>*/}
         </AppProvider>
       </>
     );
