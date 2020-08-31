@@ -6,7 +6,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import styles from './Signin.module.scss';
 
-import { useAuth, AuthState, login } from '../../';
+import { useAuth, AuthState, login } from '../';
 import { useDispatch } from 'react-redux';
 
 const FormItem = Form.Item;
@@ -44,7 +44,6 @@ const PASSWORD_RULES = [{ required: true, message: 'Please input your Password!'
 
 const Signin: React.FC = () => {
   const { state } = useAuth(), dispatch = useDispatch();
-console.log(state)
 
   async function onFinish(params: FormFields) {
     try {

@@ -14,7 +14,7 @@ const Content = styled.div`
   min-width: 300px;
 `;
 
-const Forgot: React.FC = () => {
+export const Forgot: React.FC = () => {
   async function onFinish(value: { email: string }) {
     console.dir(value);
     await Message.success('Reset email sent. Please check your inbox.');
@@ -86,5 +86,3 @@ const Forgot: React.FC = () => {
     </Row>
   );
 };
-
-export default Forgot;
