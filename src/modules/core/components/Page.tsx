@@ -15,7 +15,7 @@ import { authActions } from '@onr/auth';
 
 const { Content } = Layout;
 
-const NonDashboardRoutes = ['/auth/signin', '/auth/signup', '/forgot', '/lockscreen', '/_error'];
+const NonDashboardRoutes = ['/auth/signin', '/auth/signup', '/auth/forgot', '/lockscreen', '/_error'];
 /* eslint-disable complexity*/
 const Component = (props: IWrapperPage.IProps & WithRouterProps) => {
   const { router, menuItems, children } = props;
