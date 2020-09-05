@@ -3,19 +3,10 @@ import { useDispatch } from 'react-redux';
 
 import { menuItems } from '../';
 import { Page } from '@onr/core';
-import { getCurrentUser, useJWTAuth, useJWTAuthEffect } from '@onr/auth';
+import { AuthWrapper } from '@onr/auth';
 
 const Container: React.FC = (props) => {
   const { Component, pageProps } = props;
-  const dispatch = useDispatch();
-
-  const { isAuthroized } = useJWTAuth();
-  useJWTAuthEffect();
-
-  useEffect(() => {
-    if(isAuthroized)
-      dispatch(getCurrentUser())
-  }, [isAuthroized]);
 
   return (
     <Page 
@@ -30,6 +21,8 @@ const Container: React.FC = (props) => {
 export const PageContainer: React.FC = (props) => {
   //wrap root providers here, if any
   return (
-    <Container {...props}/>
+    <AuthWrapper>
+      <Container {...props}/>
+    </AuthWrapper>
   )
 }
