@@ -11,8 +11,6 @@ export enum AuthState {
   Pending = 'AuthState.Pending',
   Authorized = 'AuthState.Authorized',
   Unauthorized = 'AuthState.Unauthorized',
-
-  NeedRefresh = 'AuthState.NeedRefresh',
 }
 
 export enum AuthConsts {
