@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
-import { selectAuthState, selectAuthData, selectCurrentUser } from '../';
-import { useRouter } from 'next/router';
-
 import { useSelector, useDispatch } from 'react-redux';
-import { AuthState, SESSION_KEY, resolveAuthState } from '../redux';
+import { useRouter } from 'next/router';
+import { selectAuthState, selectAuthData, selectCurrentUser, AuthState, SESSION_KEY, resolveAuthState } from '@onr/auth';
 
 export const useAuth = () => {
   const state = useSelector(selectAuthState), data = useSelector(selectAuthData), user = useSelector(selectCurrentUser);

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import styles from './Signin.module.scss';
 
-import { useAuth, AuthState, login } from '../';
+import { useAuth, AuthState, login } from '@onr/auth';
 import { useDispatch } from 'react-redux';
 
 const FormItem = Form.Item;

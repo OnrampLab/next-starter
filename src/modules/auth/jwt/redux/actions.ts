@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { message } from 'antd';
-import { setAuthState, setAuthData, resolveAuthFromStorage, SESSION_KEY } from '@onr/auth/core';
-import { AuthService, AuthModel, AuthConsts, AuthState } from '../';
+import { setAuthState, setAuthData, resolveAuthFromStorage, SESSION_KEY } from '@onr/auth';
+import { AuthService, AuthModel, AuthConsts, AuthState } from '@onr/auth';
 
 export { setAuthState, setAuthData };
 
