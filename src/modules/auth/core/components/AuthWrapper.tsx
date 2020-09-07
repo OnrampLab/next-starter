@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Spin } from 'antd';
-import { useJWTAuth, useJWTAuthEffect, getCurrentUser } from '../';
+import { useAuth, useAuthEffect, getCurrentUser } from '@onr/auth';
 
 export const AuthWrapper: React.FC = ({ children }) => {
   const dispatch = useDispatch();
-  const { isAuthroized, isResolved } = useJWTAuth();
+  const { isAuthroized, isResolved } = useAuth();
 
-  useJWTAuthEffect();
+  useAuthEffect();
 
   useEffect(() => {
     if(isAuthroized) 

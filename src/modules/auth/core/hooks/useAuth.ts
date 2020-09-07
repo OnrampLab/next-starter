@@ -15,6 +15,7 @@ export const useAuth = () => {
     user, 
     isResolved: state !== AuthState.Prepare, 
     isAuthroized: state === AuthState.Authorized,
+    isPending: state === AuthState.Pending,
     // be care that !isAuthroized !== Unauthorized
     isUnAuthroized: state === AuthState.Unauthorized,
   };

@@ -5,7 +5,7 @@ import { AuthState, setAuthState, resolveJWTAuthState, refreshToken } from '../r
 
 import { Modal } from 'antd';
 
-import { useAuth, useAuthStorageEffect, useRedirectAuthEffect } from './useAuth';
+import { useAuth, useAuthStorageEffect, useRedirectAuthEffect } from '@onr/auth/core';
 
 export const useJWTAuth = () => {
   const { state, data, user } = useAuth();

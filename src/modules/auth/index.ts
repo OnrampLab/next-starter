@@ -1,4 +1,2 @@
-export * from './components';
-export * from './services';
-export * from './redux';
-export * from './hooks';
+export * from './core';
+export { useJWTAuth as useAuth, useJWTAuthEffect as useAuthEffect } from './jwt/hooks';

@@ -3,23 +3,6 @@ import { actionConsts, SESSION_KEY } from './consts';
 import { AuthService, AuthModel, AuthConsts, AuthState } from '@onr/auth';
 import { message } from 'antd';
 
-export const authActions = {
-  setCurrentUser: (payload: {}) => ({
-    payload,
-    type: actionConsts.auth.setCurrentUser,
-  }),
-
-  getCurrentUser: () => async (dispatch: Dispatch) => {
-    const currentUser = await AuthService.getCurrentUser();
-
-    dispatch(
-      authActions.setCurrentUser({
-        currentUser,
-      }),
-    );
-  },
-};
-
 export const setCurrentUser = (currentUser) => ({
   type: AuthConsts.SET_CURRENT_USER,
   payload: {
@@ -52,7 +35,7 @@ export const setAuthData = (data) => ({
   }
 })
 
-const resolveAuthFromStorage = () => {
+export const resolveAuthFromStorage = () => {
   const localSession = localStorage.getItem(SESSION_KEY) || '';
   
   try {
