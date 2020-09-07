@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import { actionConsts, SESSION_KEY } from './consts';
+import { SESSION_KEY } from './consts';
 import { AuthService, AuthModel, AuthConsts, AuthState } from '@onr/auth';
 import { message } from 'antd';
 

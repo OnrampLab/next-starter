@@ -1,19 +1,6 @@
-//#region Global Imports
-//#endregion Global Imports
-
-//#region Local Imports
-import { actionConsts } from './consts';
 import { AuthConsts, STORE_KEY, INITIAL_STATE } from './consts';
-//#endregion Local Imports
-
-//#region Interface Imports
 import { IAction } from '@onr/core';
-//#endregion Interface Imports
 
-/**
- * REDUCER
- */
-/* eslint-disable complexity */
 export const authReducer = (state = INITIAL_STATE, action: IAction<IMapPayload>) => {
   switch (action.type) {
     case AuthConsts.SET_CURRENT_USER:

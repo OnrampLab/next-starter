@@ -1,9 +1,3 @@
-export const actionConsts = {
-  auth: {
-    setCurrentUser: 'AUTH.SET_CURRENT_USER',
-  },
-};
-
 /*
   Prepare: initializing auth state (From storage/cookie)
   Pending: submitting authorization request and pending response

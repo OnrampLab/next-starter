@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { AuthState, SESSION_KEY, resolveAuthState } from '../redux';
 
-// to be used in app
 export const useAuth = () => {
   const state = useSelector(selectAuthState), data = useSelector(selectAuthData), user = useSelector(selectCurrentUser);
 
@@ -21,7 +20,6 @@ export const useAuth = () => {
   };
 }
 
-// to be used in app
 export const useAuthEffect = () => {
   const { state, data, user, isResolved, isAuthroized, isUnAuthroized } = useAuth();
 
