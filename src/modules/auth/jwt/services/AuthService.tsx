@@ -1,7 +1,6 @@
 import { Http, HttpModel } from '@onr/shared';
-import { IUser } from '@onr/user';
-import { AuthModel } from './interfaces';
 import { AuthService as AuthCoreService } from '@onr/auth/core';
+import { AuthModel } from '@onr/auth';
 
 export const AuthService = {
   ...AuthCoreService, 

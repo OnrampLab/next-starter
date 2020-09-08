@@ -1,22 +1,14 @@
 import React, { useEffect, useRef } from 'react';
-
 import { useDispatch } from 'react-redux';
-import { AuthState, setAuthState, resolveJWTAuthState, refreshToken } from '../redux';
-
 import { Modal } from 'antd';
-
-import { useAuth, useAuthStorageEffect, useRedirectAuthEffect } from '@onr/auth/core';
+import { useAuth } from '@onr/auth/core';
+import { AuthState, setAuthState, useAuthStorageEffect, useRedirectAuthEffect, resolveJWTAuthState, refreshToken } from '@onr/auth';
 
 export const useJWTAuth = () => {
-  const { state, data, user } = useAuth();
+  const { state, data, user, isResolved, isAuthroized, isPending, isUnAuthroized } = useAuth();
 
   return {
-    state, data, user, 
-    isResolved: state !== AuthState.Prepare, 
-    isAuthroized: state === AuthState.Authorized,
-    isPending: state === AuthState.Pending,
-    // be care that !isAuthroized !== Unauthorized
-    isUnAuthroized: state === AuthState.Unauthorized,
+    state, data, user, isResolved, isAuthroized, isPending, isUnAuthroized, 
     isNeedRefresh: state === AuthState.NeedRefresh, 
   }
 }

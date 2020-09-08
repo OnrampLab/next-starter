@@ -1,9 +1,7 @@
 import { Dispatch } from 'redux';
 import { message } from 'antd';
-import { setAuthState, setAuthData, resolveAuthFromStorage, SESSION_KEY } from '@onr/auth';
-import { AuthService, AuthModel, AuthConsts, AuthState } from '@onr/auth';
-
-export { setAuthState, setAuthData };
+import { setAuthState, setAuthData, resolveAuthFromStorage } from '@onr/auth';
+import { AuthService, AuthState } from '@onr/auth';
 
 export const resolveJWTAuthState = () => async(dispatch: Dispatch) => {
   const session = resolveAuthFromStorage();
