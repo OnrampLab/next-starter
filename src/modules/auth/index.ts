@@ -1,2 +1,8 @@
 export * from './core';
-export { useJWTAuth as useAuth, useJWTAuthEffect as useAuthEffect } from './jwt/hooks';
+
+// Please refer to REAMDME for more information
+
+/* JWT export */
+export { useJWTAuth as useAuth, useJWTAuthEffect as useAuthEffect, AuthService, AuthState, resolveJWTAuthState, refreshToken } from './jwt';
+/* ***********/
+ 
