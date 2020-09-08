@@ -51,7 +51,7 @@ export const resolveAuthFromStorage = () => {
 
 export const resolveAuthState = () => async(dispatch: Dispatch) => {
   const session = resolveAuthFromStorage();
-  console.log("data", session)
+
   if(session.access_token) {
     dispatch(setAuthData(session));
     dispatch(setAuthState(AuthState.Authorized));
