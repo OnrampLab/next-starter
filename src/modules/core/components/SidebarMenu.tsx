@@ -26,8 +26,10 @@ import Inner from './styles/Sidebar';
 import { capitalize, lowercase } from '../../../lib/helpers';
 
 import { wrapperActions, IWrapperPage, IStore } from '@onr/core';
-import { useAuth } from '@onr/auth';
+import { useAuth, logout } from '@onr/auth';
 import { MenuItem } from '@app';
+
+import { useDispatch } from 'react-redux';
 
 declare type WithRouterProps = {
   router: NextRouter;
@@ -81,7 +83,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
   const [openKeys, setOpenKeys] = React.useState<string[]>([]);
   const [appRoutes, setAppRoutes] = React.useState(menuItems);
   const { pathname = '' } = router || {};
-  const { logout } = useAuth();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const roles = currentUser.roles || [];
@@ -218,7 +220,7 @@ const SidebarContent = (props: ISidebarMenuProps) => {
               <Popconfirm
                 placement="top"
                 title="Are you sure you want to sign out?"
-                onConfirm={() => logout()}
+                onConfirm={() => dispatch(logout())}
                 okText="Yes"
                 cancelText="Cancel"
               >

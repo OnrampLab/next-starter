@@ -6,7 +6,8 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import styles from './Signin.module.scss';
 
-import { useAuth, AuthState } from './Auth';
+import { useAuth, AuthState, login } from '@onr/auth';
+import { useDispatch } from 'react-redux';
 
 const FormItem = Form.Item;
 
@@ -22,17 +23,36 @@ type FormFields = {
   remember: boolean;
 };
 
+const INIT_VALUES = {
+  email: '',
+  password: '',
+  remember: true,
+};
+
+const EMAIL_RULES = [
+  {
+    type: 'email',
+    message: 'The input is not valid E-mail!',
+  },
+  {
+    required: true,
+    message: 'Please input your E-mail!',
+  },
+];
+
+const PASSWORD_RULES = [{ required: true, message: 'Please input your Password!' }];
+
 const Signin: React.FC = () => {
-  const auth = useAuth();
+  const { state } = useAuth(), dispatch = useDispatch();
 
   async function onFinish(params: FormFields) {
     try {
-      await auth.login({
+      await dispatch(login({
         data: {
           email: params.email,
           password: params.password,
         },
-      });
+      }));
       Message.success('Sign complete. Taking you to your dashboard!');
     } catch (error) {
       Message.error(error.message);
@@ -40,7 +60,7 @@ const Signin: React.FC = () => {
   }
 
   return (
-    <Spin spinning={auth.authState === AuthState.Prepare}>
+    <Spin spinning={state === AuthState.Prepare || state === AuthState.Pending || state === AuthState.Authorized}>
       <Row
         align="middle"
         justify="center"
@@ -67,25 +87,12 @@ const Signin: React.FC = () => {
             onFinishFailed={err => {
               Message.error(err);
             }}
-            initialValues={{
-              email: '',
-              password: '',
-              remember: true,
-            }}
+            initialValues={INIT_VALUES}
           >
             <FormItem
               label="Email"
               name="email"
-              rules={[
-                {
-                  type: 'email',
-                  message: 'The input is not valid E-mail!',
-                },
-                {
-                  required: true,
-                  message: 'Please input your E-mail!',
-                },
-              ]}
+              rules={EMAIL_RULES}
             >
               <Input
                 prefix={<Mail size={16} strokeWidth={1} style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -97,7 +104,7 @@ const Signin: React.FC = () => {
             <FormItem
               label="Password"
               name="password"
-              rules={[{ required: true, message: 'Please input your Password!' }]}
+              rules={PASSWORD_RULES}
             >
               <Input
                 prefix={<Eye size={16} strokeWidth={1} style={{ color: 'rgba(0,0,0,.25)' }} />}
