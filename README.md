@@ -26,7 +26,7 @@
 
 <br/>
 <div align="center">
-  <sub>Created by <a href="https://www.pankod.com">Pankod</a></sub>
+  <sub>Inspired by <a href="https://www.pankod.com">Pankod</a></sub>
 </div>
 
 
@@ -80,9 +80,9 @@ This boilerplate includes the latest powerfull tools.
   >A Babel plugin to add a new resolver for your modules when compiling your code using Babel. This plugin allows you to add new "root" directories that contain your modules. It also allows you to setup a custom alias for directories, specific files, or even other npm modules.
 
 
-  <dd>Includes next-runtime-dotenv <dd>
+  <dd>Includes nextjs runtime config <dd>
 
-  >Normally, .env isn’t available in the browsers (only Node.js), but our boilerplate uses npm package for make it available. You will need to uncomment `MyApp` component's `getInitialProps()` in order to enable runtime config to get environment variables.
+  >You will need to uncomment `MyApp` component's `getInitialProps()` in order to enable runtime config to get environment variables.
 
   <dd>Includes jest and enzyme <dd>
 
