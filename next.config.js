@@ -15,6 +15,10 @@ if (typeof require !== 'undefined') {
 }
 
 const nextConfig = {
+  publicRuntimeConfig: {
+    // Will be available on both server and client
+    processEnv: process.env,
+  },
   onDemandEntries: {
     maxInactiveAge: 1000 * 60 * 60,
     pagesBufferLength: 5,

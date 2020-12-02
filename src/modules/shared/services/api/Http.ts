@@ -1,5 +1,6 @@
 import { stringify } from 'qs';
 import Axios from 'axios';
+import getConfig from 'next/config';
 import { HttpModel } from './interfaces';
 
 declare type RequestMethods =
@@ -25,12 +26,13 @@ interface IRequest {
   data?: any;
 }
 
-let BaseUrl = `${process.env.API_URL}/api`;
+const { publicRuntimeConfig } = getConfig();
 
 export const Http = {
-  apiToken: process.env.API_KEY,
+  baseUrl: `${publicRuntimeConfig.processEnv.API_URL}/api`,
+  apiToken: publicRuntimeConfig.processEnv.API_KEY,
 
-  setBaseUrl: (url: string) => (BaseUrl = url),
+  setBaseUrl: (url: string) => (Http.baseUrl = url),
 
   setToken(token: string) {
     Http.apiToken = token;
@@ -43,8 +45,9 @@ export const Http = {
     data = {},
   }: IRequest): Promise<HttpModel.IResponse<A>> => {
     try {
-      const query = Object.keys(params).length > 0 ? `?${stringify(params, { encode: false })}` : '';
-      const apiUrl = `${BaseUrl}${url}${query}`;
+      const query =
+        Object.keys(params).length > 0 ? `?${stringify(params, { encode: false })}` : '';
+      const apiUrl = `${Http.baseUrl}${url}${query}`;
 
       const res = await Axios(apiUrl, {
         method: method,
