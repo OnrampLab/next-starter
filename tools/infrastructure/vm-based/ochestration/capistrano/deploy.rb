@@ -38,7 +38,7 @@ set :yarn_roles, :all                                      # default
 set :yarn_env_variables, {}                                # default
 
 # pm2 settings
-set :pm2_config, 'tools/pm2/pm2.config.js --update-env' # PM2 config path by default
+set :pm2_config, 'tools/infrastructure/vm-based/ochestration/pm2/pm2.config.js --update-env' # PM2 config path by default
 
 # hooks
 namespace :deploy do
