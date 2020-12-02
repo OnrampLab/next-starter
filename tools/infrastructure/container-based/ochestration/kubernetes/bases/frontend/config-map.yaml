@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+data:
+  NODE_ENV: production
+  PROXY_MODE: production
+  API_URL: api.example.com
+  API_KEY: apikey

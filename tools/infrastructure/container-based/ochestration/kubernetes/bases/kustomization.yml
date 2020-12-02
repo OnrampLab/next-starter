@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - frontend/config-map.yaml
+  - frontend/deployment-app.yaml
+  - frontend/service.yaml
+
+images:
+  - name: next-starter
+    newName: YOUR_ECR_REPOSITORY_URL
+    newTag: v1.0.0 #NOTE: since we will dynamatically change tag on deploy, we don't need to manually change the tag except manual deploy
