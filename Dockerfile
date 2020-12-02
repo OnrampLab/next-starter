@@ -1,3 +1,11 @@
+FROM mhart/alpine-node:12 AS dev
+
+WORKDIR /app
+
+RUN apk add --no-cache make gcc g++ python2 python3 git
+
+ADD . /app
+
 # Do the npm install or yarn install in the full image
 FROM mhart/alpine-node:12 AS builder
 WORKDIR /app

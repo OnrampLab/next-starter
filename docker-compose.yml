@@ -1,7 +1,10 @@
-version: '3'
+version: '3.4'
 services:
   frontend:
-    image: mhart/alpine-node:12
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
     volumes:
       - .:/app
     working_dir: /app
@@ -14,5 +17,6 @@ services:
         sh -i -c -e
         "
         yarn install --frozen-lockfile;
+        npm rebuild node-sass;
         yarn start:dev;
         "
