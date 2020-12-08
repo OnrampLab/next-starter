@@ -1,0 +1,22 @@
+version: '3.4'
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    volumes:
+      - .:/app
+    working_dir: /app
+    environment:
+      - PORT=3000
+    ports:
+      - 3000:3000
+    command:
+      >
+        sh -i -c -e
+        "
+        yarn install --frozen-lockfile;
+        npm rebuild node-sass;
+        yarn start:dev;
+        "

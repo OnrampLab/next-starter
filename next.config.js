@@ -6,7 +6,6 @@ const withPurgeCss = require('next-purgecss');
 const withSASS = require('@zeit/next-sass');
 const withBundleAnalyzer = require('@zeit/next-bundle-analyzer');
 const withPWA = require('next-pwa');
-const Dotenv = require('dotenv-webpack');
 const path = require('path');
 /* eslint-enable @typescript-eslint/no-var-requires */
 
@@ -15,6 +14,10 @@ if (typeof require !== 'undefined') {
 }
 
 const nextConfig = {
+  publicRuntimeConfig: {
+    // Will be available on both server and client
+    processEnv: process.env,
+  },
   onDemandEntries: {
     maxInactiveAge: 1000 * 60 * 60,
     pagesBufferLength: 5,
@@ -40,16 +43,6 @@ const nextConfig = {
   },
   pwa: {
     dest: 'public',
-  },
-  webpack: config => {
-    config.plugins.push(
-      new Dotenv({
-        path: path.join(__dirname, '.env'),
-        systemvars: true,
-      }),
-    );
-
-    return config;
   },
 };
 

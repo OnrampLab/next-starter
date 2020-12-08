@@ -11,7 +11,6 @@ import NProgress from 'nprogress';
 import { Page, GlobalStyles, AppProvider } from '@onr/core';
 import { store, afterComponentDidMount } from '../redux';
 
-
 import { PageContainer } from './PageContainer';
 
 const makeStore: MakeStore = (context: Context) => store();
@@ -29,19 +28,23 @@ Router.events.on(
 );
 
 export class AppComponent extends React.Component {
-  // public static getInitialProps = async ({ Component, ctx }: AppContext) => {
-  //   // Keep in mind that this will be called twice on server, one for page and second for error page
-  //   // ctx.store.dispatch({ type: "DEMO.SET_PLANT_IMAGE", payload: { demos:[] } });
+  // NOTE: In order to get runtime config. We will need to use getInitialProps. But the down side
+  //       is it will opt out Next.js default static optimization.
+  // Please refer to https://nextjs.org/docs/api-reference/next.config.js/runtime-configuration
 
-  //   return {
-  //     pageProps: {
-  //       // Call page-level getInitialProps
-  //       ...(Component.getInitialProps ? await Component.getInitialProps(ctx) : {}),
-  //       // Some custom thing for all pages
-  //       appProp: ctx.pathname,
-  //     },
-  //   };
-  // };
+  public static getInitialProps = async ({ Component, ctx }: AppContext) => {
+    // Keep in mind that this will be called twice on server, one for page and second for error page
+    // ctx.store.dispatch({ type: "DEMO.SET_PLANT_IMAGE", payload: { demos:[] } });
+
+    return {
+      pageProps: {
+        // Call page-level getInitialProps
+        ...(Component.getInitialProps ? await Component.getInitialProps(ctx) : {}),
+        // Some custom thing for all pages
+        appProp: ctx.pathname,
+      },
+    };
+  };
 
   componentDidMount() {
     afterComponentDidMount();

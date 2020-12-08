@@ -18,7 +18,7 @@ set :log_level, :debug
 set :pty, true
 set :keep_releases, 5
 set :linked_dirs, %w{node_modules logs}
-set :linked_files, %w(.env)
+set :linked_files, %w(.env.local)
 
 # nvm settings
 set :nvm_type, :user # or :system, depends on your nvm setup
@@ -38,7 +38,7 @@ set :yarn_roles, :all                                      # default
 set :yarn_env_variables, {}                                # default
 
 # pm2 settings
-set :pm2_config, 'tools/pm2/pm2.config.js --update-env' # PM2 config path by default
+set :pm2_config, 'tools/infrastructure/vm-based/ochestration/pm2/pm2.config.js --update-env' # PM2 config path by default
 
 # hooks
 namespace :deploy do

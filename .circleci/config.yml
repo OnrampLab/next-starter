@@ -1,15 +1,14 @@
 version: 2.1
 
+orbs:
+  aws-ecr: circleci/aws-ecr@6.12.2
+  aws-eks: circleci/aws-eks@1.0.0
+  kustomize: finc/kustomize@0.0.2
+
 commands:
-  build_and_test:
+  run_test:
     description: "Build and test"
     steps:
-      - run:
-          name: Install System Libs
-          command: |
-            sudo apt -qq update
-            sudo apt install -y -qq bcrypt
-
       - checkout
 
       - restore_cache:
@@ -48,10 +47,10 @@ commands:
           environment:
             JEST_JUNIT_OUTPUT_DIR: "reports/jest/js-test-results.xml"
 
-      - run:
-          name: Build storybooks
-          command: |
-            yarn build-storybook
+      # - run:
+      #     name: Build storybooks
+      #     command: |
+      #       yarn build-storybook
 
       - store_test_results:
           path: reports
@@ -62,7 +61,7 @@ commands:
       - store_artifacts:
           path: storybook-static
 
-  deploy_to_server:
+  use_capistrano_to_deploy:
     description: "Deploy"
     steps:
       - checkout
@@ -73,9 +72,9 @@ commands:
             cp .env.example .env
 
       - run:
-          name: Fix host authenticity for wiki.onramplab.com
+          name: Fix host authenticity for your_proxy.example.com
           command: |
-            ssh-keyscan wiki.onramplab.com >> ~/.ssh/known_hosts
+            ssh-keyscan your_proxy.example.com >> ~/.ssh/known_hosts
 
       - deploy:
           command: |
@@ -92,57 +91,151 @@ commands:
             fi
 
 jobs:
-  build:
-    working_directory: ~/project
+  run_test:
+    working_directory: ~/app
     docker:
       - image: circleci/node:12.15.0
-
     steps:
-      - build_and_test
+      - run_test
 
-  build_prod:
-    working_directory: ~/project
-    docker:
-      - image: circleci/node:12.15.0
-
-    steps:
-      - build_and_test
-
-  deploy_staging:
+  use_capistrano_to_deploy_staging:
     docker:
       - image: circleci/ruby:2.4.2-jessie-node
-
     steps:
-      - deploy_to_server
+      - use_capistrano_to_deploy
 
-  deploy_prod:
+  use_capistrano_to_deploy_prod:
     docker:
       - image: circleci/ruby:2.4.2-jessie-node
-
     steps:
-      - deploy_to_server
+      - use_capistrano_to_deploy
 
+  build-staging-image:
+    executor: aws-ecr/default
+    steps:
+      - aws-ecr/build-and-push-image:
+          account-url: AWS_ECR_ACCOUNT_URL
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          create-repo: false
+          dockerfile: Dockerfile
+          path: .
+          region: AWS_REGION
+          repo: next-starter
+          tag: "latest,release-${CIRCLE_SHA1}"
+          extra-build-args: "--target prod-runtime"
+
+  build-production-image:
+    executor: aws-ecr/default
+    steps:
+      - aws-ecr/build-and-push-image:
+          account-url: AWS_ECR_ACCOUNT_URL
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          create-repo: false
+          dockerfile: Dockerfile
+          path: .
+          region: AWS_REGION
+          repo: next-starter
+          tag: "${CIRCLE_TAG}"
+          extra-build-args: "--target prod-runtime"
+
+  create-deployment:
+    executor: aws-eks/python3
+    parameters:
+      cluster-name:
+        description: |
+          Name of the EKS cluster
+        type: string
+      aws-region:
+        description: |
+          AWS Region
+        type: string
+    steps:
+      - checkout
+
+      - kustomize/install:
+          version: v3.8.4
+
+      - aws-eks/update-kubeconfig-with-authenticator:
+          authenticator-release-tag: v0.5.1
+          cluster-name: << parameters.cluster-name >>
+          aws-region: << parameters.aws-region >>
+          install-kubectl: true
+
+      - run:
+          name: Update image tag and deploy
+          command: |
+              ENVIRONMENT="staging"
+              TAG="release-${CIRCLE_SHA1}"
+
+              if [ -n "${CIRCLE_TAG}" ]; then
+                ENVIRONMENT="production"
+                TAG="${CIRCLE_TAG}"
+              fi
+
+              root=$(pwd)
+
+              echo "deploying ${TAG} to ${ENVIRONMENT}"
+
+              cd ${root}/tools/infrastructure/container-based/ochestration/kubernetes/bases
+              kustomize edit set image "next-starter=aws_account_id.dkr.ecr.us-east-1.amazonaws.com/next-starter:${TAG}"
+
+              cd ${root}/tools/infrastructure/container-based/ochestration/kubernetes/${ENVIRONMENT}/bases
+              kustomize build | kubectl apply -f -
 
 workflows:
   version: 2
   build-deploy:
     jobs:
-      - build
-      # - deploy_staging:
-      #     requires:
-      #       - build
-      #     filters:
-      #       branches:
-      #         only: master
-      - build_prod:
-          filters:  # required since `deploy` has tag filters AND requires `build`
+      - run_test:
+          filters:
             tags:
               only: /^v.*/
             branches:
-              ignore: /.*/
-      # - deploy_prod:
+              only: /.*/
+
+      # - build-staging-image:
       #     requires:
-      #       - build_prod
+      #       - run_test
+      #     filters:
+      #       branches:
+      #         only: master
+
+      # - build-production-image:
+      #     requires:
+      #       - run_test
+      #     filters:
+      #       tags:
+      #         only: /^v.*/
+      #       branches:
+      #         ignore: /.*/
+
+      # for staging
+      # - create-deployment:
+      #     cluster-name: staging-eks-cluster
+      #     aws-region: "${AWS_REGION}"
+      #     requires:
+      #       - build-staging-image
+      #     filters:
+      #       branches:
+      #         only: master
+
+      # for production
+      # - create-deployment:
+      #     cluster-name: production-eks-cluster
+      #     aws-region: "${AWS_REGION}"
+      #     requires:
+      #       - build-production-image
+      #     filters:
+      #       tags:
+      #         only: /^v.*/
+      #       branches:
+      #         ignore: /.*/
+
+      # - use_capistrano_to_deploy_prod:
+      #     requires:
+      #       - run_test
       #     filters:
       #       tags:
       #         only: /^v.*/
