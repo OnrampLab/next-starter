@@ -116,7 +116,13 @@ npm install
 yarn install
 ```
 
-3. Once the installation is done, you can run the following command:
+3. Create .env.local
+
+```sh
+cp .env.example .env.local
+```
+
+4. Once the installation is done, you can run the following command:
 
  ```
  npm run start:dev
