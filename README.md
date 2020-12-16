@@ -3,23 +3,17 @@
 <br/>
 
 <div align="center">
-  <!-- CodeClimate -->
-  <a href="https://codeclimate.com/github/pankod/next-boilerplate/maintainability">
-    <img src="https://api.codeclimate.com/v1/badges/077c02d5cb9ec7d8a654/maintainability" />
-  </a>
-  <!-- CodeCoverave -->
-  <a href="https://codeclimate.com/github/pankod/next-boilerplate/test_coverage"><img src="https://api.codeclimate.com/v1/badges/077c02d5cb9ec7d8a654/test_coverage" /></a>
   <!-- Build Status -->
-  <a href="https://travis-ci.org/pankod/next-boilerplate">
-    <img src="https://travis-ci.org/pankod/next-boilerplate.svg?branch=master" alt="Build Status" />
+  <a href="https://circleci.com/Onramplab/next-starter">
+    <img src="https://circleci.com/gh/OnrampLab/next-starter.svg?style=shield" alt="Build Status" />
   </a>
   <!-- Dependency Status -->
-  <a href="https://david-dm.org/pankod/next-boilerplate">
-    <img src="https://david-dm.org/pankod/next-boilerplate.svg" alt="Dependency Status" />
+  <a href="https://david-dm.org/Onramplab/next-starter">
+    <img src="https://status.david-dm.org/gh/Onramplab/next-starter.svg" alt="Dependency Status" />
   </a>
   <!-- devDependency Status -->
-  <a href="https://david-dm.org/pankod/next-boilerplate#info=devDependencies">
-    <img src="https://david-dm.org/pankod/next-boilerplate/dev-status.svg" alt="devDependency Status" />
+  <a href="https://david-dm.org/Onramplab/next-starter#info=devDependencies">
+    <img src="https://status.david-dm.org/gh/Onramplab/next-starter.svg?type=dev" alt="devDependency Status" />
   </a>
 </div>
 
@@ -47,7 +41,7 @@ By the end of setup, you'll have a Next.js project and features which is specifi
 ## Features
 
 
-This boilerplate includes the latest powerfull tools.
+This boilerplate is modular architecture includes the latest powerfull tools.
 
 * **Next.js** - Minimalistic framework for server-rendered React applications.
 * **Typescript** - Superset of JavaScript which primarily provides optional static typing, classes and interfaces. path support(allias)
@@ -55,13 +49,16 @@ This boilerplate includes the latest powerfull tools.
 * **Express.js**- Handles server-side rendering and integrated with Express.js
 * **Built-in Project CLI**- Create pages, components, actions, reducers with one command by using built-in cli.
 * **Sass/Scss** - CSS preprocessor, which adds special features such as variables, nested rules and mixins (sometimes referred to as syntactic sugar) into regular CSS.
+* **Docker** - A tool designed to make it easier to create, deploy, and run applications by using containers.
 * **Babel** -  The compiler for next generation JavaScript. Module(alias) support
 * **Eslint** - The pluggable linting utility.
 * **Reverse Proxy** - A reverse proxy server is a type of proxy server that typically sits behind the firewall in a private network and directs client requests to the appropriate backend server
 * **Bundler Analyzer** - Visualize size of webpack output files with an interactive zoomable treemap.
 * **dotenv .config** - Expose environment variables to the runtime config of Next.js
 * **Jest** - Javascript testing framework , created by developers who created react
+* **React Testing Library** - Simple and complete React DOM testing utilities that encourage good testing practices.
 * **Enzyme** - JavaScript testing utility for React that makes it easier to test your React Components output.
+* **Storybook** - An open source tool for developing UI components in isolation for React.
 
 
 <br/>
@@ -99,7 +96,7 @@ This boilerplate includes the latest powerfull tools.
 1. Clone the repository and install the dependencies:
 
 ```
-git clone https://github.com/pankod/next-boilerplate.git
+git clone https://github.com/Onramplab/next-starter.git
 ```
 
 
@@ -198,73 +195,237 @@ After answering questions it generates files in miliseconds.
 
 ```
 .
-├── app
-│   ├── proxy.js
-│   ├── routes.js
-│   └── server.js
+├── __mocks__
 ├── documentation
-├── pages
-│   ├── _app.tsx
-│   ├── _document.tsx
-│   ├── home
-│   │   ├── index.scss
-│   │   ├── index.spec.tsx
-│   │   └── index.tsx
-│   └── index.ts
 ├── project-cli
 ├── src
-│   ├── Actions
-│   │   ├── HomeActions.spec.tsx
-│   │   ├── HomeActions.ts
-│   │   └── index.ts
-│   ├── Components
-│   │   ├── Heading
-│   │   │   ├── index.spec.tsx
-│   │   │   ├── index.tsx
-│   │   │   └── style.scss
-│   │   └── index.ts
-│   ├── Definitions
-│   │   ├── ActionConsts.ts
-│   │   └── index.ts
-│   ├── Interfaces
-│   │   ├── Components
-│   │   │   └── Heading.d.ts
-│   │   ├── Pages
-│   │   │   ├── App.d.ts
-│   │   │   └── Home.d.ts
-│   │   ├── Redux
-│   │   │   ├── Action.d.ts
-│   │   │   └── Store.d.ts
-│   │   ├── Services
-│   │   │   └── API
-│   │   │       ├── Http.d.ts
-│   │   │       └── Planetary
-│   │   │           ├── ApodPayload.d.ts
-│   │   │           ├── ApodResponse.d.ts
-│   │   │           └── Planetary.d.ts
-│   │   └── index.ts
-│   ├── Redux
-│   │   ├── Reducers
-│   │   │   ├── home.spec.ts
-│   │   │   ├── home.ts
-│   │   │   └── index.ts
-│   │   └── store.ts
-│   └── Services
-│       ├── API
-│       │   ├── Http.spec.ts
-│       │   ├── Http.ts
-│       │   ├── Planetary.spec.ts
-│       │   └── Planetary.ts
-│       └── index.ts
+│   ├── app
+│   │   ├── components
+│   │   │   ├── AuthProvider.tsx
+│   │   │   ├── index.ts
+│   │   │   ├── MyApp.tsx
+│   │   │   └── PageContainer.tsx
+│   │   ├── configs
+│   │   │   ├── index.ts
+│   │   │   └── menuItems.tsx
+│   │   ├── index.ts
+│   │   └── redux
+│   │       ├── index.ts
+│   │       ├── reducers.ts
+│   │       └── store.ts
+│   ├── assets
+│   │   ├── antd-custom.less
+│   │   ├── styles.less
+│   │   └── tailwind-extension.css
+│   ├── console.d.ts
+│   ├── lib
+│   │   └── helpers.ts
+│   ├── mdx.d.ts
+│   ├── modules
+│   │   ├── account
+│   │   │   ├── components
+│   │   │   │   ├── Accountable.tsx
+│   │   │   │   ├── AccountForm
+│   │   │   │   │   ├── AccountForm.stories.tsx
+│   │   │   │   │   ├── AccountForm.tsx
+│   │   │   │   │   └── index.ts
+│   │   │   │   ├── AccountList.tsx
+│   │   │   │   ├── CreateAccountForm.tsx
+│   │   │   │   ├── index.ts
+│   │   │   │   └── UpdateAccountForm.tsx
+│   │   │   ├── documents
+│   │   │   │   ├── AccountApiKey.mdx
+│   │   │   │   ├── Authentication.tsx
+│   │   │   │   └── index.ts
+│   │   │   ├── entities
+│   │   │   │   ├── index.ts
+│   │   │   │   └── interfaces
+│   │   │   │       ├── IAccount.d.ts
+│   │   │   │       └── index.ts
+│   │   │   ├── index.ts
+│   │   │   ├── pages
+│   │   │   │   ├── AccountListPage.tsx
+│   │   │   │   └── index.ts
+│   │   │   ├── redux
+│   │   │   │   ├── actionConsts.ts
+│   │   │   │   ├── actions.ts
+│   │   │   │   ├── index.ts
+│   │   │   │   └── reducers
+│   │   │   │       ├── accountReducer.ts
+│   │   │   │       └── index.ts
+│   │   │   └── services
+│   │   │       ├── AccountService.ts
+│   │   │       ├── index.ts
+│   │   │       └── interfaces
+│   │   │           ├── AccountModel.d.ts
+│   │   │           ├── AccountsPayload.d.ts
+│   │   │           ├── AccountsResponse.d.ts
+│   │   │           └── index.ts
+│   │   ├── auth
+│   │   │   ├── core
+│   │   │   │   ├── components
+│   │   │   │   │   ├── AuthWrapper.tsx
+│   │   │   │   │   ├── Forgot.tsx
+│   │   │   │   │   ├── index.ts
+│   │   │   │   │   ├── Signin.module.scss
+│   │   │   │   │   ├── Signin.tsx
+│   │   │   │   │   └── Signup.tsx
+│   │   │   │   ├── hooks
+│   │   │   │   │   ├── index.ts
+│   │   │   │   │   └── useAuth.ts
+│   │   │   │   ├── index.ts
+│   │   │   │   ├── redux
+│   │   │   │   │   ├── actions.ts
+│   │   │   │   │   ├── consts.ts
+│   │   │   │   │   ├── index.ts
+│   │   │   │   │   ├── reducer.ts
+│   │   │   │   │   └── selectors.ts
+│   │   │   │   └── services
+│   │   │   │       ├── AuthService.ts
+│   │   │   │       ├── index.ts
+│   │   │   │       └── interfaces
+│   │   │   │           ├── AuthModel.d.ts
+│   │   │   │           ├── index.ts
+│   │   │   │           ├── LoginPayload.d.ts
+│   │   │   │           └── LoginResponse.d.ts
+│   │   │   ├── index.ts
+│   │   │   ├── jwt
+│   │   │   │   ├── hooks
+│   │   │   │   │   ├── index.ts
+│   │   │   │   │   └── useJWTAuth.ts
+│   │   │   │   ├── index.ts
+│   │   │   │   ├── redux
+│   │   │   │   │   ├── actions.ts
+│   │   │   │   │   ├── consts.ts
+│   │   │   │   │   └── index.ts
+│   │   │   │   └── services
+│   │   │   │       ├── AuthService.tsx
+│   │   │   │       └── index.ts
+│   │   │   └── README.md
+│   │   ├── core
+│   │   │   ├── components
+│   │   │   │   ├── AppProvider.tsx
+│   │   │   │   ├── Header.tsx
+│   │   │   │   ├── index.ts
+│   │   │   │   ├── NotFound.tsx
+│   │   │   │   ├── Page.tsx
+│   │   │   │   ├── SidebarMenu.tsx
+│   │   │   │   └── styles
+│   │   │   │       ├── AnimatedBG.js
+│   │   │   │       ├── GlobalStyles.ts
+│   │   │   │       ├── Header.ts
+│   │   │   │       ├── index.ts
+│   │   │   │       ├── Page.ts
+│   │   │   │       └── Sidebar.ts
+│   │   │   ├── hooks
+│   │   │   │   ├── index.ts
+│   │   │   │   └── usePubSub.ts
+│   │   │   ├── index.ts
+│   │   │   └── redux
+│   │   │       ├── actions
+│   │   │       │   ├── ActionConsts.ts
+│   │   │       │   ├── index.ts
+│   │   │       │   └── wrapperActions.ts
+│   │   │       ├── index.ts
+│   │   │       ├── interfaces
+│   │   │       │   ├── Action.d.ts
+│   │   │       │   ├── index.ts
+│   │   │       │   ├── Store.d.ts
+│   │   │       │   └── Wrapper.d.ts
+│   │   │       └── reducers
+│   │   │           ├── index.ts
+│   │   │           └── wrapperReducer.ts
+│   │   ├── home
+│   │   │   ├── index.ts
+│   │   │   └── pages
+│   │   │       ├── HomeMainPage.tsx
+│   │   │       └── index.ts
+│   │   ├── shared
+│   │   │   ├── index.ts
+│   │   │   ├── mirage
+│   │   │   │   └── mirage.ts
+│   │   │   ├── __mock__
+│   │   │   │   ├── account.json
+│   │   │   │   ├── auth.json
+│   │   │   │   ├── index.ts
+│   │   │   │   └── user.json
+│   │   │   ├── redux
+│   │   │   │   ├── index.ts
+│   │   │   │   └── interfaces
+│   │   │   │       ├── Action.d.ts
+│   │   │   │       └── index.ts
+│   │   │   └── services
+│   │   │       ├── api
+│   │   │       │   ├── Http.spec.ts
+│   │   │       │   ├── Http.ts
+│   │   │       │   ├── index.ts
+│   │   │       │   └── interfaces
+│   │   │       │       ├── HttpModel.d.ts
+│   │   │       │       └── index.ts
+│   │   │       └── index.ts
+│   │   └── user
+│   │       ├── components
+│   │       │   ├── CreateUserForm.tsx
+│   │       │   ├── index.ts
+│   │       │   ├── UpdateUserForm.tsx
+│   │       │   └── UserForm.tsx
+│   │       ├── containers
+│   │       │   ├── index.ts
+│   │       │   └── UserListPage.tsx
+│   │       ├── entities
+│   │       │   ├── index.ts
+│   │       │   └── interfaces
+│   │       │       ├── index.ts
+│   │       │       └── IUser.d.ts
+│   │       ├── index.ts
+│   │       └── services
+│   │           ├── index.ts
+│   │           ├── interfaces
+│   │           │   ├── index.ts
+│   │           │   ├── UserModel.d.ts
+│   │           │   ├── UserRequestPayload.d.ts
+│   │           │   ├── UserRequestQueryPayload.d.ts
+│   │           │   ├── UserResponse.d.ts
+│   │           │   └── UsersResponse.d.ts
+│   │           └── UserService.ts
+│   ├── pages
+│   │   ├── admin
+│   │   │   ├── accounts
+│   │   │   │   └── index.tsx
+│   │   │   └── users
+│   │   │       └── index.tsx
+│   │   ├── _app.tsx
+│   │   ├── auth
+│   │   │   ├── forgot.tsx
+│   │   │   ├── signin.tsx
+│   │   │   └── signup.tsx
+│   │   ├── _document.tsx
+│   │   ├── home
+│   │   │   └── index.tsx
+│   │   └── index.ts
+│   └── server
+│       ├── index.js
+│       ├── proxy.js
+│       └── routes.js
+├── tools
+├── babel.config.js
+├── banner.jpg
+├── base.json
+├── commitlint.config.js
+├── docker-compose.yml
+├── Dockerfile
 ├── eslintrc.js
-├── .prettierrc
-├── tsconfig.json
 ├── jest.config.js
 ├── jest.setup.ts
 ├── jest.tsconfig.json
 ├── next.config.js
-├── package-lock.json
-└── package.json
+├── next-env.d.ts
+├── package.json
+├── postcss.config.js
+├── tailwind.config.js
+├── tsconfig.json
+├── yarn-error.log
+└── yarn.lock
 
 ```
 
