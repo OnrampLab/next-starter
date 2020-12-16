@@ -11,7 +11,8 @@
     "export": "NODE_ENV=production next export",
     "analyze": "BUNDLE_ANALYZE=both npm run build",
     "cli": "node ./project-cli/dist/index.js a",
-    "post-install": "cd project-cli && npm i && npm run build",
+    "postinstall": "husky install",
+    "build-project-cli": "cd project-cli && npm i && npm run build",
     "test": "jest --coverage",
     "test:ci": "jest --ci --runInBand --reporters=default --reporters=jest-junit --coverage",
     "lint": "eslint -c .eslintrc.js --ext .ts,.tsx src",
@@ -56,6 +57,8 @@
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.7.4",
     "@babel/plugin-proposal-optional-chaining": "^7.7.4",
     "@babel/plugin-syntax-typescript": "^7.7.4",
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
     "@storybook/addon-actions": "^5.3.19",
     "@storybook/addon-docs": "^5.3.19",
     "@storybook/addon-essentials": "^5.3.19",
@@ -103,7 +106,7 @@
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.18.0",
     "http-proxy-middleware": "^0.19.1",
-    "husky": "^4.2.5",
+    "husky": "^5.0.0",
     "jest": "^24.8.0",
     "jest-junit": "^10.0.0",
     "less": "^3.9.0",
@@ -130,19 +133,8 @@
   },
   "author": "",
   "license": "ISC",
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint-staged"
-    }
-  },
   "lint-staged": {
-    "src/**/*.js": [
-      "eslint -c .eslintrc.js --fix"
-    ],
-    "src/**/*.tsx": [
-      "eslint -c .eslintrc.js --fix"
-    ],
-    "src/**/*.ts": [
+    "src/**/*.(js|ts|tsx)": [
       "eslint -c .eslintrc.js --fix"
     ]
   }
