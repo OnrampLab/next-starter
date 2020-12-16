@@ -59,6 +59,9 @@ commands:
           path: reports
 
       - store_artifacts:
+          path: coverage
+
+      - store_artifacts:
           path: storybook-static
 
   use_capistrano_to_deploy:
