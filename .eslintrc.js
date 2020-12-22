@@ -35,7 +35,7 @@ module.exports = {
     '@typescript-eslint/prefer-interface': 'off',
     'react/prop-type': 'off',
     'react/prop-types': 'off',
-    'react/react-in-jsx-scope': 'warn',
+    'react/react-in-jsx-scope': 'off',
     // Enabled rules
     '@typescript-eslint/adjacent-overload-signatures': 'error',
     '@typescript-eslint/array-type': 'error',
