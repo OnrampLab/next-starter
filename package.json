@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.2.1",
+    "@tailwindcss/postcss7-compat": "^2.0.2",
     "@zeit/next-bundle-analyzer": "^0.1.2",
     "@zeit/next-less": "1.0.2-canary.2",
     "@zeit/next-sass": "^1.0.1",
@@ -50,7 +51,7 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
     "styled-components": "^4.3.1",
-    "tailwindcss": "^1.2.0"
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   },
   "devDependencies": {
     "@babel/core": "^7.12.0",
@@ -116,6 +117,7 @@
     "node-sass": "^5.0.0",
     "nodemon": "^1.19.1",
     "nyc": "^14.1.1",
+    "postcss": "^7",
     "postcss-easy-import": "^3.0.0",
     "prettier": "^1.18.2",
     "raw-loader": "^3.0.0",

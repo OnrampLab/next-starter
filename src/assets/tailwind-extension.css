@@ -1,8 +1,6 @@
 @tailwind base;
+@tailwind components;
 @tailwind utilities;
-@import "tailwindcss/preflight";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
 
 /* NOTE: looks like it has conflit with feather icons */
 svg {
