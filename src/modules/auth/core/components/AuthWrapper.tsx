@@ -5,14 +5,14 @@ import { useAuth, useAuthEffect, getCurrentUser } from '@onr/auth';
 
 export const AuthWrapper: React.FC = ({ children }) => {
   const dispatch = useDispatch();
-  const { isAuthroized, isResolved } = useAuth();
+  const { isAuthorized, isResolved } = useAuth();
 
   useAuthEffect();
 
   useEffect(() => {
-    if(isAuthroized) 
+    if(isAuthorized)
       dispatch(getCurrentUser())
-  }, [isAuthroized]);
+  }, [isAuthorized]);
 
   if(!isResolved) {
     return (

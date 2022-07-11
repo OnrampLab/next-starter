@@ -7,40 +7,40 @@ export const useAuth = () => {
   const state = useSelector(selectAuthState), data = useSelector(selectAuthData), user = useSelector(selectCurrentUser);
 
   return {
-    state, 
-    data, 
-    user, 
-    isResolved: state !== AuthState.Prepare, 
-    isAuthroized: state === AuthState.Authorized,
+    state,
+    data,
+    user,
+    isResolved: state !== AuthState.Prepare,
+    isAuthorized: state === AuthState.Authorized,
     isPending: state === AuthState.Pending,
-    // be care that !isAuthroized !== Unauthorized
-    isUnAuthroized: state === AuthState.Unauthorized,
+    // be care that !isAuthorized !== Unauthorized
+    isUnAuthorized: state === AuthState.Unauthorized,
   };
 }
 
 export const useAuthEffect = () => {
-  const { state, data, user, isResolved, isAuthroized, isUnAuthroized } = useAuth();
+  const { state, data, user, isResolved, isAuthorized, isUnAuthorized } = useAuth();
 
   usePersistAuthEffect(data);
-  useRedirectAuthEffect(isResolved, isAuthroized);
+  useRedirectAuthEffect(isResolved, isAuthorized);
 };
 
 //@toRedirect: other condition to decide if i want redirect or not, default to be always redirect if resolved.
-export const useRedirectAuthEffect = (isResolved: boolean, isAuthroized: boolean, toRedirect: boolean = true) => {
+export const useRedirectAuthEffect = (isResolved: boolean, isAuthorized: boolean, toRedirect: boolean = true) => {
   const router = useRouter();
   const isAuthPage = router.pathname.includes('/auth/');
 
   useEffect(() => {
     if(isResolved && toRedirect) {
       //redirect to Home if authed & visiting auth page
-      if(isAuthroized && isAuthPage) 
+      if(isAuthorized && isAuthPage)
         router.push('/');
 
       //redirect to Login if unauth & not visiting auth page
-      if(!isAuthroized && !isAuthPage) 
+      if(!isAuthorized && !isAuthPage)
         router.push('/auth/signin');
     }
-  }, [isResolved, toRedirect, isAuthroized, isAuthPage]);
+  }, [isResolved, toRedirect, isAuthorized, isAuthPage]);
 }
 
 export const usePersistAuthEffect = (data) => {
@@ -62,5 +62,5 @@ export const useResolveAuthEffect = () => {
   useEffect(() => {
     //resolve token
     dispatch(resolveAuthState());
-  }, []);  
+  }, []);
 }

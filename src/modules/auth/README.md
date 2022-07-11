@@ -4,11 +4,11 @@ AuthWrapper
    - call useAuth & useAuthEffect & getCurrentUser when authorized
 
 useAuth
-   - return the auth status with state, data, user and isResolved, isAuthroized, isPending, isUnAuthroized.
+   - return the auth status with state, data, user and isResolved, isAuthorized, isPending, isUnAuthorized.
 
 useAuthEffect: control the effect corresponding to different auth status
    - resolve previous session from localStorage with SESSION_KEY as key
-   - redirect to auth if not authorized 
+   - redirect to auth if not authorized
    - redirect to home if authorized but visting auth-related pages
 
 Note on customization:
